@@ -42,3 +42,9 @@ jobs:
       run: |
         pwd
         ls -al
+        cd my_micropython
+        pwd
+        ls -al
+        cd micropython/ports/stm32/
+        pwd
+        ls -al        
