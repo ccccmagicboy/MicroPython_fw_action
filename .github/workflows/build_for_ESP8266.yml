@@ -1,0 +1,38 @@
+#===================================================================================
+# https://github.com/ccccmagicboy/MicroPython_fw_action
+# Description: Build MicroPython firmware using GitHub Actions for PYBV11
+# Lisence: MIT
+# Author: ccccmagicboy
+# Url: https://ccrobot-online.com
+#===================================================================================
+
+name: ESP8266_BUILD
+
+on:
+  release:
+    types: [published]
+  push:
+    branches:
+      - master
+  # schedule:
+    # - cron: 0 8 * * 5
+  # watch:
+    # types: [started]
+
+env:
+  REPO_URL: https://github.com/micropython/micropython.git
+  REPO_BRANCH: master
+  UPLOAD_FIRMWARE: true
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+
+    steps:
+    - name: Checkout this repos
+      uses: actions/checkout@v2    
+
+    - name: Clone the micropython source code
+      #depth用于指定克隆深度，为1即表示只克隆最近一次commit.
+      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
