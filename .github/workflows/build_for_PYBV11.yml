@@ -44,12 +44,14 @@ jobs:
       
     - name: build the mpy-cross tool
       run: |
-        pwd
-        ls -al
         cd my_micropython
         pwd
         ls -al
+        make -C mpy-cross
+
+    - name: build the submodules
+      run: |        
         cd ports/stm32/
         pwd
         ls -al
-        make -C mpy-cross
+        make submodules
