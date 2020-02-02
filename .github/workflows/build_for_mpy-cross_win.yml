@@ -17,12 +17,6 @@ on:
   # watch:
     # types: [started]
 
-env:
-  REPO_URL: https://github.com/micropython/micropython.git
-  REPO_BRANCH: master
-  UPLOAD_FIRMWARE: true
-  TZ: Asia/Shanghai
-
 jobs:
   build:
     runs-on: windows-latest
@@ -32,8 +26,7 @@ jobs:
       uses: actions/checkout@v2    
 
     - name: Clone the micropython source code
-      #depth用于指定克隆深度，为1即表示只克隆最近一次commit.
-      run: git clone --depth 1 %REPO_URL% -b %REPO_BRANCH% my_micropython
+      run: git clone --depth 1 https://github.com/micropython/micropython.git -b master my_micropython
 
     - name: check the curl tool
       run: curl --version
