@@ -28,6 +28,8 @@ jobs:
     - name: Clone the micropython source code
       run: git clone --depth 1 https://github.com/micropython/micropython.git -b master my_micropython
 
-    - name: check the wget tool
-      run: wget --version
-      #https://dl.espressif.com/dl/esp32_win32_msys2_environment_and_toolchain-20180110.zip
+    - name: down the toolchain
+      run: |
+        curl -o toolchain.zip https://dl.espressif.com/dl/esp32_win32_msys2_environment_and_toolchain-20180110.zip
+        unzip toolchain.zip
+        ll
