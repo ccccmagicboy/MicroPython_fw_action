@@ -54,6 +54,7 @@ jobs:
         make submodules
         make
         find . -name "*micropython*"
+        ./micropython -c "import sys;print(sys.implementation)"
 
     - name: build the submodules of stm32 port
       run: |        
