@@ -37,6 +37,10 @@ jobs:
       #depth用于指定克隆深度，为1即表示只克隆最近一次commit.
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
 
+    - name: get the cross-toolchain
+      run: |
+        sudo apt-get install gcc-arm-none-eabi
+        sudo apt-get install gcc
       
     - name: build the mpy-cross tool
       run: |
