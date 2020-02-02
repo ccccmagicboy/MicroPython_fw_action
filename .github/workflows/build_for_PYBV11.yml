@@ -53,6 +53,7 @@ jobs:
         cd my_micropython/ports/unix
         make submodules
         make
+        cd build-standard
         ls -al        
 
     - name: build the submodules of stm32 port
