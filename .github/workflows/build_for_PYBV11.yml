@@ -47,8 +47,15 @@ jobs:
         pwd
         ls -al
         make -C mpy-cross
+        
+    - name: build the unix port
+      run: |
+        cd my_micropython/ports/unix
+        make submodules
+        make
+        ls -al        
 
-    - name: build the submodules
+    - name: build the submodules of stm32 port
       run: |        
         cd my_micropython/ports/stm32/
         pwd
