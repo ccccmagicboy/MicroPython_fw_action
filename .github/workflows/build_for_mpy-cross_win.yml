@@ -33,7 +33,7 @@ jobs:
 
     - name: Clone the micropython source code
       #depth用于指定克隆深度，为1即表示只克隆最近一次commit.
-      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+      run: git clone --depth 1 %REPO_URL% -b %REPO_BRANCH% my_micropython
 
     - name: check the curl tool
       run: curl --version
