@@ -1,6 +1,29 @@
-name: CI
+#===================================================================================
+# https://github.com/ccccmagicboy/MicroPython_fw_action
+# Description: Build MicroPython firmware using GitHub Actions for PYBV11
+# Lisence: MIT
+# Author: ccccmagicboy
+# Url: https://ccrobot-online.com
+#===================================================================================
 
-on: [push]
+name: ESP32_BUILD
+
+on:
+  release:
+    types: [published]
+  push:
+    branches:
+      - master
+  # schedule:
+    # - cron: 0 8 * * 5
+  # watch:
+    # types: [started]
+
+env:
+  REPO_URL: https://github.com/micropython/micropython.git
+  REPO_BRANCH: master
+  UPLOAD_FIRMWARE: true
+  TZ: Asia/Shanghai
 
 jobs:
   build:
