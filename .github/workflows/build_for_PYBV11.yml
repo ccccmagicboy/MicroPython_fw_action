@@ -51,7 +51,14 @@ jobs:
 
     - name: build the submodules
       run: |        
-        cd ports/stm32/
+        cd my_micropython/ports/stm32/
         pwd
         ls -al
         make submodules
+        
+    - name: build the PYBV11 bin
+      run: |        
+        cd my_micropython/ports/stm32/
+        pwd
+        ls -al
+        make BOARD=PYBV11
