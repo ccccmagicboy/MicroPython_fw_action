@@ -37,7 +37,7 @@ jobs:
     - name: Install require for toolchain
       run: |
         sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
-        flex bison texinfo gawk ncurses-dev libevpat-dev python-dev sed git unzip \
+        flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
         bash help2man wget bzip2 libtool-bin
 
     - name: Clone the toolchain source code
