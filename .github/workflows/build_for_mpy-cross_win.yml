@@ -1,6 +1,6 @@
 #===================================================================================
 # https://github.com/ccccmagicboy/MicroPython_fw_action
-# Description: Build MicroPython firmware using GitHub Actions for PYBV11
+# Description: Build MicroPython firmware using GitHub Actions for mpy-cross_win
 # Lisence: MIT
 # Author: ccccmagicboy
 # Url: https://ccrobot-online.com

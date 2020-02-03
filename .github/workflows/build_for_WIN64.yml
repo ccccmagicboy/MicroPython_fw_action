@@ -1,12 +1,12 @@
 #===================================================================================
 # https://github.com/ccccmagicboy/MicroPython_fw_action
-# Description: Build MicroPython firmware using GitHub Actions for ESP8266
+# Description: Build MicroPython firmware using GitHub Actions for WIN64
 # Lisence: MIT
 # Author: ccccmagicboy
 # Url: https://ccrobot-online.com
 #===================================================================================
 
-name: ESP8266_BUILD
+name: WIN64_BUILD
 
 on:
   release:
@@ -22,9 +22,6 @@ on:
 env:
   REPO_URL: https://github.com/micropython/micropython.git
   REPO_BRANCH: master
-  TOOLCHAIN_REPO_URL: https://github.com/pfalcon/esp-open-sdk.git
-  TOOLCHAIN_REPO_BRANCH: master  
-  TZ: Asia/Shanghai
 
 jobs:
   build:
@@ -34,23 +31,9 @@ jobs:
     - name: Checkout this repos
       uses: actions/checkout@v2    
       
-    - name: Install require for toolchain
+    - name: Install the toolchain
       run: |
-        sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
-        flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
-        bash help2man wget bzip2 libtool-bin python-serial
-
-    - name: Clone the toolchain source code
-      run: git clone --recursive $TOOLCHAIN_REPO_URL -b $TOOLCHAIN_REPO_BRANCH my_toolchain
-
-    - name: Build the toolchain and install it
-      run: |
-        cd my_toolchain
-        ls -al
-        make
-        ls -al
-        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
-        xtensa-lx106-elf-gcc --version
+        sudo apt-get install gcc-mingw-w64
       
     - name: Clone the micropython source code
       run: |
@@ -72,22 +55,21 @@ jobs:
         find . -name "*micropython*"
         ./micropython -c "import sys;print(sys.implementation)"
         
-    - name: Build the ESP8266 port
+    - name: Build the Windows port
       run: |        
-        cd my_micropython/ports/esp8266/
+        cd my_micropython/ports/windows/
         pwd
-        ls -al
-        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH        
-        make
+        ls -al   
+        make CROSS_COMPILE=i686-w64-mingw32-
         ls -al
         
     - name: Zip the artifact
       run: |
-        zip --junk-paths firmware_ESP8266 my_micropython/ports/esp8266/build-GENERIC/firmware-combined.bin README.md MicroPython_fw_action_card.png
+        zip --junk-paths micropython_win64 my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: firmware_ESP8266
-        path: firmware_ESP8266.zip
+        name: micropython_win64
+        path: micropython_win64.zip
             
