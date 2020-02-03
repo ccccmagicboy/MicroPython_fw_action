@@ -70,6 +70,10 @@ jobs:
         find . -name "*micropython*"
         ./micropython -c "import sys;print(sys.implementation)"
 
-
+    - name: Get the IDF git hash of the only version
+      run: |        
+        cd my_micropython/ports/esp32/
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH
+        make
         
         
