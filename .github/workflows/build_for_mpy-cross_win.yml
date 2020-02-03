@@ -42,17 +42,22 @@ jobs:
         python-version: '3.x'
         architecture: 'x64'      
 
-    - name: check python version
+    - name: Check python version
       run: |
         python -c "import sys; print(sys.version)"
         cp %pythonLocation%\python.exe %pythonLocation%\python3.exe
         python3 -c "import sys; print(sys.version)"
       shell: cmd
       
-    - name: Display the path use python
+    - name: Fix the makefile for mpy-cross
       run: |
+        from mpy-cross_win_tool import replaceAll
         import os
         print(os.environ['PATH'])
+        print(os.getcwd())
+        mk_path = os.path.join(os.getcwd(), 'my_micropython', 'mpy-cross', 'Makefile')
+        print(mk_path)
+        replaceAll(mk_path, "PROG = mpy-cross","PROG = mpy-cross.exe")
       shell: python      
       
     - name: Make the mpy-cross
