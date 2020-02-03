@@ -30,9 +30,9 @@ jobs:
 
     - name: Get the python3
       uses: actions/setup-python@v1
-        with:
-          python-version: '3.x'
-          architecture: 'x64'      
+      with:
+        python-version: '3.x'
+        architecture: 'x64'      
       
     - name: Down the toolchain and set the gcc path
       run: |
