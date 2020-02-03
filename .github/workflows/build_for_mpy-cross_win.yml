@@ -48,6 +48,7 @@ jobs:
         msystem: MSYS
 
     - name: Make the mpy-cross
-      run: |        
+      run: |       
+        mingw32
         cd my_micropython
         make -C mpy-cross
