@@ -45,7 +45,7 @@ jobs:
         
     - uses: numworks/setup-msys2@v1
       with:
-        msystem: MINGW32
+        msystem: MSYS
 
     - name: Make the mpy-cross
       run: |        
