@@ -1,6 +1,6 @@
 # MicroPython_fw_action
-![](https://github.com/ccccmagicboy/MicroPython_fw_action/.github/workflows/build_for_ESP32.yml/badge.svg)
-
+![](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/build_for_ESP32/badge.svg)
+[![Actions Status](https://github.com/appleboy/telegram-action/workflows/telegram%20message/badge.svg)](https://github.com/appleboy/telegram-action/actions)
 
 | No 	| check list 	| ![](https://img.shields.io/badge/PYBV11-blue) 	| ![](https://img.shields.io/badge/ESP32-blue) 	| ![](https://img.shields.io/badge/ESP8266-blue) 	| ![](https://img.shields.io/badge/mpy_cross_win-blue) 	|
 |----	|------------	|---------------------------------------------------------	|---------------------------------------------------------	|-----------------------------------------------------------	|----------------------------------------------------------------	|
