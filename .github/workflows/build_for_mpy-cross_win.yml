@@ -38,17 +38,10 @@ jobs:
       run: |
         python -c "import sys; print(sys.version)"
         cd C:\hostedtoolcache\windows\Python\3.8.1\X64
-        dir
         cp python.exe python3.exe
-        dir
         python3 -c "import sys; print(sys.version)"
-        
-    - uses: numworks/setup-msys2@v1
-      with:
-        msystem: MSYS
 
     - name: Make the mpy-cross
-      run: |       
-        mingw32
+      run: |
         cd my_micropython
         make -C mpy-cross
