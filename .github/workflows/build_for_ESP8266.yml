@@ -77,6 +77,7 @@ jobs:
         cd my_micropython/ports/esp8266/
         pwd
         ls -al
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH        
         make
         ls -al
         
