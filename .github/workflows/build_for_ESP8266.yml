@@ -47,7 +47,7 @@ jobs:
       run: |
         cd my_toolchain
         ls -al
-        make -j4 -s
+        make
         ls -al
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
         xtensa-lx106-elf-gcc --version
@@ -57,14 +57,14 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
-    - name: build the mpy-cross tool
+    - name: Build the mpy-cross tool
       run: |
         cd my_micropython
         pwd
         ls -al
         make -C mpy-cross
         
-    - name: build the unix port
+    - name: Build the unix port
       run: |
         cd my_micropython/ports/unix
         make submodules
@@ -72,10 +72,21 @@ jobs:
         find . -name "*micropython*"
         ./micropython -c "import sys;print(sys.implementation)"
         
-    - name: build the ESP8266 port
+    - name: Build the ESP8266 port
       run: |        
         cd my_micropython/ports/esp8266/
         pwd
         ls -al
         make
         ls -al
+        
+    - name: Zip the artifact
+      run: |
+        zip --junk-paths firmware_ESP8266 my_micropython/ports/esp8266/build-GENERIC/firmware-combined.bin README.md MicroPython_fw_action_card.png
+        
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: firmware_ESP8266
+        path: my_micropython/firmware_ESP8266.zip
+            
