@@ -36,8 +36,9 @@ jobs:
 
     - name: check python version
       run: |
-        python --version
-        python3 --version
+        python -c "import sys; print(sys.version)"
+        echo %PYTHONHOME%
+        echo %PATH%
         
     - name: Down the toolchain and set the gcc path
       run: |
