@@ -37,7 +37,7 @@ jobs:
     - name: check python version
       run: |
         python -c "import sys; print(sys.version)"
-        cd C:\hostedtoolcache\windows\Python\
+        cd C:\hostedtoolcache\windows\Python\3.8.1\X64
         dir
         
     - name: Down the toolchain and set the gcc path
