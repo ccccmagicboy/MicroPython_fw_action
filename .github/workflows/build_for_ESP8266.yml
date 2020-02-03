@@ -22,6 +22,7 @@ on:
 env:
   REPO_URL: https://github.com/micropython/micropython.git
   REPO_BRANCH: master
+  TOOLCHAIN_FROM_SCRATCH: false
   TOOLCHAIN_REPO_URL: https://github.com/pfalcon/esp-open-sdk.git
   TOOLCHAIN_REPO_BRANCH: master  
   TZ: Asia/Shanghai
@@ -41,14 +42,27 @@ jobs:
         bash help2man wget bzip2 libtool-bin python-serial
 
     - name: Clone the toolchain source code
+      if: env.TOOLCHAIN_FROM_SCRATCH == 'true'
       run: git clone --recursive $TOOLCHAIN_REPO_URL -b $TOOLCHAIN_REPO_BRANCH my_toolchain
 
     - name: Build the toolchain and install it
+      if: env.TOOLCHAIN_FROM_SCRATCH == 'true'
       run: |
         cd my_toolchain
         ls -al
         make
         ls -al
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
+        xtensa-lx106-elf-gcc --version
+        
+    - name: Down and install the toolchain
+      if: env.TOOLCHAIN_FROM_SCRATCH == 'false'
+      run: |
+        mkdir -p my_toolchain
+        cd my_toolchain
+        curl -O https://dl.espressif.com/dl/xtensa-lx106-elf-linux64-1.22.0-100-ge567ec7-5.2.0.tar.gz
+        tar -xzf xtensa-lx106-elf-linux64-1.22.0-100-ge567ec7-5.2.0.tar.gz
+        rm xtensa-lx106-elf-linux64-1.22.0-100-ge567ec7-5.2.0.tar.gz
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
         xtensa-lx106-elf-gcc --version
       

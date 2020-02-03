@@ -22,7 +22,7 @@ on:
 env:
   REPO_URL: https://github.com/micropython/micropython.git
   REPO_BRANCH: master
-  UPLOAD_FIRMWARE: true
+  TOOLCHAIN_FROM_SCRATCH: false
   TZ: Asia/Shanghai
 
 jobs:
@@ -41,6 +41,7 @@ jobs:
         python-pyparsing
         
     - name: Down and install the toolchain
+      if: env.TOOLCHAIN_FROM_SCRATCH == 'false'
       run: |
         mkdir -p my_toolchain
         cd my_toolchain
