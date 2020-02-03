@@ -39,6 +39,9 @@ jobs:
         python -c "import sys; print(sys.version)"
         cd C:\hostedtoolcache\windows\Python\3.8.1\X64
         dir
+        cp python.exe python3.exe
+        dir
+        python3 -c "import sys; print(sys.version)"
         
     - name: Down the toolchain and set the gcc path
       run: |
