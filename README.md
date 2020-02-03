@@ -1,5 +1,5 @@
 # MicroPython_fw_action
-![](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/.github/workflows/build_for_ESP32.yml/badge.svg)
+![](https://github.com/ccccmagicboy/MicroPython_fw_action/.github/workflows/build_for_ESP32.yml/badge.svg)
 
 
 | No 	| check list 	| ![](https://img.shields.io/badge/PYBV11-blue) 	| ![](https://img.shields.io/badge/ESP32-blue) 	| ![](https://img.shields.io/badge/ESP8266-blue) 	| ![](https://img.shields.io/badge/mpy_cross_win-blue) 	|
