@@ -58,6 +58,7 @@ jobs:
         mk_path = os.path.join(os.getcwd(), 'my_micropython', 'mpy-cross', 'Makefile')
         print(mk_path)
         replaceAll(mk_path, "PROG = mpy-cross","PROG = mpy-cross.exe")
+        print("hello finished!")
       shell: python      
       
     - name: Make the mpy-cross
