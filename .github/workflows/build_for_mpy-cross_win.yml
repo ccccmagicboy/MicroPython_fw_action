@@ -33,7 +33,12 @@ jobs:
       with:
         python-version: '3.x'
         architecture: 'x64'      
-      
+
+    - name: check python version
+      run: |
+        python --version
+        python3 --version
+        
     - name: Down the toolchain and set the gcc path
       run: |
         curl -o toolchain.zip https://dl.espressif.com/dl/esp32_win32_msys2_environment_and_toolchain-20180110.zip
