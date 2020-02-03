@@ -49,6 +49,12 @@ jobs:
         python3 -c "import sys; print(sys.version)"
       shell: cmd
       
+    - name: Display the path use python
+      run: |
+        import os
+        print(os.environ['PATH'])
+      shell: python      
+      
     - name: Make the mpy-cross
       run: |
         echo %PATH%
