@@ -7,7 +7,7 @@
 
 | No 	| check list 	| ![](https://img.shields.io/badge/PYBV11-OK-yellowgreen) 	| ![](https://img.shields.io/badge/ESP32-ing-yellowgreen) 	| ![](https://img.shields.io/badge/ESP8266-ing-yellowgreen) 	| ![](https://img.shields.io/badge/mpy_cross_win-OK-yellowgreen) 	|
 |----	|------------	|---------------------------------------------------------	|---------------------------------------------------------	|-----------------------------------------------------------	|----------------------------------------------------------------	|
-| 1  	|            	|                                                         	|                                                         	|                                                           	|                                                                	|
+| 1  	|            	|           :heavy_check_mark:                                              	|                 :x:                                        	|                    :x:                                       	|              :heavy_check_mark:                                                  	|
 | 2  	|            	|                                                         	|                                                         	|                                                           	|                                                                	|
 | 3  	|            	|                                                         	|                                                         	|                                                           	|                                                                	|
 
