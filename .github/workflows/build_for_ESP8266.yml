@@ -61,7 +61,7 @@ jobs:
         mkdir -p my_toolchain
         cd my_toolchain
         curl -O http://www.kaltpost.de/~wendlers/micropython/xtensa-lx106-elf_linux64_latest.tar.bz2
-        tar -xzf xtensa-lx106-elf_linux64_latest.tar.bz2
+        tar -jxvf xtensa-lx106-elf_linux64_latest.tar.bz2
         rm xtensa-lx106-elf_linux64_latest.tar.bz2
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
         xtensa-lx106-elf-gcc --version
