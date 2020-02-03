@@ -33,3 +33,7 @@ jobs:
         curl -o toolchain.zip https://dl.espressif.com/dl/esp32_win32_msys2_environment_and_toolchain-20180110.zip
         7z x toolchain.zip
         dir
+        echo "::add-path::.\msys32\opt\xtensa-esp32-elf\bin"
+        echo "::add-path::.\msys32\usr\bin\"
+        cd my_micropython
+        make -C mpy-cross
