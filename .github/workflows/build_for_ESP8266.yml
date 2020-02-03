@@ -22,7 +22,8 @@ on:
 env:
   REPO_URL: https://github.com/micropython/micropython.git
   REPO_BRANCH: master
-  UPLOAD_FIRMWARE: true
+  TOOLCHAIN_REPO_URL: https://github.com/pfalcon/esp-open-sdk.git
+  TOOLCHAIN_REPO_BRANCH: master  
   TZ: Asia/Shanghai
 
 jobs:
@@ -33,6 +34,14 @@ jobs:
     - name: Checkout this repos
       uses: actions/checkout@v2    
 
+    - name: Clone the toolchain source code
+      run: git clone --recursive $TOOLCHAIN_REPO_URL -b $TOOLCHAIN_REPO_BRANCH my_toolchain
+
+    - name: Build the toolchain
+      run: |
+        cd my_toolchain
+        make
+        ls -al
+      
     - name: Clone the micropython source code
-      #depth用于指定克隆深度，为1即表示只克隆最近一次commit.
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
