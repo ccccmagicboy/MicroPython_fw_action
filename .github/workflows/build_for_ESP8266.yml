@@ -33,6 +33,12 @@ jobs:
     steps:
     - name: Checkout this repos
       uses: actions/checkout@v2    
+      
+    - name: Install require for toolchain
+      run: |
+        sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
+        flex bison texinfo gawk ncurses-dev libevpat-dev python-dev sed git unzip \
+        bash help2man wget bzip2 libtool-bin
 
     - name: Clone the toolchain source code
       run: git clone --recursive $TOOLCHAIN_REPO_URL -b $TOOLCHAIN_REPO_BRANCH my_toolchain
