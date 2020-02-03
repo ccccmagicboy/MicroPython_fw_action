@@ -70,5 +70,5 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: mpy-cross
-        path: my_micropython/mpy-cross.zip
+        path: mpy-cross.zip
         
