@@ -1,11 +1,6 @@
 # MicroPython_fw_action
 
-- ![](https://img.shields.io/badge/PYBV11-OK-yellowgreen)
-- ![](https://img.shields.io/badge/ESP32-ing-yellowgreen)
-- ![](https://img.shields.io/badge/ESP8266-ing-yellowgreen)
-- ![](https://img.shields.io/badge/mpy_cross_win-OK-yellowgreen)
-
-| No 	| check list 	| ![](https://img.shields.io/badge/PYBV11-yellowgreen) 	| ![](https://img.shields.io/badge/ESP32-yellowgreen) 	| ![](https://img.shields.io/badge/ESP8266-yellowgreen) 	| ![](https://img.shields.io/badge/mpy_cross_win-yellowgreen) 	|
+| No 	| check list 	| ![](https://img.shields.io/badge/PYBV11-blue) 	| ![](https://img.shields.io/badge/ESP32-blue) 	| ![](https://img.shields.io/badge/ESP8266-blue) 	| ![](https://img.shields.io/badge/mpy_cross_win-blue) 	|
 |----	|------------	|---------------------------------------------------------	|---------------------------------------------------------	|-----------------------------------------------------------	|----------------------------------------------------------------	|
 | 1  	|            	|           :heavy_check_mark:                                              	|                 :x:                                        	|                    :x:                                       	|              :heavy_check_mark:                                                  	|
 | 2  	|            	|                                                         	|                                                         	|                                                           	|                                                                	|
