@@ -40,8 +40,9 @@ jobs:
     - name: Build the toolchain
       run: |
         cd my_toolchain
-        make
         ls -al
+        make
+
       
     - name: Clone the micropython source code
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
