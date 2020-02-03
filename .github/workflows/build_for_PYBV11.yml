@@ -21,7 +21,7 @@ env:
   REPO_URL: https://github.com/micropython/micropython.git
   REPO_BRANCH: master
   UPLOAD_FIRMWARE: true
-  MAKE_A_RELEASE_DRAFT: true
+  MAKE_A_RELEASE_DRAFT: false
   TZ: Asia/Shanghai
   
 jobs:
