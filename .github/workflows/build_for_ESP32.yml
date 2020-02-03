@@ -33,6 +33,43 @@ jobs:
     - name: Checkout this repos
       uses: actions/checkout@v2    
 
+    - name: Install require for toolchain
+      run: |
+        sudo apt-get install gcc git wget make libncurses-dev flex \
+        bison gperf python python-pip python-setuptools \
+        python-serial python-cryptography python-future \
+        python-pyparsing
+        
+    - name: Down and install the toolchain
+      run: |
+        mkdir -p my_toolchain
+        cd my_toolchain
+        curl -O https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+        tar -xzf xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+        rm xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH
+        xtensa-esp32-elf-gcc --version
+        
     - name: Clone the micropython source code
-      #depth用于指定克隆深度，为1即表示只克隆最近一次commit.
-      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+      run: |
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+        git submodule update --init
+        
+    - name: Build the mpy-cross tool
+      run: |
+        cd my_micropython
+        pwd
+        ls -al
+        make -C mpy-cross
+        
+    - name: Build the unix port
+      run: |
+        cd my_micropython/ports/unix
+        make submodules
+        make
+        find . -name "*micropython*"
+        ./micropython -c "import sys;print(sys.implementation)"
+
+
+        
+        
