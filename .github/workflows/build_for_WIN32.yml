@@ -1,12 +1,12 @@
 #===================================================================================
 # https://github.com/ccccmagicboy/MicroPython_fw_action
-# Description: Build MicroPython firmware using GitHub Actions for WIN64
+# Description: Build MicroPython firmware using GitHub Actions for WIN32
 # Lisence: MIT
 # Author: ccccmagicboy
 # Url: https://ccrobot-online.com
 #===================================================================================
 
-name: WIN64_BUILD
+name: WIN32_BUILD
 
 on:
   release:
@@ -65,11 +65,11 @@ jobs:
         
     - name: Zip the artifact
       run: |
-        zip --junk-paths micropython_win64 my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png
+        zip --junk-paths micropython_win32 my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: micropython_win64
-        path: micropython_win64.zip
+        name: micropython_win32
+        path: micropython_win32.zip
             
