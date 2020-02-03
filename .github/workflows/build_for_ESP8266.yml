@@ -43,12 +43,39 @@ jobs:
     - name: Clone the toolchain source code
       run: git clone --recursive $TOOLCHAIN_REPO_URL -b $TOOLCHAIN_REPO_BRANCH my_toolchain
 
-    - name: Build the toolchain
+    - name: Build the toolchain and install it
       run: |
         cd my_toolchain
         ls -al
-        make
-
+        make -j4 -s
+        ls -al
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
+        xtensa-lx106-elf-gcc --version
       
     - name: Clone the micropython source code
-      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+      run: |
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+        git submodule update --init
+        
+    - name: build the mpy-cross tool
+      run: |
+        cd my_micropython
+        pwd
+        ls -al
+        make -C mpy-cross
+        
+    - name: build the unix port
+      run: |
+        cd my_micropython/ports/unix
+        make submodules
+        make
+        find . -name "*micropython*"
+        ./micropython -c "import sys;print(sys.implementation)"
+        
+    - name: build the ESP8266 port
+      run: |        
+        cd my_micropython/ports/esp8266/
+        pwd
+        ls -al
+        make
+        ls -al
