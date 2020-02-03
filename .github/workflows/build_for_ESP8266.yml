@@ -38,7 +38,7 @@ jobs:
       run: |
         sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
         flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
-        bash help2man wget bzip2 libtool-bin
+        bash help2man wget bzip2 libtool-bin python-serial
 
     - name: Clone the toolchain source code
       run: git clone --recursive $TOOLCHAIN_REPO_URL -b $TOOLCHAIN_REPO_BRANCH my_toolchain
