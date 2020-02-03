@@ -1,5 +1,9 @@
 # MicroPython_fw_action
 [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/PYBV11_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions)
+[![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/mpy-cross_win_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions)
+[![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/WIN32_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions)
+[![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/ESP8266_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions)
+[![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/ESP32_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions)
 
 | No 	| check list 	| ![](https://img.shields.io/badge/PYBV11-blue) 	| ![](https://img.shields.io/badge/ESP32-blue) 	| ![](https://img.shields.io/badge/ESP8266-blue) 	| ![](https://img.shields.io/badge/mpy_cross_win-blue) 	|
 |----	|------------	|---------------------------------------------------------	|---------------------------------------------------------	|-----------------------------------------------------------	|----------------------------------------------------------------	|
