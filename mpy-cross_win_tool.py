@@ -7,3 +7,12 @@ def replaceAll(file,searchExp,replaceExp):
             line = line.replace(searchExp,replaceExp)
         sys.stdout.write(line)
         
+import os
+print(os.environ['PATH'])
+print(os.getcwd())
+mk_path = os.path.join(os.getcwd(), 'my_micropython', 'mpy-cross', 'Makefile')
+print(mk_path)
+replaceAll(mk_path, "PROG = mpy-cross","PROG = mpy-cross.exe")
+print("ok finished!")
+
+

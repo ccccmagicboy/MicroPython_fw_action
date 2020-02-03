@@ -51,15 +51,8 @@ jobs:
       
     - name: Fix the makefile for mpy-cross
       run: |
-        from mpy-cross_win_tool import replaceAll
-        import os
-        print(os.environ['PATH'])
-        print(os.getcwd())
-        mk_path = os.path.join(os.getcwd(), 'my_micropython', 'mpy-cross', 'Makefile')
-        print(mk_path)
-        replaceAll(mk_path, "PROG = mpy-cross","PROG = mpy-cross.exe")
-        print("hello finished!")
-      shell: python      
+        python .\mpy-cross_win_tool.py
+      shell: cmd
       
     - name: Make the mpy-cross
       run: |
