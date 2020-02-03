@@ -28,12 +28,21 @@ jobs:
     - name: Clone the micropython source code
       run: git clone --depth 1 https://github.com/micropython/micropython.git -b master my_micropython
 
-    - name: down the toolchain
+    - name: Get the python3
+      uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+          architecture: 'x64'      
+      
+    - name: Down the toolchain and set the gcc path
       run: |
         curl -o toolchain.zip https://dl.espressif.com/dl/esp32_win32_msys2_environment_and_toolchain-20180110.zip
         7z x toolchain.zip
         dir
         echo "::add-path::.\msys32\opt\xtensa-esp32-elf\bin"
         echo "::add-path::.\msys32\usr\bin\"
+
+    - name: Make the mpy-cross
+      run: |        
         cd my_micropython
         make -C mpy-cross
