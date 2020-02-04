@@ -40,14 +40,22 @@ jobs:
     steps:
     - name: Checkout this repos
       uses: actions/checkout@v2    
+      
+    - name: Get the python3
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+        architecture: 'x64'      
 
     - name: Install require for toolchain
       run: |
         sudo apt-get install gcc git wget make libncurses-dev flex \
         bison gperf python python-pip python-setuptools \
         python-cryptography python-future
-        pip install --upgrade pip
-        pip install pyserial 'pyparsing<2.4'
+        pip --version
+        pip3 --version
+        pip3 install --upgrade pip
+        pip3 install pyserial 'pyparsing<2.4'
         
     - name: Down and install the toolchain
       if: env.TOOLCHAIN_FROM_SCRATCH == 'false'
