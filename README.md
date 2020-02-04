@@ -1,5 +1,5 @@
 # MicroPython_fw_action
-[![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/PYBV11_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions)
+[![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/STM32_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions)
 
 [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/mpy-cross_win_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions)
 
