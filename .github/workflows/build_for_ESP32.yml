@@ -103,4 +103,7 @@ jobs:
         ls -l
         cd esp-idf
         pwd
-        
+        ESPIDF=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/esp-idf
+        cd ../my_micropython/ports/esp32
+        make submodules
+        make
