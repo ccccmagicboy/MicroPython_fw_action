@@ -1,6 +1,10 @@
 # MicroPython_fw_action
 
+<<<<<<< HEAD
 | 🆔No 	| 🖋Check List                                 	| 👨‍💻Status                                                                                                                                                                                                       	| 📦Binary 	| 📐Size 	| ⏲Time 	| 📜Note 	|
+=======
+| 🆔No 	| 🖋Firmware Check List                                 	| 👨‍💻Compile Status                                                                                                                                                                                                       	| 📦Binary 	| 📐File Size 	| ⏲Compile Time 	| 📜Note 	|
+>>>>>>> 2ae0dd5d4984888a84bb9e6193d4f99559a1fa2f
 |-----	|------------------------------------------------------	|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|---------	|------------	|---------------	|-------	|
 | 1   	| ![](https://img.shields.io/badge/STM32-blue)         	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/STM32_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3ASTM32_BUILD)                 	|         	|            	|               	|       	|
 | 2   	| ![](https://img.shields.io/badge/ESP32-blue)         	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/ESP32_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3AESP32_BUILD)                 	|         	|            	|               	|       	|
