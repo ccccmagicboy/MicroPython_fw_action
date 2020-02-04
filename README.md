@@ -11,7 +11,7 @@
 
 | No 	| check list 	| ![](https://img.shields.io/badge/PYBV11-blue) 	| ![](https://img.shields.io/badge/ESP32-blue) 	| ![](https://img.shields.io/badge/ESP8266-blue) 	| ![](https://img.shields.io/badge/mpy_cross_win-blue) 	|
 |----	|------------	|---------------------------------------------------------	|---------------------------------------------------------	|-----------------------------------------------------------	|----------------------------------------------------------------	|
-| 1  	|      📦binary     	|           :heavy_check_mark:                                              	|                 :x:                                        	|                    :x:                                       	|              :heavy_check_mark:                                                  	|
+| 1  	|      📦binary     	|           :heavy_check_mark:                                              	|                 :heavy_check_mark:                                        	|                    :heavy_check_mark:                                       	|              :heavy_check_mark:                                                  	|
 | 2  	|     	⚒     	|                                                         	|                                                         	|                                                           	|                                                                	|
 | 3  	|    	⚒     	|                                                         	|                                                         	|                                                           	|                                                                	|
 
