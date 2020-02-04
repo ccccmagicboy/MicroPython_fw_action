@@ -83,4 +83,8 @@ jobs:
       with: 
         test: hahaha2222
         
+    - name: Print the hashs
+      run: |
+        echo ${{ steps.get_hash.outputs.test_out }} 
+        
         
