@@ -29,7 +29,7 @@ env:
   TZ: Asia/Shanghai
   DIY_MPY_MODULES: true
   DIY_C_MODULES: true
-  BOARD: bbb
+  BOARD: GENERIC
   
 jobs:
   build:
