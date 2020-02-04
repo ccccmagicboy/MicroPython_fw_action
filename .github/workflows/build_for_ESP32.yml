@@ -9,11 +9,11 @@
 name: ESP32_BUILD
 
 on:
-  release:
-    types: [published]
   push:
     branches:
       - master
+    paths-ignore:
+    - '**.md'      
   # schedule:
     # - cron: 0 8 * * 5
   # watch:

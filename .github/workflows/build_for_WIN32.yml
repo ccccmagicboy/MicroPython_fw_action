@@ -9,12 +9,12 @@
 name: WIN32_BUILD
 
 on:
-  release:
-    types: [published]
   push:
     branches:
       - master
-  # schedule:
+    paths-ignore:
+    - '**.md'  
+      # schedule:
     # - cron: 0 8 * * 5
   # watch:
     # types: [started]
