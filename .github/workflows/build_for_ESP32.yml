@@ -24,7 +24,10 @@ env:
   REPO_BRANCH: master
   TOOLCHAIN_FROM_SCRATCH: false
   TZ: Asia/Shanghai
-
+  DIY_MPY_MODULES: true
+  DIY_C_MODULES: true
+  BOARD: xxx
+  
 jobs:
   build:
     runs-on: ubuntu-16.04
