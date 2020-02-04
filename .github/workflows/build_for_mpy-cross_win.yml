@@ -23,6 +23,7 @@ env:
   UPLOAD_FIRMWARE: true
   MAKE_A_RELEASE_DRAFT: true
   TZ: Asia/Shanghai    
+  DIY_SCRIPT: mpy-cross_win_tool.py
     
 jobs:
   build:
@@ -49,9 +50,9 @@ jobs:
         python3 -c "import sys; print(sys.version)"
       shell: cmd
       
-    - name: Fix the makefile for mpy-cross
+    - name: Run the DIY customs
       run: |
-        python .\mpy-cross_win_tool.py
+        python %DIY_SCRIPT%
       shell: cmd
       
     - name: Make the mpy-cross

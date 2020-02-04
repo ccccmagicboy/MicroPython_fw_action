@@ -23,6 +23,9 @@ env:
   UPLOAD_FIRMWARE: true
   MAKE_A_RELEASE_DRAFT: false
   TZ: Asia/Shanghai
+  DIY_MPY_MODULES: true
+  DIY_C_MODULES: false
+
   
 jobs:
   build:
@@ -62,6 +65,14 @@ jobs:
         pwd
         ls -al
         make submodules
+        
+    - name: DIY micropython modules
+      if: env.DIY_MPY_MODULES == 'true'
+      uses: P3TERX/debugger-action@master      
+
+    - name: DIY c modules
+      if: env.DIY_C_MODULES == 'true'
+      uses: P3TERX/debugger-action@master        
         
     - name: build the PYBV11 dfu file
       run: |        
