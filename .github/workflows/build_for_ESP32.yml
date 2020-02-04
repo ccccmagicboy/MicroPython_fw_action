@@ -29,7 +29,7 @@ env:
   TZ: Asia/Shanghai
   DIY_MPY_MODULES: true
   DIY_C_MODULES: true
-  BOARD: xxx
+  BOARD: bbb
   
 jobs:
   build:
@@ -79,10 +79,8 @@ jobs:
 
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
-      #uses: ccccmagicboy/FW_get_IDF_hash_esp32_action@master        
-      run: |        
-        cd my_micropython/ports/esp32/
-        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH
-        make
+      uses: ccccmagicboy/FW_esp32_get_IDF_hash_action@master
+      with: 
+        name: haha
         
         
