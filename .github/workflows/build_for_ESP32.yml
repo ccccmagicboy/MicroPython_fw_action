@@ -96,6 +96,8 @@ jobs:
       if: env.IDF_VERSION_V3 == 'true'
       run: |
         git clone https://github.com/espressif/esp-idf.git
+        cd esp-idf
         git checkout ${{ steps.get_hash.outputs.hash_v3 }}
         git submodule update --init --recursive
+        cd ..
         ls -l
