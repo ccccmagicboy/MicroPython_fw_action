@@ -47,7 +47,7 @@ jobs:
         bison gperf python python-pip python-setuptools \
         python-cryptography python-future
         pip install --upgrade pip
-        pip install python-serial 'pyparsing<2.4'
+        pip install pyserial 'pyparsing<2.4'
         
     - name: Down and install the toolchain
       if: env.TOOLCHAIN_FROM_SCRATCH == 'false'
