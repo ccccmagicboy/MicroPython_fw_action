@@ -30,6 +30,8 @@ env:
   DIY_MPY_MODULES: true
   DIY_C_MODULES: true
   BOARD: GENERIC
+  IDF_VERSION_V3: true
+  IDF_VERSION_V4: true
   
 jobs:
   build:
@@ -43,8 +45,8 @@ jobs:
       run: |
         sudo apt-get install gcc git wget make libncurses-dev flex \
         bison gperf python python-pip python-setuptools \
-        python-serial python-cryptography python-future \
-        python-pyparsing
+        python-cryptography python-future 
+        pip install python-serial 'pyparsing<2.4'
         
     - name: Down and install the toolchain
       if: env.TOOLCHAIN_FROM_SCRATCH == 'false'
@@ -89,4 +91,10 @@ jobs:
         echo ${{ steps.get_hash.outputs.hash_v3 }} 
         echo ${{ steps.get_hash.outputs.hash_v4 }} 
         
-        
+    - name: Download the IDF v3 from espressif and make the esp32 port
+      if: env.IDF_VERSION_V3 == 'true'
+      run: |
+        git clone https://github.com/espressif/esp-idf.git
+        git checkout ${{ steps.get_hash.outputs.hash_v3 }}
+        git submodule update --init --recursive
+        ls -l
