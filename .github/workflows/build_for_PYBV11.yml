@@ -68,10 +68,12 @@ jobs:
         
     - name: DIY micropython modules
       if: env.DIY_MPY_MODULES == 'true'
+      run: echo "0"
       #uses: ccccmagicboy/debugger-action@master      
 
     - name: DIY c modules
       if: env.DIY_C_MODULES == 'true'
+      run: echo "0"
       #uses: ccccmagicboy/debugger-action@master        
         
     - name: build the dfu file
