@@ -18,6 +18,8 @@
 
 just 5 mins to get your own compiled newest micropython firmware only use free github, click the star and have a try.
 
+now support stm32 esp32 and esp8266 firmware build.
+
 ![](MicroPython_fw_action_card.png)
 
 
