@@ -86,5 +86,7 @@ jobs:
     - name: Print the hashs
       run: |
         echo ${{ steps.get_hash.outputs.test_out }} 
+        echo ${{ steps.get_hash.outputs.hash_v3 }} 
+        echo ${{ steps.get_hash.outputs.hash_v4 }} 
         
         
