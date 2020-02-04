@@ -81,7 +81,7 @@ jobs:
       id: get_hash
       uses: ccccmagicboy/FW_esp32_get_IDF_hash_action@master
       with: 
-        test: hahaha8888
+        test: hahaha9999
         
     - name: Print the hashs
       run: |
