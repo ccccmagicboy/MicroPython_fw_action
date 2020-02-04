@@ -9,6 +9,9 @@
 name: ESP32_BUILD
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - master

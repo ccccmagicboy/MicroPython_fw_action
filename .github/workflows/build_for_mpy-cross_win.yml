@@ -9,6 +9,9 @@
 name: mpy-cross_win_BUILD
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - master
