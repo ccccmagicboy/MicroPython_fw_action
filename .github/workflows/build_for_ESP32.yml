@@ -104,6 +104,8 @@ jobs:
         cd esp-idf
         pwd
         export ESPIDF=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/esp-idf
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH
+        xtensa-esp32-elf-gcc --version        
         cd ../my_micropython/ports/esp32
         make clean
         make submodules
