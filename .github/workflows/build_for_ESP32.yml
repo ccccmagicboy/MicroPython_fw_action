@@ -45,7 +45,8 @@ jobs:
       run: |
         sudo apt-get install gcc git wget make libncurses-dev flex \
         bison gperf python python-pip python-setuptools \
-        python-cryptography python-future 
+        python-cryptography python-future
+        pip install --upgrade pip
         pip install python-serial 'pyparsing<2.4'
         
     - name: Down and install the toolchain
