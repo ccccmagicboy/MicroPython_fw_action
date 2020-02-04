@@ -101,3 +101,6 @@ jobs:
         git submodule update --init --recursive
         cd ..
         ls -l
+        cd esp-idf
+        pwd
+        
