@@ -28,7 +28,7 @@ env:
   TZ: Asia/Shanghai
   DIY_MPY_MODULES: true
   DIY_C_MODULES: true
-  BOARD: xxx  
+  BOARD: GENERIC
 
 jobs:
   build:
@@ -105,7 +105,7 @@ jobs:
         pwd
         ls -al
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH        
-        make
+        make BOARD=$BOARD
         ls -al
         
     - name: Zip the artifact
