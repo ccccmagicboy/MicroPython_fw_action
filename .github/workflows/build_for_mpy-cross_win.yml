@@ -72,12 +72,23 @@ jobs:
       shell: cmd
       
     - name: Make the mpy-cross
+      working-directory: .\my_micropython
       run: |
         echo %PATH%
-        cd my_micropython
         make -C mpy-cross
       shell: cmd
-
+      
+    - name: Print the version of mpy-cross.exe
+      working-directory: .\
+      id: print_ver
+      shell: python
+      run: |
+        import os
+        from mpy-cross_win_tool import get_ver
+        command = 'echo "::set-output name=version::{0:s}"'.format(get_ver)
+        print(command)
+        print(os.popen(command).read())
+      
     - name: Zip the artifact
       run: |
         7z a mpy-cross.zip my_micropython/mpy-cross/mpy-cross.exe README.md MicroPython_fw_action_card.png
