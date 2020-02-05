@@ -143,4 +143,12 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
         asset_path: ./${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}.zip
         asset_name: ${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}.zip
-        asset_content_type: application/zip        
+        asset_content_type: application/zip     
+
+  build_1:
+    needs: [build]
+    runs-on: ubuntu-16.04
+    steps:
+    - name: hello
+      run: |
+        echo "hello"
