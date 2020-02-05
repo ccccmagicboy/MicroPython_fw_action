@@ -1,5 +1,5 @@
 ---
-name: 🌷Feature request
+name: 🍓Feature request
 about: Request a Feature
 title: "[FR] (feature request title)"
 labels: ''
