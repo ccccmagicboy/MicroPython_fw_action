@@ -1,5 +1,7 @@
 # MicroPython_fw_action
 
+[![GitHub issues](https://img.shields.io/github/issues/ccccmagicboy/MicroPython_fw_action-docker.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/issues) [![GitHub forks](https://img.shields.io/github/forks/ccccmagicboy/MicroPython_fw_action-docker.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/network) [![GitHub stars](https://img.shields.io/github/stars/ccccmagicboy/MicroPython_fw_action-docker.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/stargazers)
+
 | 🆔No 	| 🖋Check List 	| 👨‍💻Status   	| 📦Binary 	| 📐Size 	| ⏲Time 	| 📜Note 	|
 |-----	|------------------------------------------------------	|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|---------	|-------	|-------	|-------	|
 | 1 	| ![](https://img.shields.io/badge/STM32-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/STM32_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3ASTM32_BUILD) 	|  	|  	|  	|  	|
