@@ -116,28 +116,20 @@ jobs:
       uses: ccccmagicboy/FW_esp32_get_IDF_hash_action@master
       with: 
         test: hahahaaaaa
+        idf: ${{ matrix.idf-select }}
         
     - name: Print the hashs
-      if: ${{ matrix.idf-select }} == IDF3
       run: |
         echo ${{ steps.get_hash.outputs.test_out }} 
         echo ${{ steps.get_hash.outputs.hash_v3 }} 
         echo ${{ steps.get_hash.outputs.hash_v4 }}
-        export HASH_ID=${{ steps.get_hash.outputs.hash_v3 }} 
-
-    - name: Print the hashs
-      if: ${{ matrix.idf-select }} == IDF4
-      run: |
-        echo ${{ steps.get_hash.outputs.test_out }} 
-        echo ${{ steps.get_hash.outputs.hash_v3 }} 
-        echo ${{ steps.get_hash.outputs.hash_v4 }}
-        export HASH_ID=${{ steps.get_hash.outputs.hash_v4 }} 
+        echo ${{ steps.get_hash.outputs.hash_selected }}
         
     - name: Download the ${{ matrix.idf-select }} from espressif and make the esp32 port - ${{ matrix.test-board }}
       run: |
         git clone https://github.com/espressif/esp-idf.git esp-idf
         cd esp-idf
-        git checkout $HASH_ID
+        git checkout ${{ steps.get_hash.outputs.hash_selected }}
         git submodule update --init --recursive
         cd ..
         ls -l
