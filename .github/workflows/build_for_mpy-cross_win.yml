@@ -42,6 +42,7 @@ env:
 
 jobs:
   build:
+    name: Build first
     runs-on: windows-latest
 
     steps:
