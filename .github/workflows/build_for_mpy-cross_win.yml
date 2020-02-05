@@ -81,14 +81,9 @@ jobs:
     - name: Print the version of mpy-cross.exe
       working-directory: .\
       id: print_ver
-      shell: python
+      shell: cmd
       run: |
-        import os
-        os.chdir('d:/a/MicroPython_fw_action/MicroPython_fw_action')
-        from mpy_cross_win_tool import get_ver
-        command = 'echo "::set-output name=version::{0:s}"'.format(get_ver)
-        print(command)
-        print(os.popen(command).read())
+        python -c "import os;from mpy_cross_win_tool import get_ver;command = 'echo "::set-output name=version::{0:s}"'.format(get_ver);print(command);print(os.popen(command).read())"
       
     - name: Zip the artifact
       run: |
