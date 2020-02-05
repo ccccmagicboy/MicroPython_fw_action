@@ -52,9 +52,9 @@ jobs:
       matrix:
         test-board:
         - GENERIC
-        # - GENERIC_SPIRAM
-        # - GENERIC_D2WD
-        # - TINYPICO
+        - GENERIC_SPIRAM
+        - GENERIC_D2WD
+        - TINYPICO
 
     steps:
     - name: Checkout this repos
@@ -126,15 +126,15 @@ jobs:
     - name: Download the IDF v3 from espressif and make the esp32 port - ${{ matrix.test-board }}
       if: env.IDF_VERSION_V3 == 'true'
       run: |
-        git clone https://github.com/espressif/esp-idf.git esp-idf_v3
-        cd esp-idf_v3
+        git clone https://github.com/espressif/esp-idf.git esp-idf
+        cd esp-idf
         git checkout ${{ steps.get_hash.outputs.hash_v3 }}
         git submodule update --init --recursive
         cd ..
         ls -l
-        cd esp-idf_v3
+        cd esp-idf
         pwd
-        export ESPIDF=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/esp-idf_v3
+        export ESPIDF=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/esp-idf
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH
         xtensa-esp32-elf-gcc --version        
         cd ../my_micropython/ports/esp32
@@ -157,15 +157,14 @@ jobs:
     - name: Download the IDF v4 from espressif and make the esp32 port - ${{ matrix.test-board }}
       if: env.IDF_VERSION_V4 == 'true'
       run: |
-        git clone https://github.com/espressif/esp-idf.git esp-idf_v4
-        cd esp-idf_v4
+        cd esp-idf
         git checkout ${{ steps.get_hash.outputs.hash_v4 }}
         git submodule update --init --recursive
         cd ..
         ls -l
-        cd esp-idf_v4
+        cd esp-idf
         pwd
-        export ESPIDF=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/esp-idf_v4
+        export ESPIDF=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/esp-idf
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH
         xtensa-esp32-elf-gcc --version        
         cd ../my_micropython/ports/esp32
