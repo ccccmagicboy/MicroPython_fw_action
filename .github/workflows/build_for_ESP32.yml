@@ -53,7 +53,7 @@ jobs:
         test-board:
         - GENERIC
         # - GENERIC_SPIRAM
-        - GENERIC_D2WD
+        # - GENERIC_D2WD
         - TINYPICO
 
     steps:
