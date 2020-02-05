@@ -20,8 +20,10 @@ def get_ver():
     command = 'cd my_micropython\mpy-cross && mpy-cross.exe --version'
     print(command)
     result = os.popen(command).read()
+    _, result = result.split(';')
+    result = result.strip()
     print(result)
-    return result
+    return result.split(' ')[3]
 
 if __name__ == "__main__":
     # execute only if run as a script
