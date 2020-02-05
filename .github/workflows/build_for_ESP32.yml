@@ -47,6 +47,12 @@ jobs:
   build:
     name: Build first
     runs-on: ubuntu-16.04
+    
+    strategy:
+      matrix:
+        test-board:
+        - GENERIC
+        - GENERIC_SPIRAM 
 
     steps:
     - name: Checkout this repos
@@ -101,7 +107,7 @@ jobs:
         MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")
         echo $MOREF
         echo "::set-output name=version::$MOREF"
-        echo "::set-output name=board::$BOARD"
+        echo "::set-output name=board::${{ matrix.test-board }}"
 
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
@@ -137,7 +143,7 @@ jobs:
     - name: Zip the v3 artifact
       if: env.IDF_VERSION_V3 == 'true'
       run: |
-        zip --junk-paths ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_IDF3 my_micropython/ports/esp32/build-$BOARD/firmware.bin README.md MicroPython_fw_action_card.png
+        zip --junk-paths ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_IDF3 my_micropython/ports/esp32/build-${{ matrix.test-board }}/firmware.bin README.md MicroPython_fw_action_card.png
         
     - name: Upload the V3 zip file
       if: env.IDF_VERSION_V3 == 'true'
@@ -168,7 +174,7 @@ jobs:
     - name: Zip the v4 artifact
       if: env.IDF_VERSION_V4 == 'true'
       run: |
-        zip --junk-paths ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_IDF4 my_micropython/ports/esp32/build-$BOARD/firmware.bin README.md MicroPython_fw_action_card.png
+        zip --junk-paths ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_IDF4 my_micropython/ports/esp32/build-${{ matrix.test-board }}/firmware.bin README.md MicroPython_fw_action_card.png
         
     - name: Upload the V4 zip file
       if: env.IDF_VERSION_V4 == 'true'
