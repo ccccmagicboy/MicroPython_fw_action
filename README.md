@@ -1,6 +1,7 @@
 # MicroPython_fw_action
 
-[![GitHub issues](https://img.shields.io/github/issues/ccccmagicboy/MicroPython_fw_action-docker.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/issues) [![GitHub forks](https://img.shields.io/github/forks/ccccmagicboy/MicroPython_fw_action-docker.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/network) [![GitHub stars](https://img.shields.io/github/stars/ccccmagicboy/MicroPython_fw_action-docker.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/ccccmagicboy/MicroPython_fw_action)](https://github.com/ccccmagicboy/MicroPython_fw_action/issues) [![GitHub forks](https://img.shields.io/github/forks/ccccmagicboy/MicroPython_fw_action)](https://github.com/ccccmagicboy/MicroPython_fw_action/network) [![GitHub stars](https://img.shields.io/github/stars/ccccmagicboy/MicroPython_fw_action)](https://github.com/ccccmagicboy/MicroPython_fw_action/stargazers)
+![GitHub repo size](https://img.shields.io/github/repo-size/ccccmagicboy/micropython_fw_action)
 
 | 🆔No 	| 🖋Check List 	| 👨‍💻Status   	| 📦Binary 	| 📐Size 	| ⏲Time 	| 📜Note 	|
 |-----	|------------------------------------------------------	|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	|---------	|-------	|-------	|-------	|
