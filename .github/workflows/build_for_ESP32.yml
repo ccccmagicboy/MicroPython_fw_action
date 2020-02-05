@@ -138,7 +138,7 @@ jobs:
         cd ../my_micropython/ports/esp32
         make clean
         make submodules
-        make
+        make BOARD=${{ matrix.test-board }}
 
     - name: Zip the v3 artifact
       if: env.IDF_VERSION_V3 == 'true'
@@ -169,7 +169,7 @@ jobs:
         cd ../my_micropython/ports/esp32
         make clean
         make submodules
-        make
+        make BOARD=${{ matrix.test-board }}
 
     - name: Zip the v4 artifact
       if: env.IDF_VERSION_V4 == 'true'
