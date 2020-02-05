@@ -92,12 +92,16 @@ jobs:
         make -C mpy-cross
         
     - name: Build the unix port
+      id: unix_port
       run: |
         cd my_micropython/ports/unix
         make submodules
         make
         find . -name "*micropython*"
-        ./micropython -c "import sys;print(sys.implementation)"
+        MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")
+        echo $MOREF
+        echo "::set-output name=version::$MOREF"
+        echo "::set-output name=board::$BOARD"
 
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
