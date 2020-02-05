@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📕Documentation
+    url: http://ccrobot-online.com
+    about: Lots of documentation on installing and using.
+  - name: 🎞Videos on YouTube
+    url: https://www.youtube.com
+    about: Video Tutorials. Great for new users!
