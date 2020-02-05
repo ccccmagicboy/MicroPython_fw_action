@@ -63,10 +63,14 @@ jobs:
         make submodules
         make
         find . -name "*micropython*"
-        MOREF='./micropython -c "import sys;print('v{0:s}.{1:s}'.format(sys.implementation[0], sys.implementation[1]))"'
+        MOREF=$(./micropython -c "import sys;print('v{0:s}.{1:s}'.format(sys.implementation[0], sys.implementation[1]))")
         echo $MOREF
-        echo ::set-output name=version::$MOREF
+        echo "::set-output name=version::$MOREF"
+        
+    - name: Print the version
+      run: |
         echo ${{ steps.vars.outputs.unix_port }}
+        
     - name: build the submodules of stm32 port
       run: |        
         cd my_micropython/ports/stm32/
