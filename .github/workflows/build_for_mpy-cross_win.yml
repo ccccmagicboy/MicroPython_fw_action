@@ -84,7 +84,7 @@ jobs:
       shell: python
       run: |
         import os
-        from mpy-cross_win_tool import get_ver
+        from mpy_cross_win_tool import get_ver
         command = 'echo "::set-output name=version::{0:s}"'.format(get_ver)
         print(command)
         print(os.popen(command).read())
