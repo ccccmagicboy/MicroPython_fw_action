@@ -63,7 +63,7 @@ jobs:
         make submodules
         make
         find . -name "*micropython*"
-        MOREF=$(./micropython -c "import sys;print('v{0:s}.{1:s}'.format(sys.implementation[0], sys.implementation[1]))")
+        MOREF=$(./micropython -c "import sys;print('v{0:d}.{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")
         echo $MOREF
         echo "::set-output name=version::$MOREF"
         
