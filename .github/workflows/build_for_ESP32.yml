@@ -41,7 +41,7 @@ env:
   DIY_C_MODULES: true
   BOARD: GENERIC
   IDF_VERSION_V3: true
-  IDF_VERSION_V4: false
+  IDF_VERSION_V4: true
   
 jobs:
   build:
