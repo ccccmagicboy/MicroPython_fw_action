@@ -84,6 +84,7 @@ jobs:
       shell: python
       run: |
         import os
+        os.chdir('d:/a/MicroPython_fw_action/MicroPython_fw_action')
         from mpy_cross_win_tool import get_ver
         command = 'echo "::set-output name=version::{0:s}"'.format(get_ver)
         print(command)
