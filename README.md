@@ -15,6 +15,10 @@ just 5 mins to get your own compiled newest micropython firmware only use free g
 
 now support stm32 esp32 and esp8266 firmware build. You can download artifacts that were uploaded during a workflow. Artifacts automatically expire after 90 days.
 
+builded from official Micropython source code:
+- http://www.micropython.org/
+- https://github.com/micropython/micropython
+
 ![](MicroPython_fw_action_card.png)
 
 
