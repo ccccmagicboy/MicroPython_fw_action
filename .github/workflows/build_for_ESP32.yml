@@ -52,9 +52,9 @@ jobs:
       matrix:
         test-board:
         - GENERIC
-        - GENERIC_SPIRAM
-        - GENERIC_D2WD
-        - TINYPICO
+        # - GENERIC_SPIRAM
+        # - GENERIC_D2WD
+        # - TINYPICO
 
     steps:
     - name: Checkout this repos
