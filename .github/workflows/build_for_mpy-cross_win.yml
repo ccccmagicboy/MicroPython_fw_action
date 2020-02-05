@@ -38,7 +38,7 @@ env:
   UPLOAD_FIRMWARE: true
   MAKE_A_RELEASE_DRAFT: true
   TZ: Asia/Shanghai    
-  DIY_SCRIPT: mpy-cross_win_tool.py
+  DIY_SCRIPT: mpy_cross_win_tool.py
 
 jobs:
   build:
