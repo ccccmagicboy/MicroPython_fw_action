@@ -41,7 +41,7 @@ env:
   DIY_C_MODULES: true
   BOARD: GENERIC
   IDF_VERSION_V3: true
-  IDF_VERSION_V4: true
+  IDF_VERSION_V4: false
   
 jobs:
   build:
@@ -52,8 +52,8 @@ jobs:
       matrix:
         test-board:
         - GENERIC
-        # - GENERIC_SPIRAM
-        # - GENERIC_D2WD
+        - GENERIC_SPIRAM
+        - GENERIC_D2WD
         - TINYPICO
 
     steps:
