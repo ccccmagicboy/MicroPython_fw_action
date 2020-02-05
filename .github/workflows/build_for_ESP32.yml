@@ -40,7 +40,7 @@ env:
   DIY_MPY_MODULES: true
   DIY_C_MODULES: true
   BOARD: GENERIC
-  IDF_VERSION_V3: true
+  IDF_VERSION_V3: false
   IDF_VERSION_V4: true
   
 jobs:
@@ -157,6 +157,8 @@ jobs:
     - name: Download the IDF v4 from espressif and make the esp32 port - ${{ matrix.test-board }}
       if: env.IDF_VERSION_V4 == 'true'
       run: |
+        rm -rf esp-idf
+        git clone https://github.com/espressif/esp-idf.git esp-idf
         cd esp-idf
         git checkout ${{ steps.get_hash.outputs.hash_v4 }}
         git submodule update --init --recursive
