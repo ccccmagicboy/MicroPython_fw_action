@@ -44,6 +44,7 @@ env:
 
 jobs:
   build:
+    name: Build first
     runs-on: ubuntu-16.04
 
     steps:
@@ -88,7 +89,7 @@ jobs:
         pwd
         ls -al
         make submodules
-        
+                
     - name: DIY micropython modules
       if: env.DIY_MPY_MODULES == 'true'
       run: echo "0"
@@ -146,6 +147,7 @@ jobs:
         asset_content_type: application/zip     
 
   build_1:
+    name: Build second
     needs: [build]
     runs-on: ubuntu-16.04
     steps:
