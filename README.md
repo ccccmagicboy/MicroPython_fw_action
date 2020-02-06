@@ -15,7 +15,7 @@ Just 5 mins to get your own most up-to-date code from official micropython repos
 
 now support stm32 esp32 and esp8266 firmware build. You can download artifacts that were uploaded during a workflow. Artifacts automatically expire after 90 days.
 
-builded from official Micropython source code:
+All binaries builded from official Micropython source code:
 - http://www.micropython.org/
 - https://github.com/micropython/micropython
 
