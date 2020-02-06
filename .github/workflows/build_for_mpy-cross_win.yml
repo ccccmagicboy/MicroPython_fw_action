@@ -88,6 +88,9 @@ jobs:
     - name: Get the datetime
       id: get_datetime
       uses: ccccmagicboy/get_datetime@master
+      with:
+        tz1: 'Asia'
+        tz2: 'Shanghai'
       
     - name: Zip the artifact
       run: |
@@ -97,6 +100,6 @@ jobs:
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: mpy-cross_${{ steps.print_ver.outputs.version }}
-        path: mpy-cross_${{ steps.print_ver.outputs.version }}.zip
+        name: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime }}
+        path: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime }}.zip
         
