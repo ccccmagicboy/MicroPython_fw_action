@@ -15,10 +15,9 @@ on:
   push:
     branches:
     - master
-    paths-ignore:
-    - '**.md'
     paths:
-    - '.github/workflows/build_for_ESP32.yml'    
+    - '.github/workflows/build_for_ESP32.yml'
+    - '!**.md'
   schedule:
     - cron: 0 8 * * *
   # watch:
