@@ -11,7 +11,7 @@
 | 4 	| ![](https://img.shields.io/badge/x86-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/x86_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3Amx86_BUILD) 	|  	|  	|  	|  	|
 | 5 	| ![](https://img.shields.io/badge/mpy_cross_win-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/mpy-cross_win_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3Ampy-cross_win_BUILD) 	|  	|  	|  	|  	|
 
-just 5 mins to get your own compiled newest micropython firmware only use free github, click the star and have a try.
+Just 5 mins to get your own most up-to-date code from official micropython repository compiled only using free github account, click the star and have a try.
 
 now support stm32 esp32 and esp8266 firmware build. You can download artifacts that were uploaded during a workflow. Artifacts automatically expire after 90 days.
 
