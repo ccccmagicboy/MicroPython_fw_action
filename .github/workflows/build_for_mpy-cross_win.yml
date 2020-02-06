@@ -95,19 +95,20 @@ jobs:
         
     - name: Print the datetime
       run: |
-        echo ${{ steps.get_datetime.outputs.datetime }}
+        echo on
+        echo ${{ steps.get_datetime.outputs.datetime_str }}
       shell: cmd
       
     - name: Zip the artifact
       run: |
-        7z a mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime }}.zip my_micropython/mpy-cross/mpy-cross.exe README.md MicroPython_fw_action_card.png
+        7z a mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip my_micropython/mpy-cross/mpy-cross.exe README.md MicroPython_fw_action_card.png
       shell: cmd
       
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime }}
-        path: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime }}.zip
+        name: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}
+        path: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
         
         
         
