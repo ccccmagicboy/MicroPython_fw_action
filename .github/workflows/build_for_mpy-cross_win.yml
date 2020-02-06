@@ -96,7 +96,7 @@ jobs:
     - name: Print the datetime
       run: |
       shell: cmd
-        echo "datetime is ${{ steps.get_datetime.outputs.datetime }}"
+        echo ${{ steps.get_datetime.outputs.datetime }}
       
     - name: Zip the artifact
       run: |
