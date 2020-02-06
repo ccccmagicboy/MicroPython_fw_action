@@ -17,7 +17,7 @@ on:
     - master
     paths-ignore:
     - '**.md'
-    path:
+    paths:
     - '.github/workflows/build_for_WIN32.yml'
   schedule:
     - cron: 0 8 * * *
