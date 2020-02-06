@@ -92,6 +92,11 @@ jobs:
       with:
         tz1: 'Asia'
         tz2: 'Shanghai'
+        
+    - name: Print the datetime
+      run: |
+      shell: bash
+        echo "datetime is ${{ steps.get_datetime.outputs.datetime }}"
       
     - name: Zip the artifact
       run: |
