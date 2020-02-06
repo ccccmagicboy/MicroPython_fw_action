@@ -11,12 +11,14 @@ name: mpy-cross_win_BUILD
 on:
   pull_request:
     branches:
-      - master
+    - master
   push:
     branches:
-      - master
+    - master
     paths-ignore:
-    - '**.md'  
+    - '**.md'
+    path:
+    - '.github\workflows\build_for_mpy-cross_win.yml'
   schedule:
     - cron: 0 8 * * *
   # watch:
@@ -102,4 +104,6 @@ jobs:
       with:
         name: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime }}
         path: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime }}.zip
+        
+
         
