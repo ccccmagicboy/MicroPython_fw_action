@@ -18,7 +18,7 @@ on:
     paths-ignore:
     - '**.md'
     path:
-    - '.github\workflows\build_for_mpy-cross_win.yml'
+    - '.github/workflows/build_for_mpy-cross_win.yml'
   schedule:
     - cron: 0 8 * * *
   # watch:
@@ -106,5 +106,4 @@ jobs:
         path: mpy-cross_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime }}.zip
         
 
-        
         

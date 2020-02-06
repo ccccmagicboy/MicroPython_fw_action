@@ -18,7 +18,7 @@ on:
     paths-ignore:
     - '**.md'
     path:
-    - '.github\workflows\build_for_PYBV11.yml'
+    - '.github/workflows/build_for_PYBV11.yml'
   schedule:
     - cron: 0 8 * * *
   # watch:
