@@ -68,9 +68,13 @@ jobs:
       run: |
         echo 0        
         
-    - name: Setup tmate session
+    # - name: Setup tmate session
+      # if: env.SSH_ACTIONS == 'true'
+      # uses: mxschmitt/action-tmate@v1
+      
+    - name: SSH connection to Actions
       if: env.SSH_ACTIONS == 'true'
-      uses: mxschmitt/action-tmate@v1
+      uses: p3terx/debugger-action@master      
 
     - name: Build the source
       working-directory: ./my_micropython/MicroPython_BUILD
