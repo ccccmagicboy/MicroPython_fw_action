@@ -62,10 +62,16 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         
+    - name: Take the sdkconfig
+      working-directory: ./
+      run: |
+        echo 0
+
     - name: Build the source
       working-directory: ./my_micropython/MicroPython_BUILD
       run: |
-        ./BUILD.sh
+        ./BUILD.sh -v
+        git status
         
     - name: Get the datetime
       id: get_datetime
