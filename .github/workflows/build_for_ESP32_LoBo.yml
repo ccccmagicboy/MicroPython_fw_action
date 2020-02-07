@@ -54,7 +54,9 @@ jobs:
       
     - name: Install dependence
       run: |
-        sudo apt-get install git wget make libncurses-dev flex bison gperf python python-serial
+        sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
+        flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
+        bash help2man wget bzip2 libtool-bin python-serial
 
     - name: Clone the micropython source code
       run: |
