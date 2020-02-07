@@ -59,7 +59,7 @@ jobs:
       run: |
         ./BUILD.sh -v
         cd build
-        ls -al
+        ls -al *.bin
         
     - name: Get the datetime
       id: get_datetime
