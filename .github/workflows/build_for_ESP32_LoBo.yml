@@ -9,9 +9,6 @@
 name: ESP32_LoBo_BUILD
 
 on:
-  pull_request:
-    branches:
-    - master
   push:
     branches:
     - master
