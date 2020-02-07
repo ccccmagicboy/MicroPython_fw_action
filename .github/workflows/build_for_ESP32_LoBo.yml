@@ -63,7 +63,6 @@ jobs:
       working-directory: ./my_micropython/MicroPython_BUILD
       run: |
         ./BUILD.sh -v
-        git status
         
     - name: Get the datetime
       id: get_datetime
