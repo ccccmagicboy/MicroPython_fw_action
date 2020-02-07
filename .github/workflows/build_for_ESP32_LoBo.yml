@@ -8,18 +8,8 @@
 
 name: ESP32_LoBo_BUILD
 
-on:
-  push:
-    branches:
-    - master
-    paths:
-    - '.github/workflows/build_for_ESP32_LoBo.yml'
-    - '!**.md'
-  schedule:
-    - cron: 0 10 * * *
-  # watch:
-    # types: [started]
-    
+on: [push]
+  
 # ┌───────────── minute (0 - 59)
 # │ ┌───────────── hour (0 - 23)
 # │ │ ┌───────────── day of the month (1 - 31)
