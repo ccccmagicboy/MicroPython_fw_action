@@ -51,12 +51,16 @@ jobs:
     steps:
     - name: Checkout this repos
       uses: actions/checkout@v2
-        
+      
+    - name: Install dependence
+      run: |
+        sudo apt-get install git wget make libncurses-dev flex bison gperf python python-serial
+
     - name: Clone the micropython source code
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         
-    - name: Build
+    - name: Build the source
       working-directory: ./my_micropython/MicroPython_BUILD
       run: |
         sh ./BUILD.sh -v
