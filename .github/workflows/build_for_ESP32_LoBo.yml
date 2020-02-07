@@ -42,11 +42,6 @@ jobs:
   build:
     name: Build first
     runs-on: ubuntu-16.04
-    
-    strategy:
-      matrix:
-        test-board:
-        - GENERIC
 
     steps:
     - name: Checkout this repos
