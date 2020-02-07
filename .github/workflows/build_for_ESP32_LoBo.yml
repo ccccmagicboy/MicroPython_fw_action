@@ -37,6 +37,7 @@ env:
   REPO_URL: https://github.com/loboris/MicroPython_ESP32_psRAM_LoBo.git
   REPO_BRANCH: master
   TZ: Asia/Shanghai
+  SSH_ACTIONS: true
   
 jobs:
   build:
@@ -66,6 +67,10 @@ jobs:
       working-directory: ./
       run: |
         echo 0        
+        
+    - name: Setup tmate session
+      if: env.SSH_ACTIONS == 'true'
+      uses: mxschmitt/action-tmate@v1
 
     - name: Build the source
       working-directory: ./my_micropython/MicroPython_BUILD
