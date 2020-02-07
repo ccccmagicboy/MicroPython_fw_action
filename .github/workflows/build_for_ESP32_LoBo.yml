@@ -63,7 +63,7 @@ jobs:
     - name: Build the source
       working-directory: ./my_micropython/MicroPython_BUILD
       run: |
-        sh ./BUILD.sh -v
+        sh ./BUILD.sh
         
     - name: Get the datetime
       id: get_datetime
