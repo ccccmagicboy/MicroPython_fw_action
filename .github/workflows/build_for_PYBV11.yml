@@ -47,7 +47,7 @@ env:
 
 jobs:
   build:
-    name: Build first
+    name: Build
     runs-on: ubuntu-16.04
 
     strategy:
@@ -174,7 +174,7 @@ jobs:
         asset_content_type: application/zip     
 
   build_1:
-    name: Build second
+    name: Test
     needs: [build]
     runs-on: ubuntu-16.04
     steps:
