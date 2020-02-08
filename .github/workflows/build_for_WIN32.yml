@@ -39,7 +39,7 @@ env:
 
 jobs:
   build:
-    name: Build
+    name: Build Windows and Linux
     runs-on: ubuntu-16.04
 
     steps:
@@ -130,7 +130,7 @@ jobs:
       uses: ccccmagicboy/get_datetime@master
       with:
         tz1: 'Asia'
-        tz2: 'Shanghai'        
+        tz2: 'Shanghai'
         
     - name: Build the macos port
       run: |
