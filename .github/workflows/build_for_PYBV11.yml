@@ -98,10 +98,8 @@ jobs:
         echo ${{ steps.unix_port.outputs.version }}
         
     - name: Build the submodules of stm32 port
-      run: |        
-        cd my_micropython/ports/stm32/
-        pwd
-        ls -al
+      working-directory: ./my_micropython/ports/stm32
+      run: |      
         make submodules
         
     - name: Custom the factoryreset.c file
@@ -114,7 +112,6 @@ jobs:
       working-directory: ./my_micropython/ports/stm32/
       run: |
         echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
-      #uses: ccccmagicboy/FW_custom_mpconfigport_action@master   
                 
     - name: DIY micropython modules
       working-directory: ./my_micropython/ports/stm32/boards
@@ -129,11 +126,13 @@ jobs:
       run: |
         ./micropython -m upip install -p ../stm32/modules micropython-pystone_lowmem
 
-    - name: DIY c modules
+    - name: DIY c mpy modules
       if: env.DIY_C_MODULES == 'true'
+      working-directory: ./../c_modules/
       run: |
-        echo "0"
-      #uses: ccccmagicboy/FW_DIY_c_modules_action@master        
+        cd ./Universal/factorial
+        make ARCH=armv7emsp
+        ls -al
         
     - name: Build the dfu file - ${{ matrix.test-board }}
       working-directory: ./my_micropython/ports/stm32/
