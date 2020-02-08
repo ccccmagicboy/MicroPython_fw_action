@@ -117,10 +117,11 @@ jobs:
       #uses: ccccmagicboy/FW_custom_mpconfigport_action@master   
                 
     - name: DIY micropython modules
+      working-directory: ./my_micropython/ports/stm32/boards
       if: env.DIY_MPY_MODULES == 'true'
       run: |
-        freeze('$(MPY_DIR)/../modules/STM32')
-        freeze('$(MPY_DIR)/../modules/Universal')
+        echo "freeze('$(MPY_DIR)/../modules/STM32')" >> manifest.py
+        echo "freeze('$(MPY_DIR)/../modules/Universal')" >> manifest.py
         
     - name: upip modules from internet
       run: |
