@@ -53,7 +53,6 @@ jobs:
     - name: Install the depend
       run: |
         sudo apt-get install libc6-dev
-        sudo apt install libc6-dev-i386
         sudo apt-get install emscripten
         sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
         flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
@@ -64,16 +63,10 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
-    # - name: Build the mpy-cross tool
-      # working-directory: ./my_micropython/mpy-cross
-      # run: |
-        # make
-        
     - name: Build the javascript port
       working-directory: ./my_micropython/ports/javascript
       run: |
         make
-        make min
         
     - name: Get the datetime
       id: get_datetime
