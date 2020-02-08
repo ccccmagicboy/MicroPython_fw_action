@@ -241,6 +241,23 @@ jobs:
         export ARCH=arm64
         export CROSS_COMPILE=aarch64-linux-gnu-
         make
-
+        
+    - name: Get the datetime
+      id: get_datetime
+      uses: ccccmagicboy/get_datetime@master
+      with:
+        tz1: 'Asia'
+        tz2: 'Shanghai'
+              
+    - name: Zip the artifact
+      run: |
+        zip --junk-paths mpy-cross_arm64_linux_${{ steps.get_datetime.outputs.datetime_str }}.zip my_micropython/mpy-cross/mpy-cross.exe README.md MicroPython_fw_action_card.png
+        
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: mpy-cross_arm64_linux_${{ steps.get_datetime.outputs.datetime_str }}
+        path: mpy-cross_arm64_linux_${{ steps.get_datetime.outputs.datetime_str }}.zip           
+        
         
         
