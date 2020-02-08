@@ -122,15 +122,17 @@ jobs:
       run: |
         echo "freeze('\$(MPY_DIR)/../modules/STM32')" >> manifest.py
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
+        echo "freeze('\$(PORT_DIR)/modules')" >> manifest.py
         
     - name: upip micropython modules from internet
       working-directory: ./my_micropython/ports/unix
       run: |
-        ./micropython --version
+        ./micropython -m upip install -p ../stm32/modules micropython-pystone_lowmem
 
     - name: DIY c modules
       if: env.DIY_C_MODULES == 'true'
-      run: echo "0"
+      run: |
+        echo "0"
       #uses: ccccmagicboy/FW_DIY_c_modules_action@master        
         
     - name: Build the dfu file - ${{ matrix.test-board }}
