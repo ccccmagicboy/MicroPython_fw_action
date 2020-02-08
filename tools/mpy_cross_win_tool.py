@@ -26,7 +26,7 @@ def get_ver():
     return result.split(' ')[3]
     
 def get_ver_unix():
-    command = 'cd my_micropython\mpy-cross && chmod +x mpy-cross && ./mpy-cross --version'
+    command = 'cd my_micropython/mpy-cross && chmod +x mpy-cross && ./mpy-cross --version'
     print(command)
     result = os.popen(command).read()
     result = result.strip()
