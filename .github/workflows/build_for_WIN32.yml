@@ -69,8 +69,7 @@ jobs:
         tz1: 'Asia'
         tz2: 'Shanghai'        
         
-    - name: Build the unix port
-      id: unix_port
+    - name: Build the linux port
       run: |
         cd my_micropython/ports/unix
         make submodules
@@ -80,13 +79,13 @@ jobs:
         
     - name: Zip the artifact
       run: |
-        zip --junk-paths micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/unix/micropython README.md MicroPython_fw_action_card.png        
+        zip --junk-paths Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/unix/micropython README.md MicroPython_fw_action_card.png        
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}
-        path: micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}.zip        
+        name: Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}
+        path: Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
     - name: Build the Windows port
       run: |        
@@ -98,11 +97,58 @@ jobs:
         
     - name: Zip the artifact
       run: |
-        zip --junk-paths micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png        
+        zip --junk-paths Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png        
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}
-        path: micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
+        name: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}
+        path: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
             
+  build_1:
+    name: Build MACOS
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout this repos
+      uses: actions/checkout@v2
+      
+    - name: Clone the micropython source code
+      run: |
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+        git submodule update --init
+        
+    - name: Build the mpy-cross tool
+      run: |
+        cd my_micropython
+        pwd
+        ls -al
+        make -C mpy-cross
+        
+    - name: Get the datetime
+      id: get_datetime
+      uses: ccccmagicboy/get_datetime@master
+      with:
+        tz1: 'Asia'
+        tz2: 'Shanghai'        
+        
+    - name: Build the macos port
+      run: |
+        cd my_micropython/ports/unix
+        make submodules
+        make
+        find . -name "*micropython*"
+        MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")    
+        
+    - name: Zip the artifact
+      run: |
+        zip --junk-paths Micropython_macos_catalina_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/unix/micropython README.md MicroPython_fw_action_card.png        
+        
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: Micropython_macos_catalina_${{ steps.get_datetime.outputs.datetime_str }}
+        path: Micropython_macos_catalina_${{ steps.get_datetime.outputs.datetime_str }}.zip   
+
+
+        
