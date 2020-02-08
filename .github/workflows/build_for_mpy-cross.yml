@@ -111,6 +111,12 @@ jobs:
     steps:
     - name: Checkout this repos
       uses: actions/checkout@v2    
+      
+    - name: Get the python3
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+        architecture: 'x64'      
 
     - name: Clone the micropython source code
       run: |
@@ -120,7 +126,7 @@ jobs:
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
       run: |
-        make
+        make 
         
     - name: Print the version of mpy-cross
       working-directory: ./
