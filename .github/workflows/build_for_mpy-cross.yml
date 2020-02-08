@@ -229,9 +229,7 @@ jobs:
         
     - name: Get the cross-toolchain
       run: |
-        wget https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu.tar.xz
-        tar -Jxvf gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu.tar.xz
-        PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin:$PATH
+        sudo apt-get install gcc-aarch64-linux-gnu
         aarch64-linux-gnu-gcc --version        
         
     # - name: Debug the action
@@ -241,7 +239,6 @@ jobs:
       working-directory: ./my_micropython/mpy-cross
       run: |
         export ARCH=arm64
-        PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/gcc-linaro-7.3.1-2018.05-x86_64_aarch64-linux-gnu/bin:$PATH
         export CROSS_COMPILE=aarch64-linux-gnu-
         make
 
