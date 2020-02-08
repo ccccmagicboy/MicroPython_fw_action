@@ -46,6 +46,10 @@ jobs:
     - name: Checkout this repos
       uses: actions/checkout@v2
       
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+      
     - name: Install the depend
       run: |
         sudo apt-get install libc6-dev
@@ -60,10 +64,10 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
-    - name: Build the mpy-cross tool
-      working-directory: ./my_micropython/mpy-cross
-      run: |
-        make
+    # - name: Build the mpy-cross tool
+      # working-directory: ./my_micropython/mpy-cross
+      # run: |
+        # make
         
     - name: Build the javascript port
       working-directory: ./my_micropython/ports/javascript
