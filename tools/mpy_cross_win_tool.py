@@ -24,6 +24,15 @@ def get_ver():
     result = result.strip()
     print(result)
     return result.split(' ')[3]
+    
+def get_ver_macos():
+    command = 'cd my_micropython\mpy-cross && mpy-cross --version'
+    print(command)
+    result = os.popen(command).read()
+    result = result.split(';')
+    result = result.strip()
+    print(result)
+    return result.split(' ')[3]    
 
 if __name__ == "__main__":
     # execute only if run as a script
