@@ -113,10 +113,9 @@ jobs:
     - name: Checkout this repos
       uses: actions/checkout@v2
       
-    - name: Depends
+    - name: Install depends
       run: |
-        sudo port install libffi
-        sudo port install pkgconfig
+        brew install libffi
       
     - name: Clone the micropython source code
       run: |
@@ -139,6 +138,7 @@ jobs:
         
     - name: Build the macos port
       run: |
+        export PKG_CONFIG_PATH=/usr/local/Cellar/libffi/3.2.1/lib/pkgconfig/
         cd my_micropython/ports/unix
         make submodules
         make axtls
