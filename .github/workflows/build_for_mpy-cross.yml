@@ -126,7 +126,7 @@ jobs:
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
       run: |
-        make 
+        make
         
     - name: Print the version of mpy-cross
       working-directory: ./
@@ -151,5 +151,5 @@ jobs:
         name: mpy-cross_macos_catalina_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: mpy-cross_macos_catalina_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
 
-        
+
         
