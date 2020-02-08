@@ -128,8 +128,8 @@ jobs:
       run: |
         make
         
-    # - name: Debug the action
-      # uses: p3terx/debugger-action@master          
+    - name: Debug the action
+      uses: p3terx/debugger-action@master          
         
     - name: Print the version of mpy-cross
       working-directory: ./
