@@ -111,15 +111,20 @@ jobs:
       
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'
+      working-directory: ./my_micropython/ports/stm32/
       run: |
-        cd my_micropython/ports/stm32/
         echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
       #uses: ccccmagicboy/FW_custom_mpconfigport_action@master   
                 
     - name: DIY micropython modules
       if: env.DIY_MPY_MODULES == 'true'
-      run: echo "0"
-      #uses: ccccmagicboy/FW_DIY_mpy_modules_action@master      
+      run: |
+        freeze('$(MPY_DIR)/../modules/STM32')
+        freeze('$(MPY_DIR)/../modules/Universal')
+        
+    - name: upip modules from internet
+      run: |
+        echo "0"
 
     - name: DIY c modules
       if: env.DIY_C_MODULES == 'true'
@@ -127,10 +132,8 @@ jobs:
       #uses: ccccmagicboy/FW_DIY_c_modules_action@master        
         
     - name: Build the dfu file - ${{ matrix.test-board }}
-      run: |        
-        cd my_micropython/ports/stm32/
-        pwd
-        ls -al
+      working-directory: ./my_micropython/ports/stm32/
+      run: |
         make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../ulab all
         
     - name: Get the datetime
