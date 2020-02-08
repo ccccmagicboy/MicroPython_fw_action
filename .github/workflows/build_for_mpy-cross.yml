@@ -154,4 +154,18 @@ jobs:
         name: mpy-cross_macos_catalina_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: mpy-cross_macos_catalina_${{ steps.print_ver.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
 
+  build_2:
+    name: Build Linux
+    runs-on: ubuntu-16.04
+    
+    steps:
+    - name: Checkout this repos
+      uses: actions/checkout@v2    
 
+  build_3:
+    name: Build Linux - armv8
+    runs-on: ubuntu-16.04
+    
+    steps:
+    - name: Checkout this repos
+      uses: actions/checkout@v2        
