@@ -17,7 +17,7 @@ def main():
     print("ok finished!")
     
 def get_ver():
-    command = 'cd my_micropython\mpy-cross && mpy-cross.exe --version'
+    command = 'cd my_micropython\mpy-cross && mpy-cross --version'
     print(command)
     result = os.popen(command).read()
     _, result = result.split(';')
