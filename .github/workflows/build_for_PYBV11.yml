@@ -128,7 +128,7 @@ jobs:
 
     - name: DIY c mpy modules
       if: env.DIY_C_MODULES == 'true'
-      working-directory: ./../c_modules/
+      working-directory: ./c_modules/
       run: |
         cd ./Universal/factorial
         make ARCH=armv7emsp
