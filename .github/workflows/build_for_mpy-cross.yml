@@ -84,7 +84,7 @@ jobs:
       id: print_ver
       shell: cmd
       run: |
-        python -c "import os;from mpy_cross_win_tool import get_ver;command = 'echo ::set-output name=version::{0:s}'.format(get_ver());print(command);print(os.popen(command).read())"
+        python -c "import os;from tools.mpy_cross_win_tool import get_ver;command = 'echo ::set-output name=version::{0:s}'.format(get_ver());print(command);print(os.popen(command).read())"
         
     - name: Get the datetime
       id: get_datetime
