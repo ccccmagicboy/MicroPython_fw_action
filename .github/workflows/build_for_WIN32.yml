@@ -62,6 +62,13 @@ jobs:
         ls -al
         make -C mpy-cross
         
+    - name: Get the datetime
+      id: get_datetime
+      uses: ccccmagicboy/get_datetime@master
+      with:
+        tz1: 'Asia'
+        tz2: 'Shanghai'        
+        
     - name: Build the unix port
       id: unix_port
       run: |
@@ -70,32 +77,32 @@ jobs:
         make
         find . -name "*micropython*"
         MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")
-        echo $MOREF
-        echo "::set-output name=version::$MOREF"
-        echo "::set-output name=board::$BOARD"
+        
+    - name: Zip the artifact
+      run: |
+        zip --junk-paths micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/unix/micropython README.md MicroPython_fw_action_card.png        
+        
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}
+        path: micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
     - name: Build the Windows port
       run: |        
         cd my_micropython/ports/windows/
         pwd
-        ls -al   
+        ls -al
         make CROSS_COMPILE=i686-w64-mingw32-
         ls -al
         
-    - name: Get the datetime
-      id: get_datetime
-      uses: ccccmagicboy/get_datetime@master
-      with:
-        tz1: 'Asia'
-        tz2: 'Shanghai'            
-        
     - name: Zip the artifact
       run: |
-        zip --junk-paths micropython_x86_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/unix/micropython my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png
+        zip --junk-paths micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png        
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: micropython_x86_${{ steps.get_datetime.outputs.datetime_str }}
-        path: micropython_x86_${{ steps.get_datetime.outputs.datetime_str }}.zip
+        name: micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}
+        path: micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
             

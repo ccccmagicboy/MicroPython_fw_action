@@ -37,7 +37,7 @@ env:
   REPO_URL: https://github.com/loboris/MicroPython_ESP32_psRAM_LoBo.git
   REPO_BRANCH: master
   TZ: Asia/Shanghai
-  SSH_ACTIONS: true
+  SSH_ACTIONS: false
   
 jobs:
   build:
@@ -72,7 +72,7 @@ jobs:
       # if: env.SSH_ACTIONS == 'true'
       # uses: mxschmitt/action-tmate@v1
       
-    - name: SSH connection to Actions
+    - name: Config via ssh and menuconfig
       if: env.SSH_ACTIONS == 'true'
       uses: p3terx/debugger-action@master      
 
