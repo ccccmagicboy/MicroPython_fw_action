@@ -116,6 +116,7 @@ jobs:
     - name: Install depends
       run: |
         brew install libffi
+        brew install pkgconfig
       
     - name: Clone the micropython source code
       run: |
@@ -144,7 +145,12 @@ jobs:
         make axtls
         make
         find . -name "*micropython*"
-        MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")    
+        MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")
+        
+    - name: Do a test
+      working-directory: ./my_micropython/tests
+      run: |
+        ./run-tests
         
     - name: Zip the artifact
       run: |
