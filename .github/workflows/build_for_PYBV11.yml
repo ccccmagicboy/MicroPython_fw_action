@@ -123,9 +123,10 @@ jobs:
         echo "freeze('\$(MPY_DIR)/../modules/STM32')" >> manifest.py
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
         
-    - name: upip modules from internet
+    - name: upip micropython modules from internet
+      working-directory: ./my_micropython/ports/unix
       run: |
-        echo "0"
+        ./micropython --version
 
     - name: DIY c modules
       if: env.DIY_C_MODULES == 'true'
