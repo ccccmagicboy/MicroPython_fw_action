@@ -137,6 +137,13 @@ jobs:
         make ARCH=armv7emsp
         ls -al
         
+    - name: Upload c mpy file
+      working-directory: ./c_modules/Universal/factorial
+      uses: actions/upload-artifact@master
+      with:
+        name: factorial
+        path: factorial.mpy
+        
     - name: Build the dfu file - ${{ matrix.test-board }}
       working-directory: ./my_micropython/ports/stm32/
       run: |
