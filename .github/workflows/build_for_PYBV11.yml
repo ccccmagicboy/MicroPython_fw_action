@@ -64,6 +64,10 @@ jobs:
     - name: Clone the micropython source code
       #depth用于指定克隆深度，为1即表示只克隆最近一次commit.
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+      
+    - name: Clone the ulab
+      run: |
+        git clone https://github.com/v923z/micropython-ulab.git ulab
 
     - name: get the cross-toolchain
       run: |
@@ -107,7 +111,9 @@ jobs:
       
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'
-      run: echo "0"
+      run: |
+        cd my_micropython/ports/stm32/
+        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
       #uses: ccccmagicboy/FW_custom_mpconfigport_action@master   
                 
     - name: DIY micropython modules
@@ -125,7 +131,7 @@ jobs:
         cd my_micropython/ports/stm32/
         pwd
         ls -al
-        make BOARD=${{ matrix.test-board }}
+        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../ulab all
         
     - name: Get the datetime
       id: get_datetime
