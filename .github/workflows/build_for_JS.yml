@@ -57,7 +57,7 @@ jobs:
         make
         
     - name: Build the javascript port
-      working-directory: ./my_micropython/port/javascript
+      working-directory: ./my_micropython/ports/javascript
       run: |
         make
         make min
