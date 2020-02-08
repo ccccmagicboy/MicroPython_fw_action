@@ -6,7 +6,7 @@
 # Url: https://ccrobot-online.com
 #===================================================================================
 
-name: javascript_BUILD
+name: Javascript_BUILD
 
 on:
   pull_request:
@@ -39,7 +39,7 @@ env:
 
 jobs:
   build:
-    name: Build Windows and Linux
+    name: Build
     runs-on: ubuntu-16.04
 
     steps:
@@ -52,9 +52,15 @@ jobs:
         git submodule update --init
         
     - name: Build the mpy-cross tool
+      working-directory: ./my_micropython/mpy-cross
+      run: |
+        make
+        
+    - name: Build the javascript port
       working-directory: ./my_micropython/port/javascript
       run: |
         make
+        make min
         
     - name: Get the datetime
       id: get_datetime
