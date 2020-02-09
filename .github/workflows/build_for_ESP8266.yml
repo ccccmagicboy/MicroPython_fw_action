@@ -157,6 +157,7 @@ jobs:
       if: env.DIY_C_MODULES == 'true'
       working-directory: ./c_modules/
       run: |
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
         cd ./Universal/factorial
         make ARCH=xtensa
         ls -al

@@ -134,7 +134,7 @@ jobs:
       working-directory: ./c_modules/
       run: |
         cd ./Universal/factorial
-        make ARCH=x64
+        make ARCH=x64 CROSS_COMPILE=x86_64-w64-mingw32-
         ls -al
         
     - name: Upload c mpy file
@@ -143,7 +143,22 @@ jobs:
       with:
         name: factorial_x64
         path: c_modules/Universal/factorial/factorial.mpy    
-            
+
+    - name: DIY c mpy modules
+      if: env.DIY_C_MODULES == 'true'
+      working-directory: ./c_modules/
+      run: |
+        cd ./Universal/factorial
+        make ARCH=x86 CROSS_COMPILE=i686-w64-mingw32-
+        ls -al
+        
+    - name: Upload c mpy file
+      if: env.DIY_C_MODULES == 'true'    
+      uses: actions/upload-artifact@master
+      with:
+        name: factorial_x86
+        path: c_modules/Universal/factorial/factorial.mpy    
+        
   build_1:
     name: Build MACOS
     runs-on: macos-latest
