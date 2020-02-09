@@ -69,11 +69,7 @@ jobs:
     - name: Clone the micropython source code
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
-        git submodule update --init
-        
-    - name: Clone the ulab
-      run: |
-        git clone https://github.com/v923z/micropython-ulab.git ulab        
+        git submodule update --init      
         
     - name: Clone the emsdk
       run: |
@@ -92,7 +88,7 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/javascript/
       run: |
-        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h         
+        echo " " >> mpconfigport.h         
       
     - name: Del the flag
       working-directory: ./
@@ -103,10 +99,7 @@ jobs:
       working-directory: ./my_micropython/ports/javascript
       run: |
         source ../../../emsdk/emsdk_env.sh
-        make USER_C_MODULES=../../../ulab all
-        make min USER_C_MODULES=../../../ulab all
-        cd build
-        ls -al
+        make min
         
     - name: Get the datetime
       id: get_datetime
