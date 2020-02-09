@@ -68,8 +68,8 @@ jobs:
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
         cd emsdk
-        ./emsdk install clang-e1.30.0-64bit
-        ./emsdk activate clang-e1.30.0-64bit        
+        ./emsdk install latest
+        ./emsdk activate latest
         source ./emsdk_env.sh
         
         
