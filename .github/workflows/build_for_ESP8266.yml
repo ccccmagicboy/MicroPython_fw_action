@@ -150,3 +150,17 @@ jobs:
         name: ESP8266_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: ESP8266_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
             
+    - name: DIY c mpy modules
+      if: env.DIY_C_MODULES == 'true'
+      working-directory: ./c_modules/
+      run: |
+        cd ./Universal/factorial
+        make ARCH=xtensa
+        ls -al
+        
+    - name: Upload c mpy file
+      if: env.DIY_C_MODULES == 'true'    
+      uses: actions/upload-artifact@master
+      with:
+        name: factorial
+        path: c_modules/Universal/factorial/factorial.mpy  

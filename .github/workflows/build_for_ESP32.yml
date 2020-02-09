@@ -161,4 +161,17 @@ jobs:
         name: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
-
+    - name: DIY c mpy modules
+      if: env.DIY_C_MODULES == 'true'
+      working-directory: ./c_modules/
+      run: |
+        cd ./Universal/factorial
+        make ARCH=xtensawin
+        ls -al
+        
+    - name: Upload c mpy file
+      if: env.DIY_C_MODULES == 'true'    
+      uses: actions/upload-artifact@master
+      with:
+        name: factorial
+        path: c_modules/Universal/factorial/factorial.mpy    
