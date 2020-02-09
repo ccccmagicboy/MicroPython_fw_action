@@ -97,6 +97,8 @@ jobs:
         source ../../../emsdk/emsdk_env.sh
         make
         make min
+        cd build
+        ls -al
         
     - name: Get the datetime
       id: get_datetime
