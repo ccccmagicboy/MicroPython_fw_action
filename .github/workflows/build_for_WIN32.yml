@@ -36,6 +36,7 @@ on:
 env:
   REPO_URL: https://github.com/micropython/micropython.git
   REPO_BRANCH: master
+  DIY_C_MODULES: true
 
 jobs:
   build:
@@ -114,6 +115,7 @@ jobs:
         ls -al
         
     - name: Upload c mpy file
+      if: env.DIY_C_MODULES == 'true'    
       uses: actions/upload-artifact@master
       with:
         name: factorial

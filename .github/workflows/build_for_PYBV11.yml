@@ -43,7 +43,6 @@ env:
   CUSTOM_MPCONFIGPORT: true
   DIY_MPY_MODULES: true
   DIY_C_MODULES: true
-  BOARD: PYBV11
 
 jobs:
   build:
@@ -138,6 +137,7 @@ jobs:
         ls -al
         
     - name: Upload c mpy file
+      if: env.DIY_C_MODULES == 'true'
       uses: actions/upload-artifact@master
       with:
         name: factorial
