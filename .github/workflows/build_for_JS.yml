@@ -54,18 +54,24 @@ jobs:
       run: |
         sudo apt-get install libc6-dev
         sudo apt install libc6-dev-i386
-        sudo apt-get install emscripten
         sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
         flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
         bash help2man wget bzip2 libtool-bin python-serial
         npm install uglify-js -g
-        emsdk install clang-e1.30.0-64bit
-        emsdk activate clang-e1.30.0-64bit
       
     - name: Clone the micropython source code
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
+        
+    - name: Clone the emsdk
+      run: |
+        git clone https://github.com/emscripten-core/emsdk.git
+        cd emsdk
+        emsdk install clang-e1.30.0-64bit
+        emsdk activate clang-e1.30.0-64bit        
+        source ./emsdk_env.sh
+        
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
