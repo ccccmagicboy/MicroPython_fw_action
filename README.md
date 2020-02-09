@@ -12,7 +12,7 @@
 | 4 	| ![](https://img.shields.io/badge/x86(64bit)-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/x86_BUILD(64bit)/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3Ax86_BUILD(64bit)) 	|  	|  	|  	|  	|
 | 5 	| ![](https://img.shields.io/badge/mpy_cross-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/mpy-cross_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3Ampy-cross_BUILD) 	|  	|  	|  	|  	|
 | 6 	| ![](https://img.shields.io/badge/ESP32-LoBo-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/ESP32_LoBo_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3Ampy-ESP32_LoBo_BUILD) 	|  	|  	|  	|  	|
-| 7 	| ![](https://img.shields.io/badge/Javascript-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/Javascript_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3Ampy-Javascript_BUILD) 	|  	|  	|  	|  	|
+| 7 	| ![](https://img.shields.io/badge/Javascript-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/Javascript_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3AJavascript_BUILD) 	|  	|  	|  	|  	|
 
 
 Just 5 mins to get your own most up-to-date code from official micropython repository compiled only using free github account, click the star and have a try.
