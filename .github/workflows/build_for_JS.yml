@@ -36,6 +36,7 @@ on:
 env:
   REPO_URL: https://github.com/micropython/micropython.git
   REPO_BRANCH: master
+  CUSTOM_MPCONFIGPORT: true
 
 jobs:
   build:
@@ -70,6 +71,10 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
+    - name: Clone the ulab
+      run: |
+        git clone https://github.com/v923z/micropython-ulab.git ulab        
+        
     - name: Clone the emsdk
       run: |
         git clone https://github.com/emscripten-core/emsdk.git
@@ -83,8 +88,11 @@ jobs:
       run: |
         make     
         
-    # - name: Debugger
-      # uses: p3terx/debugger-action@master             
+    - name: Custom the mpconfigport.h file
+      if: env.CUSTOM_MPCONFIGPORT == 'true'
+      working-directory: ./my_micropython/ports/javascript/
+      run: |
+        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h         
       
     - name: Del the flag
       working-directory: ./
@@ -95,8 +103,8 @@ jobs:
       working-directory: ./my_micropython/ports/javascript
       run: |
         source ../../../emsdk/emsdk_env.sh
-        make
-        make min
+        make USER_C_MODULES=../../../ulab all
+        make min USER_C_MODULES=../../../ulab all
         cd build
         ls -al
         
