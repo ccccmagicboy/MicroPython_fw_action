@@ -1,12 +1,12 @@
 #===================================================================================
 # https://github.com/ccccmagicboy/MicroPython_fw_action
-# Description: Build MicroPython firmware using GitHub Actions for x86
+# Description: Build MicroPython firmware using GitHub Actions for x64
 # Lisence: MIT
 # Author: ccccmagicboy
 # Url: https://ccrobot-online.com
 #===================================================================================
 
-name: x86_BUILD
+name: x86_BUILD(64bit)
 
 on:
   pull_request:
@@ -99,8 +99,11 @@ jobs:
         cd my_micropython/ports/windows/
         pwd
         ls -al
-        make CROSS_COMPILE=i686-w64-mingw32-
+        make CROSS_COMPILE=x86_64-w64-mingw32-
         ls -al
+        
+#       make CROSS_COMPILE=i686-w64-mingw32-      FOR 32BIT
+
         
     - name: Zip the artifact
       run: |
