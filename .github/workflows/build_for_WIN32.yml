@@ -104,6 +104,20 @@ jobs:
       with:
         name: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}
         path: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
+        
+    - name: DIY c mpy modules
+      if: env.DIY_C_MODULES == 'true'
+      working-directory: ./c_modules/
+      run: |
+        cd ./Universal/factorial
+        make ARCH=x86
+        ls -al
+        
+    - name: Upload c mpy file
+      uses: actions/upload-artifact@master
+      with:
+        name: factorial
+        path: c_modules/Universal/factorial/factorial.mpy    
             
   build_1:
     name: Build MACOS
