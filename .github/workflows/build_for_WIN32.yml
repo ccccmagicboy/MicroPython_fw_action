@@ -77,8 +77,9 @@ jobs:
         tz2: 'Shanghai'        
         
     - name: Build the linux port
+      working-directory: ./my_micropython/ports/unix/
       run: |
-        cd my_micropython/ports/unix
+        make clean
         make submodules
         make
         find . -name "*micropython*"
@@ -94,16 +95,12 @@ jobs:
         name: Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}
         path: Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
-    - name: Build the Windows port
+    - name: Build the Windows port x64
+      working-directory: ./my_micropython/ports/windows/
       run: |        
-        cd my_micropython/ports/windows/
-        pwd
-        ls -al
+        make clean
+        make submodules        
         make CROSS_COMPILE=x86_64-w64-mingw32-
-        ls -al
-        
-#       make CROSS_COMPILE=i686-w64-mingw32-      FOR 32BIT
-
         
     - name: Zip the artifact
       run: |
@@ -114,6 +111,23 @@ jobs:
       with:
         name: Micropython_x64_windows_${{ steps.get_datetime.outputs.datetime_str }}
         path: Micropython_x64_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
+        
+    - name: Build the Windows port x86
+      working-directory: ./my_micropython/ports/windows/
+      run: |        
+        make clean
+        make submodules      
+        make CROSS_COMPILE=i686-w64-mingw32-
+        
+    - name: Zip the artifact
+      run: |
+        zip --junk-paths Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png        
+        
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}
+        path: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
     - name: DIY c mpy modules
       if: env.DIY_C_MODULES == 'true'
@@ -127,7 +141,7 @@ jobs:
       if: env.DIY_C_MODULES == 'true'    
       uses: actions/upload-artifact@master
       with:
-        name: factorial
+        name: factorial_x64
         path: c_modules/Universal/factorial/factorial.mpy    
             
   build_1:
