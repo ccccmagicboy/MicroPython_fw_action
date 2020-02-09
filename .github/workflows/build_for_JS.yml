@@ -77,8 +77,13 @@ jobs:
       run: |
         make     
         
-    - name: Debugger
-      uses: p3terx/debugger-action@master             
+    # - name: Debugger
+      # uses: p3terx/debugger-action@master             
+      
+    - name: Del the flag
+      working-directory: ./
+      run: |
+        python -c "from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'javascript', 'Makefile');print(mk_path);replaceAll(mk_path, "-s \"BINARYEN_TRAP_MODE='clamp'\"","-s USE_SDL=2")"
         
     - name: Build the javascript port
       working-directory: ./my_micropython/ports/javascript
