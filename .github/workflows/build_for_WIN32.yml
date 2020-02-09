@@ -104,20 +104,20 @@ jobs:
         
     - name: Zip the artifact
       run: |
-        zip --junk-paths Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png        
+        zip --junk-paths Micropython_x64_windows_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/windows/micropython.exe README.md MicroPython_fw_action_card.png        
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}
-        path: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
+        name: Micropython_x64_windows_${{ steps.get_datetime.outputs.datetime_str }}
+        path: Micropython_x64_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
         
     - name: DIY c mpy modules
       if: env.DIY_C_MODULES == 'true'
       working-directory: ./c_modules/
       run: |
         cd ./Universal/factorial
-        make ARCH=x86
+        make ARCH=x64
         ls -al
         
     - name: Upload c mpy file
