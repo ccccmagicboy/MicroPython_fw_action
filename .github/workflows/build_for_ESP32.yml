@@ -76,6 +76,7 @@ jobs:
         pip3 --version
         pip3 install --upgrade pip
         pip3 install pyserial 'pyparsing<2.4'
+        pip3 install pyelftools
         
     - name: Down and install the toolchain
       if: env.TOOLCHAIN_FROM_SCRATCH == 'false'

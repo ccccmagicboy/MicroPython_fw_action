@@ -64,6 +64,9 @@ jobs:
         sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
         flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
         bash help2man wget bzip2 libtool-bin python-serial
+        pip3 --version        
+        pip3 install --upgrade pip
+        pip3 install pyelftools
 
     - name: Clone the toolchain source code
       if: env.TOOLCHAIN_FROM_SCRATCH == 'true'
