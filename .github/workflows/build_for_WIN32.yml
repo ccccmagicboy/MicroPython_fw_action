@@ -51,6 +51,7 @@ jobs:
       run: |
         sudo apt-get install gcc      
         sudo apt-get install gcc-mingw-w64
+        sudo apt-get install libc6-dev
         pip3 --version        
         pip3 install --upgrade pip
         pip3 install pyelftools
