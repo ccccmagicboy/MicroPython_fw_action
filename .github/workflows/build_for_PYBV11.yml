@@ -147,7 +147,7 @@ jobs:
     - name: Build the dfu file - ${{ matrix.test-board }}
       working-directory: ./my_micropython/ports/stm32/
       run: |
-        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../ulab MICROPY_PY_WIZNET5K=W5500 all
+        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../ulab MICROPY_PY_WIZNET5K=5500 all
         
     - name: Get the datetime
       id: get_datetime
