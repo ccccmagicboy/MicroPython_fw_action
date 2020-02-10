@@ -47,6 +47,7 @@ jobs:
     runs-on: ubuntu-16.04
     
     strategy:
+      max-parallel: 1
       matrix:
         test-board:
         - GENERIC
