@@ -118,6 +118,7 @@ jobs:
       working-directory: ./my_micropython/ports/esp32/boards
       if: env.DIY_MPY_MODULES == 'true'
       run: |
+        echo "freeze('\$(MPY_DIR)/../modules/ESP32')" >> manifest.py
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
 
     - name: Get the IDF git hash of the only version(two of them)
