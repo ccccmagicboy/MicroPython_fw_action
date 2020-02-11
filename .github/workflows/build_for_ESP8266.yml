@@ -51,6 +51,7 @@ jobs:
     runs-on: ubuntu-16.04
     
     strategy:
+      max-parallel: 1
       matrix:
         test-board:
         - GENERIC
@@ -99,13 +100,13 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
-    - name: Clone the ulab external c modules
-      working-directory: ./c_modules
-      run: |
-        git clone https://github.com/v923z/micropython-ulab.git ulab
-        mkdir -p ./ESP8266/ulab
-        cp -R ./ulab/code/. ./ESP8266/ulab
-        ls -al ./ESP8266/ulab
+    # - name: Clone the ulab external c modules
+      # working-directory: ./c_modules
+      # run: |
+        # git clone https://github.com/v923z/micropython-ulab.git ulab
+        # mkdir -p ./ESP8266/ulab
+        # cp -R ./ulab/code/. ./ESP8266/ulab
+        # ls -al ./ESP8266/ulab
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
@@ -128,7 +129,6 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/stm32/
       run: |
-        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
         echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h        
         
     - name: Add micropython frozen modules
