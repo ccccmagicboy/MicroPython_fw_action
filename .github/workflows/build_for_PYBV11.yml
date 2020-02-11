@@ -51,10 +51,12 @@ jobs:
     runs-on: ubuntu-16.04
 
     strategy:
-      max-parallel: 1
+      max-parallel: 2
       matrix:
         test-board:
         - PYBV11
+        - PYBLITEV10
+        # - PYBV10
     
     steps:
     - name: Checkout this repos

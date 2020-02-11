@@ -49,12 +49,12 @@ jobs:
     runs-on: ubuntu-16.04
     
     strategy:
-      max-parallel: 1
+      max-parallel: 6
       matrix:
         test-board:
         - GENERIC
         - GENERIC_SPIRAM
-        - GENERIC_D2WD
+        # - GENERIC_D2WD
         - TINYPICO
         idf-select:
         - IDF3
@@ -96,11 +96,14 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
-        
+
     - name: Clone the ulab external c modules
-      working-directory: ./c_modules/ESP32
+      working-directory: ./c_modules
       run: |
         git clone https://github.com/v923z/micropython-ulab.git ulab
+        mkdir -p ./ESP32/ulab
+        cp -R ./ulab/code/. ./ESP32/ulab
+        ls -al ./ESP32/ulab        
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
@@ -124,6 +127,7 @@ jobs:
       working-directory: ./my_micropython/ports/esp32/
       run: |
         echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+        echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h
    
     - name: Add micropython frozen modules
       working-directory: ./my_micropython/ports/esp32/boards
