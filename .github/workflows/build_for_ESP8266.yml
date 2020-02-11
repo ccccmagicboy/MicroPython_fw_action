@@ -139,10 +139,10 @@ jobs:
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
         echo "freeze('\$(PORT_DIR)/modules')" >> manifest.py   
 
-    - name: upip micropython modules from internet
-      working-directory: ./my_micropython/ports/unix
-      run: |
-        ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem        
+    # - name: upip micropython modules from internet
+      # working-directory: ./my_micropython/ports/unix
+      # run: |
+        # ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem        
         
     - name: Build the ESP8266 port
       run: |        
