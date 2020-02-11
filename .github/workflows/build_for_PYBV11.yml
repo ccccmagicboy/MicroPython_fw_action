@@ -66,7 +66,7 @@ jobs:
     - name: Clone the ulab external c modules
       working-directory: ./
       run: |
-        git clone https://github.com/v923z/micropython-ulab.git ulab
+        git clone https://github.com/v923z/micropython-ulab.git c_modules/STM32
 
     - name: Get the cross-toolchain
       run: |
@@ -111,7 +111,7 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/stm32/
       run: |
-        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+        echo "#define MODULE_STM32_ENABLED (1)" >> mpconfigport.h
                 
     - name: Add micropython frozen modules
       working-directory: ./my_micropython/ports/stm32/boards
@@ -144,7 +144,7 @@ jobs:
     - name: Build the dfu file - ${{ matrix.test-board }}
       working-directory: ./my_micropython/ports/stm32/
       run: |
-        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../ulab MICROPY_PY_WIZNET5K=5500 all
+        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 all
         
     - name: Get the datetime
       id: get_datetime
