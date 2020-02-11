@@ -38,8 +38,10 @@ env:
   REPO_BRANCH: master
   TOOLCHAIN_FROM_SCRATCH: false
   TZ: Asia/Shanghai
-  DIY_MPY_MODULES: true
-  DIY_C_MODULES: true
+  CUSTOM_MPCONFIGPORT: true
+  ADD_MPY_FROZEN_MODULES: true
+  ADD_NATIVE_C_MPY_MODULES: true
+  ADD_EXTERNAL_C_MODULES: true
   
 jobs:
   build:
@@ -95,12 +97,15 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
-    - name: Build the mpy-cross tool
+    - name: Clone the ulab external c modules
+      working-directory: ./c_modules/ESP32
       run: |
-        cd my_micropython
-        pwd
-        ls -al
-        make -C mpy-cross
+        git clone https://github.com/v923z/micropython-ulab.git ulab
+        
+    - name: Build the mpy-cross tool
+      working-directory: ./my_micropython/mpy-cross
+      run: |
+        make
         
     - name: Build the unix port
       id: unix_port
@@ -113,13 +118,20 @@ jobs:
         echo $MOREF
         echo "::set-output name=version::$MOREF"
         echo "::set-output name=board::${{ matrix.test-board }}"
-        
-    - name: DIY micropython modules
+   
+    - name: Custom the mpconfigport.h file
+      if: env.CUSTOM_MPCONFIGPORT == 'true'
+      working-directory: ./my_micropython/ports/esp32/
+      run: |
+        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+   
+    - name: Add micropython frozen modules
       working-directory: ./my_micropython/ports/esp32/boards
-      if: env.DIY_MPY_MODULES == 'true'
+      if: env.ADD_MPY_FROZEN_MODULES == 'true'
       run: |
         echo "freeze('\$(MPY_DIR)/../modules/ESP32')" >> manifest.py
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
+        echo "freeze('\$(PORT_DIR)/modules')" >> manifest.py
 
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
@@ -151,7 +163,7 @@ jobs:
         cd ../my_micropython/ports/esp32
         make clean
         make submodules
-        make V=1 BOARD=${{ matrix.test-board }}
+        make V=1 BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/ESP32
 
     - name: Get the datetime
       id: get_datetime
@@ -170,17 +182,17 @@ jobs:
         name: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
-    - name: DIY c mpy modules
-      if: env.DIY_C_MODULES == 'true'
+    - name: Add native c mpy modules
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
       working-directory: ./c_modules/
       run: |
+        echo "[factorial]"
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH
         cd ./Universal/factorial
         make ARCH=xtensawin
-        ls -al
         
     - name: Upload c mpy file
-      if: env.DIY_C_MODULES == 'true'    
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'    
       uses: actions/upload-artifact@master
       with:
         name: factorial
