@@ -64,9 +64,9 @@ jobs:
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
       
     - name: Clone the ulab external c modules
-      working-directory: ./
+      working-directory: ./c_modules
       run: |
-        git clone https://github.com/v923z/micropython-ulab.git c_modules/STM32
+        git clone https://github.com/v923z/micropython-ulab.git STM32
 
     - name: Get the cross-toolchain
       run: |
