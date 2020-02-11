@@ -55,7 +55,6 @@ jobs:
       matrix:
         test-board:
         - GENERIC
-        - GENERIC_512K    
 
     steps:
     - name: Checkout this repos
@@ -100,14 +99,6 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
-    # - name: Clone the ulab external c modules
-      # working-directory: ./c_modules
-      # run: |
-        # git clone https://github.com/v923z/micropython-ulab.git ulab
-        # mkdir -p ./ESP8266/ulab
-        # cp -R ./ulab/code/. ./ESP8266/ulab
-        # ls -al ./ESP8266/ulab
-        
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
       run: |
@@ -139,10 +130,10 @@ jobs:
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
         echo "freeze('\$(PORT_DIR)/modules')" >> manifest.py   
 
-    # - name: upip micropython modules from internet
-      # working-directory: ./my_micropython/ports/unix
-      # run: |
-        # ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem        
+    - name: upip micropython modules from internet
+      working-directory: ./my_micropython/ports/unix
+      run: |
+        ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem        
         
     - name: Build the ESP8266 port
       run: |        
