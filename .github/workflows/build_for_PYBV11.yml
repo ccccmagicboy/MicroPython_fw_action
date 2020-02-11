@@ -200,12 +200,21 @@ jobs:
         asset_content_type: application/zip     
       
     - name: Upload to amazon S3
-      uses: jakejarvis/s3-sync-action@master
-      with:
-        args: --acl public-read --follow-symlinks
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'cn-north-1'
-        SOURCE_DIR: ${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
+        AWSCLI_VERSION: '1.17.1'
+      run: |
+        pip install --quiet --no-cache-dir awscli==${AWSCLI_VERSION}
+        aws configure --profile s3-sync-action <<-EOF > /dev/null 2>&1
+        ${AWS_ACCESS_KEY_ID}
+        ${AWS_SECRET_ACCESS_KEY}
+        ${AWS_REGION}
+        text
+        EOF
+        echo ${AWS_S3_BUCKET}
+        echo ${{ secrets.AWS_S3_BUCKET }}
+        aws s3 cp ./${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/
+
