@@ -61,7 +61,15 @@ jobs:
     - name: Clone the micropython source code
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
-        git submodule update --init             
+        git submodule update --init      
+
+    - name: Clone the ulab external c modules
+      working-directory: ./c_modules
+      run: |
+        git clone https://github.com/v923z/micropython-ulab.git ulab
+        mkdir -p ./STM32/ulab
+        cp -R ./ulab/code/. ./STM32/ulab
+        ls -al ./STM32/ulab        
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
@@ -72,7 +80,7 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/unix/
       run: |
-        echo " " >> mpconfigport.h               
+        echo " " >> mpconfigport.h             
         
     - name: Get the datetime
       id: get_datetime
@@ -120,14 +128,15 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/windows/
       run: |
-        echo " " >> mpconfigport.h        
+        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+        echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h       
         
     - name: Build the Windows port x64
       working-directory: ./my_micropython/ports/windows/
       run: |        
         make clean
         make submodules        
-        make CROSS_COMPILE=x86_64-w64-mingw32-
+        make CROSS_COMPILE=x86_64-w64-mingw32- USER_C_MODULES=../../../c_modules/STM32 all
         
     - name: Zip the artifact
       run: |
@@ -138,13 +147,15 @@ jobs:
       with:
         name: Micropython_x64_windows_${{ steps.get_datetime.outputs.datetime_str }}
         path: Micropython_x64_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
-        
+ 
+#########################################################################
+ 
     - name: Build the Windows port x86
       working-directory: ./my_micropython/ports/windows/
       run: |        
         make clean
         make submodules      
-        make CROSS_COMPILE=i686-w64-mingw32-
+        make CROSS_COMPILE=i686-w64-mingw32- USER_C_MODULES=../../../c_modules/STM32 all
         
     - name: Zip the artifact
       run: |
