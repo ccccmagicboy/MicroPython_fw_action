@@ -72,9 +72,12 @@ jobs:
         git submodule update --init
         
     - name: Clone the ulab external c modules
-      working-directory: ./c_modules/STM32
+      working-directory: ./c_modules
       run: |
         git clone https://github.com/v923z/micropython-ulab.git ulab
+        mkdir -p ./JS/ulab
+        cp -R ./ulab/code/. ./JS/ulab
+        ls -al ./JS/ulab        
         
     - name: Clone the emsdk
       run: |
@@ -94,6 +97,7 @@ jobs:
       working-directory: ./my_micropython/ports/javascript/
       run: |
         echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+        echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h            
       
     - name: Del the flag
       working-directory: ./
@@ -104,7 +108,7 @@ jobs:
       working-directory: ./my_micropython/ports/javascript
       run: |
         source ../../../emsdk/emsdk_env.sh
-        make USER_C_MODULES=../../../c_modules/STM32 all
+        make USER_C_MODULES=../../../c_modules/JS min
         ls ./build -al
         
     - name: Get the datetime
