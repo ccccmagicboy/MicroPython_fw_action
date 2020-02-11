@@ -40,10 +40,11 @@ env:
   TOOLCHAIN_REPO_URL: https://github.com/pfalcon/esp-open-sdk.git
   TOOLCHAIN_REPO_BRANCH: master  
   TZ: Asia/Shanghai
-  DIY_MPY_MODULES: true
-  DIY_C_MODULES: true
-  BOARD: GENERIC
-
+  CUSTOM_MPCONFIGPORT: true
+  ADD_MPY_FROZEN_MODULES: true
+  ADD_NATIVE_C_MPY_MODULES: true
+  ADD_EXTERNAL_C_MODULES: true
+  
 jobs:
   build:
     name: Build
@@ -98,12 +99,18 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
-    - name: Build the mpy-cross tool
+    - name: Clone the ulab external c modules
+      working-directory: ./c_modules
       run: |
-        cd my_micropython
-        pwd
-        ls -al
-        make -C mpy-cross
+        git clone https://github.com/v923z/micropython-ulab.git ulab
+        mkdir -p ./ESP8266/ulab
+        cp -R ./ulab/code/. ./ESP8266/ulab
+        ls -al ./ESP8266/ulab
+        
+    - name: Build the mpy-cross tool
+      working-directory: ./my_micropython/mpy-cross
+      run: |
+        make
         
     - name: Build the unix port
       id: unix_port
@@ -117,15 +124,25 @@ jobs:
         echo "::set-output name=version::$MOREF"
         echo "::set-output name=board::${{ matrix.test-board }}"
         
-    - name: DIY micropython modules
-      if: env.DIY_MPY_MODULES == 'true'
-      run: echo "0"
-      #uses: ccccmagicboy/FW_DIY_mpy_modules_action@master      
+    - name: Custom the mpconfigport.h file
+      if: env.CUSTOM_MPCONFIGPORT == 'true'
+      working-directory: ./my_micropython/ports/stm32/
+      run: |
+        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+        echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h        
+        
+    - name: Add micropython frozen modules
+      working-directory: ./my_micropython/ports/esp8266/boards
+      if: env.ADD_MPY_FROZEN_MODULES == 'true'
+      run: |
+        echo "freeze('\$(MPY_DIR)/../modules/ESP8266')" >> manifest.py
+        echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
+        echo "freeze('\$(PORT_DIR)/modules')" >> manifest.py   
 
-    - name: DIY c modules
-      if: env.DIY_C_MODULES == 'true'
-      run: echo "0"
-      #uses: ccccmagicboy/FW_DIY_c_modules_action@master               
+    - name: upip micropython modules from internet
+      working-directory: ./my_micropython/ports/unix
+      run: |
+        ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem        
         
     - name: Build the ESP8266 port
       run: |        
@@ -133,7 +150,7 @@ jobs:
         pwd
         ls -al
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH        
-        make BOARD=${{ matrix.test-board }}
+        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/ESP8266 all
         ls -al
         
     - name: Get the datetime
@@ -153,18 +170,19 @@ jobs:
         name: ESP8266_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: ESP8266_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
             
-    - name: DIY c mpy modules
-      if: env.DIY_C_MODULES == 'true'
-      working-directory: ./c_modules/
+    - name: Add native c mpy modules
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
+      working-directory: ./c_mpy_modules/
       run: |
+        echo "[factorial]"
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
         cd ./Universal/factorial
         make ARCH=xtensa
         ls -al
         
     - name: Upload c mpy file
-      if: env.DIY_C_MODULES == 'true'    
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'    
       uses: actions/upload-artifact@master
       with:
         name: factorial
-        path: c_modules/Universal/factorial/factorial.mpy  
+        path: c_mpy_modules/Universal/factorial/factorial.mpy  
