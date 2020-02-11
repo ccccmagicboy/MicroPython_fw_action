@@ -36,7 +36,8 @@ on:
 env:
   REPO_URL: https://github.com/micropython/micropython.git
   REPO_BRANCH: master
-  DIY_C_MODULES: true
+  CUSTOM_MPCONFIGPORT: true
+  ADD_NATIVE_C_MPY_MODULES: true
 
 jobs:
   build:
@@ -62,11 +63,14 @@ jobs:
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
         
+    - name: Clone the ulab external c modules
+      working-directory: ./c_modules/STM32
+      run: |
+        git clone https://github.com/v923z/micropython-ulab.git ulab                
+        
     - name: Build the mpy-cross tool
       run: |
         cd my_micropython
-        pwd
-        ls -al
         make -C mpy-cross
         
     - name: Get the datetime
@@ -74,7 +78,7 @@ jobs:
       uses: ccccmagicboy/get_datetime@master
       with:
         tz1: 'Asia'
-        tz2: 'Shanghai'        
+        tz2: 'Shanghai'  
         
     - name: Build the linux port
       working-directory: ./my_micropython/ports/unix/
@@ -95,12 +99,18 @@ jobs:
         name: Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}
         path: Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
+    - name: Custom the mpconfigport.h file
+      if: env.CUSTOM_MPCONFIGPORT == 'true'
+      working-directory: ./my_micropython/ports/windows/
+      run: |
+        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h        
+        
     - name: Build the Windows port x64
       working-directory: ./my_micropython/ports/windows/
       run: |        
         make clean
         make submodules        
-        make CROSS_COMPILE=x86_64-w64-mingw32-
+        make CROSS_COMPILE=x86_64-w64-mingw32- USER_C_MODULES=../../../c_modules/STM32
         
     - name: Zip the artifact
       run: |
@@ -130,7 +140,7 @@ jobs:
         path: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
     - name: DIY c mpy modules
-      if: env.DIY_C_MODULES == 'true'
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
       working-directory: ./c_modules/
       run: |
         cd ./Universal/factorial
@@ -138,14 +148,14 @@ jobs:
         ls -al
         
     - name: Upload c mpy file
-      if: env.DIY_C_MODULES == 'true'    
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'    
       uses: actions/upload-artifact@master
       with:
         name: factorial_x64
         path: c_modules/Universal/factorial/factorial.mpy    
 
     - name: DIY c mpy modules
-      if: env.DIY_C_MODULES == 'true'
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
       working-directory: ./c_modules/
       run: |
         cd ./Universal/factorial
@@ -153,7 +163,7 @@ jobs:
         ls -al
         
     - name: Upload c mpy file
-      if: env.DIY_C_MODULES == 'true'    
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'    
       uses: actions/upload-artifact@master
       with:
         name: factorial_x86
