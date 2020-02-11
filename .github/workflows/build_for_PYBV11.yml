@@ -204,15 +204,9 @@ jobs:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: 'cn-north-1'
       run: |
         pip3 install awscli
-        aws configure --profile s3-sync-action <<-EOF > /dev/null 2>&1
-        ${AWS_ACCESS_KEY_ID}
-        ${AWS_SECRET_ACCESS_KEY}
-        ${AWS_REGION}
-        text
-        EOF
+        printf "%s\n%s\ncn-north-1\njson" "$AWS_ACCESS_KEY_ID" "$AWS_SECRET_ACCESS_KEY" | aws configure --profile my-profile
         aws s3 cp ./${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/
 
 
