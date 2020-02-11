@@ -114,7 +114,8 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/stm32/
       run: |
-        echo "#define MODULE_STM32_ENABLED (1)" >> mpconfigport.h
+        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+        echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h
                 
     - name: Add micropython frozen modules
       working-directory: ./my_micropython/ports/stm32/boards
