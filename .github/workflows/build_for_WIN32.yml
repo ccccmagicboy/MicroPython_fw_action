@@ -61,17 +61,18 @@ jobs:
     - name: Clone the micropython source code
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
-        git submodule update --init
-        
-    - name: Clone the ulab external c modules
-      working-directory: ./c_modules/STM32
-      run: |
-        git clone https://github.com/v923z/micropython-ulab.git ulab                
+        git submodule update --init             
         
     - name: Build the mpy-cross tool
+      working-directory: ./my_micropython/mpy-cross
       run: |
-        cd my_micropython
-        make -C mpy-cross
+        make
+        
+    - name: Custom the mpconfigport.h file
+      if: env.CUSTOM_MPCONFIGPORT == 'true'
+      working-directory: ./my_micropython/ports/unix/
+      run: |
+        echo " " >> mpconfigport.h               
         
     - name: Get the datetime
       id: get_datetime
@@ -99,18 +100,34 @@ jobs:
         name: Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}
         path: Micropython_amd64_linux_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
+    - name: DIY c mpy modules
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
+      working-directory: ./c_mpy_modules/
+      run: |
+        cd ./Universal/factorial
+        make ARCH=x64
+        
+    - name: Upload c mpy file
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'    
+      uses: actions/upload-artifact@master
+      with:
+        name: factorial_x64_unix
+        path: c_mpy_modules/Universal/factorial/factorial.mpy   
+
+#########################################################################        
+        
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/windows/
       run: |
-        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h        
+        echo " " >> mpconfigport.h        
         
     - name: Build the Windows port x64
       working-directory: ./my_micropython/ports/windows/
       run: |        
         make clean
         make submodules        
-        make CROSS_COMPILE=x86_64-w64-mingw32- USER_C_MODULES=../../../c_modules/STM32
+        make CROSS_COMPILE=x86_64-w64-mingw32-
         
     - name: Zip the artifact
       run: |
@@ -138,37 +155,7 @@ jobs:
       with:
         name: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}
         path: Micropython_x86_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip        
-        
-    - name: DIY c mpy modules
-      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
-      working-directory: ./c_modules/
-      run: |
-        cd ./Universal/factorial
-        make ARCH=x64 CROSS_COMPILE=x86_64-w64-mingw32-
-        ls -al
-        
-    - name: Upload c mpy file
-      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'    
-      uses: actions/upload-artifact@master
-      with:
-        name: factorial_x64
-        path: c_modules/Universal/factorial/factorial.mpy    
-
-    - name: DIY c mpy modules
-      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
-      working-directory: ./c_modules/
-      run: |
-        cd ./Universal/factorial
-        make ARCH=x86 CROSS_COMPILE=i686-w64-mingw32-
-        ls -al
-        
-    - name: Upload c mpy file
-      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'    
-      uses: actions/upload-artifact@master
-      with:
-        name: factorial_x86
-        path: c_modules/Universal/factorial/factorial.mpy    
-        
+           
   build_1:
     name: Build MACOS
     runs-on: macos-latest
