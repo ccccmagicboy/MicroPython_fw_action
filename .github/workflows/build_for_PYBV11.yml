@@ -41,8 +41,9 @@ env:
   TZ: Asia/Shanghai
   CUSTOM_FACTORY_RESET: true
   CUSTOM_MPCONFIGPORT: true
-  DIY_MPY_MODULES: true
-  DIY_C_MODULES: true
+  ADD_MPY_FROZEN_MODULES: true
+  ADD_NATIVE_C_MPY_MODULES: true
+  ADD_EXTERNAL_C_MODULES: true
 
 jobs:
   build:
@@ -62,14 +63,14 @@ jobs:
       uses: actions/checkout@v2    
 
     - name: Clone the micropython source code
-      #depth用于指定克隆深度，为1即表示只克隆最近一次commit.
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
       
-    - name: Clone the ulab
+    - name: Clone the ulab external c modules
+      working-directory: ./c_modules/STM32
       run: |
         git clone https://github.com/v923z/micropython-ulab.git ulab
 
-    - name: get the cross-toolchain
+    - name: Get the cross-toolchain
       run: |
         sudo apt-get install gcc-arm-none-eabi
         sudo apt-get install gcc
@@ -77,12 +78,10 @@ jobs:
         pip3 install --upgrade pip
         pip3 install pyelftools
       
-    - name: build the mpy-cross tool
+    - name: Build the mpy-cross tool
+      working-directory: ./my_micropython/mpy-cross
       run: |
-        cd my_micropython
-        pwd
-        ls -al
-        make -C mpy-cross
+        make
         
     - name: Build the unix port
       id: unix_port
@@ -107,8 +106,8 @@ jobs:
         
     - name: Custom the factoryreset.c file
       if: env.CUSTOM_FACTORY_RESET == 'true'
-      run: echo "0"
-      #uses: ccccmagicboy/FW_stm32_custom_factory_reset_action@master
+      run: |
+        echo "0"
       
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'
@@ -116,9 +115,9 @@ jobs:
       run: |
         echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
                 
-    - name: DIY micropython modules
+    - name: Add micropython frozen modules
       working-directory: ./my_micropython/ports/stm32/boards
-      if: env.DIY_MPY_MODULES == 'true'
+      if: env.ADD_MPY_FROZEN_MODULES == 'true'
       run: |
         echo "freeze('\$(MPY_DIR)/../modules/STM32')" >> manifest.py
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
@@ -129,25 +128,25 @@ jobs:
       run: |
         ./micropython -m upip install -p ../stm32/modules micropython-pystone_lowmem
 
-    - name: DIY c mpy modules
-      if: env.DIY_C_MODULES == 'true'
-      working-directory: ./c_modules/
+    - name: Add native c mpy modules
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
+      working-directory: ./c_mpy_modules/
       run: |
+        echo "[factorial]"
         cd ./Universal/factorial
         make ARCH=armv7emsp
-        ls -al
         
     - name: Upload c mpy file
-      if: env.DIY_C_MODULES == 'true'
+      if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
       uses: actions/upload-artifact@master
       with:
         name: factorial
-        path: c_modules/Universal/factorial/factorial.mpy
+        path: c_mpy_modules/Universal/factorial/factorial.mpy
         
     - name: Build the dfu file - ${{ matrix.test-board }}
       working-directory: ./my_micropython/ports/stm32/
       run: |
-        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../ulab MICROPY_PY_WIZNET5K=5500 all
+        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 all
         
     - name: Get the datetime
       id: get_datetime
@@ -177,8 +176,8 @@ jobs:
         release_name: v1.0
         body: |
           Changes in this Release
-          - First Change
-          - Second Change
+          - First Change xxx
+          - Second Change xxx
           - XXX
         draft: true
         prerelease: false
@@ -195,11 +194,5 @@ jobs:
         asset_name: ${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
         asset_content_type: application/zip     
 
-  build_1:
-    name: Test
-    needs: [build]
-    runs-on: ubuntu-16.04
-    steps:
-    - name: hello
-      run: |
-        echo "hello"
+        
+        
