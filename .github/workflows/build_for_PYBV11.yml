@@ -66,7 +66,8 @@ jobs:
     - name: Clone the ulab external c modules
       working-directory: ./c_modules
       run: |
-        git clone https://github.com/v923z/micropython-ulab.git STM32
+        git clone https://github.com/v923z/micropython-ulab.git ulab
+        cp ./ulab/code ./STM32/ulab 
 
     - name: Get the cross-toolchain
       run: |
