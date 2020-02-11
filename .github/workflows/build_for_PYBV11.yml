@@ -198,5 +198,5 @@ jobs:
         asset_path: ./${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
         asset_name: ${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
         asset_content_type: application/zip     
-
+      
 
