@@ -163,7 +163,7 @@ jobs:
         cd ../my_micropython/ports/esp32
         make clean
         make submodules
-        make V=1 BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/ESP32
+        make V=1 BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/ESP32 all
 
     - name: Get the datetime
       id: get_datetime
