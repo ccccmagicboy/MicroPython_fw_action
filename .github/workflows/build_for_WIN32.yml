@@ -185,15 +185,7 @@ jobs:
     - name: Clone the micropython source code
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
-        git submodule update --init
-        
-    - name: Clone the ulab external c modules
-      working-directory: ./c_modules
-      run: |
-        git clone https://github.com/v923z/micropython-ulab.git ulab
-        mkdir -p ./x86/ulab
-        cp -R ./ulab/code/. ./x86/ulab
-        ls -al ./x86/ulab        
+        git submodule update --init      
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
@@ -204,7 +196,6 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/unix/
       run: |
-        echo "#define MODULE_ULAB_ENABLED (0)" >> mpconfigport.h
         echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h           
         
     - name: Get the datetime
