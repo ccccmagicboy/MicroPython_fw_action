@@ -104,8 +104,8 @@ jobs:
       working-directory: ./my_micropython/ports/javascript
       run: |
         source ../../../emsdk/emsdk_env.sh
-        make min USER_C_MODULES=../../../c_modules/STM32 all
-        ls -al
+        make USER_C_MODULES=../../../c_modules/STM32 all
+        ls ./build -al
         
     - name: Get the datetime
       id: get_datetime
