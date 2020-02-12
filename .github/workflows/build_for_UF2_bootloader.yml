@@ -48,7 +48,7 @@ jobs:
       
     - name: Install the depend
       run: |
-        sudo apt-get install libc6-dev
+        sudo apt-get install gcc-arm-none-eabi
       
     - name: Clone the micropython source code
       run: |
@@ -58,10 +58,9 @@ jobs:
       uses: p3terx/debugger-action@master  
    
     - name: Build UF2
-      working-directory: ./my_micropython/ports/javascript
+      working-directory: ./my_uf2
       run: |
-        source ../../../emsdk/emsdk_env.sh
-        make min
+        make
         ls ./build -al
         
     - name: Get the datetime
