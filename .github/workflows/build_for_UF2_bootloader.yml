@@ -42,6 +42,15 @@ jobs:
     name: Build
     runs-on: ubuntu-16.04
 
+    strategy:
+      max-parallel: 2
+      matrix:
+        test-board:
+        - f401
+        # - f412
+        - feather_f405
+        - stm32f407-discovery
+    
     steps:
     - name: Checkout this repos
       uses: actions/checkout@v2     
@@ -54,14 +63,14 @@ jobs:
       run: |
         git clone $REPO_URL -b $REPO_BRANCH my_uf2
    
-    - name: Debug the action
-      uses: p3terx/debugger-action@master  
+    # - name: Debug the action
+      # uses: p3terx/debugger-action@master  
    
     - name: Build UF2
       working-directory: ./my_uf2
       run: |
-        make
-        ls ./build -al
+        make BOARD=${{ matrix.test-board }}
+        ls ./build/${{ matrix.test-board }} -al
         
     - name: Get the datetime
       id: get_datetime
@@ -72,13 +81,13 @@ jobs:
                 
     - name: Zip the artifact
       run: |
-        zip --junk-paths uf2-stm32f README.md MicroPython_fw_action_card.png        
+        zip --junk-paths ${{ matrix.test-board }}_uf2_${{ steps.get_datetime.outputs.datetime_str }} ./build/${{ matrix.test-board }}/bootloader.bin README.md MicroPython_fw_action_card.png        
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: Micropython_js_min_${{ steps.get_datetime.outputs.datetime_str }}
-        path: Micropython_js_min_${{ steps.get_datetime.outputs.datetime_str }}.zip        
+        name: ${{ matrix.test-board }}_uf2_${{ steps.get_datetime.outputs.datetime_str }}
+        path: ${{ matrix.test-board }}_uf2_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
         
         
