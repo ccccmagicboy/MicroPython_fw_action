@@ -131,13 +131,13 @@ jobs:
       env: 
         STACK_VER: ${{ matrix.bt_stack}}     
       run: |
-        zip --junk-paths nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${STACK_VER:0:4}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/nrf/build-${STACK_VER:0:4}/firmware.bin README.md MicroPython_fw_action_card.png        
+        zip --junk-paths nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${STACK_VER:0:4}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/nrf/build-${{ matrix.test-board }}-${STACK_VER:0:4}/firmware.bin my_micropython/ports/nrf/build-${{ matrix.test-board }}-${STACK_VER:0:4}/firmware.hex README.md MicroPython_fw_action_card.png        
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.bt_stack }}_${{ steps.get_datetime.outputs.datetime_str }}
-        path: nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.bt_stack }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
+        name: nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${STACK_VER:0:4}_${{ steps.get_datetime.outputs.datetime_str }}
+        path: nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${STACK_VER:0:4}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
         
         
