@@ -1,0 +1,124 @@
+#===================================================================================
+# https://github.com/ccccmagicboy/MicroPython_fw_action
+# Description: Build MicroPython firmware using GitHub Actions for nRF
+# Lisence: MIT
+# Author: ccccmagicboy
+# Url: https://ccrobot-online.com
+#===================================================================================
+
+name: nRF_BUILD
+
+on:
+  pull_request:
+    branches:
+    - master
+  push:
+    branches:
+    - master
+    paths:
+    - '.github/workflows/build_for_nRF.yml'
+    - '!**.md'
+  schedule:
+    - cron: 0 9 * * *
+  # watch:
+    # types: [started]
+    
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of the month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+# │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+# │ │ │ │ │                                   
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * *  
+
+env:
+  REPO_URL: https://github.com/micropython/micropython.git
+  REPO_BRANCH: master
+  CUSTOM_MPCONFIGPORT: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-16.04
+
+    strategy:
+      max-parallel: 6
+      matrix:
+        test-board:
+        - pca10040
+        - pca10056
+    
+    steps:
+    - name: Checkout this repos
+      uses: actions/checkout@v2
+        
+    - name: Get the python3
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+        architecture: 'x64'        
+      
+    - name: Install the depend
+      run: |
+        echo 0
+      
+    - name: Clone the micropython source code
+      run: |
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+        git submodule update --init
+        
+    - name: Build the mpy-cross tool
+      working-directory: ./my_micropython/mpy-cross
+      run: |
+        make     
+        
+    - name: Build the unix port
+      id: unix_port
+      run: |
+        cd my_micropython/ports/unix
+        make submodules
+        make
+        find . -name "*micropython*"
+        MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")
+        echo $MOREF
+        echo "::set-output name=version::$MOREF"
+        echo "::set-output name=board::${{ matrix.test-board }}"        
+        
+    - name: Custom the mpconfigport.h file
+      if: env.CUSTOM_MPCONFIGPORT == 'true'
+      working-directory: ./my_micropython/ports/nrf/
+      run: |
+        echo 0
+        
+    - name: Download the blueteeth stack
+      run: |
+        ./drivers/bluetooth/download_ble_stack.sh
+        
+    - name: Build the nrf port
+      working-directory: ./my_micropython/ports/nrf
+      run: |
+        make submodules
+        make V=1 BOARD=${{ matrix.test-board }} SD=s132 all
+        ls ./build-${{ matrix.test-board }} -al
+        
+    - name: Get the datetime
+      id: get_datetime
+      uses: ccccmagicboy/get_datetime@master
+      with:
+        tz1: 'Asia'
+        tz2: 'Shanghai'        
+                
+    - name: Zip the artifact
+      run: |
+        zip --junk-paths nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/nrf/build-${{ matrix.test-board }}/firmware.bin README.md MicroPython_fw_action_card.png        
+        
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}
+        path: nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
+        
+        
+        
