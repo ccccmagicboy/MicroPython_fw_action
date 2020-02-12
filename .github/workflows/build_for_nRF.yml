@@ -50,9 +50,9 @@ jobs:
         - pca10040
         # - pca10056
         bt_stack:
-        - s110_nrf51
+        # - s110_nrf51
         - s132_nrf52_6_1_1
-        - s140_nrf52_6_1_1
+        # - s140_nrf52_6_1_1
     
     steps:
     - name: Checkout this repos
@@ -112,8 +112,8 @@ jobs:
         STACK_VER: ${{ matrix.bt_stack}} 
       run: |
         make submodules
-        make V=1 BOARD=${{ matrix.test-board }} SD=$STACK_VER:0:4 FROZEN_MPY_DIR=freeze all
-        ls ./build-${{ matrix.test-board }}-$STACK_VER:0:4 -al
+        make V=1 BOARD=${{ matrix.test-board }} SD=${STACK_VER%_*} FROZEN_MPY_DIR=freeze all
+        ls ./build-${{ matrix.test-board }}-${STACK_VER%_*} -al
         
     - name: Get the datetime
       id: get_datetime
