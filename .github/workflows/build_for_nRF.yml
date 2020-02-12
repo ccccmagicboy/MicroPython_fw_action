@@ -135,6 +135,8 @@ jobs:
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
+      env: 
+        STACK_VER: ${{ matrix.bt_stack}}
       with:
         name: nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${STACK_VER:0:4}_${{ steps.get_datetime.outputs.datetime_str }}
         path: nRF_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${STACK_VER:0:4}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
