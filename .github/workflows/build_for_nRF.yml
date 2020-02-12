@@ -112,8 +112,8 @@ jobs:
         STACK_VER: ${{ matrix.bt_stack}} 
       run: |
         make submodules
-        make V=1 BOARD=${{ matrix.test-board }} SD=${STACK_VER%_*} FROZEN_MPY_DIR=freeze all
-        ls ./build-${{ matrix.test-board }}-${STACK_VER%_*} -al
+        make V=1 BOARD=${{ matrix.test-board }} SD=s132 FROZEN_MPY_DIR=freeze all
+        ls ./build-${{ matrix.test-board }}-s132 -al
         
     - name: Get the datetime
       id: get_datetime
