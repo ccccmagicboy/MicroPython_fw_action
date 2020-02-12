@@ -104,16 +104,16 @@ jobs:
     - name: Download the blueteeth stack
       working-directory: ./my_micropython/ports/nrf/drivers/bluetooth
       run: |
-        ./download_ble_stack.sh {{ matrix.bt_stack }}
+        ./download_ble_stack.sh ${{ matrix.bt_stack }}
         
     - name: Build the nrf port
       working-directory: ./my_micropython/ports/nrf
       env: 
-        STACK_VER: ${{ matrix.bt_stack }} 
+        STACK_VER: ${{ matrix.bt_stack:0:4}} 
       run: |
         make submodules
-        make V=1 BOARD=${{ matrix.test-board }} SD=${STACK_VER:0:4} FROZEN_MPY_DIR=freeze all
-        ls ./build-${{ matrix.test-board }}-${{ matrix.bt_stack }} -al
+        make V=1 BOARD=${{ matrix.test-board }} SD=$STACK_VER FROZEN_MPY_DIR=freeze all
+        ls ./build-${{ matrix.test-board }}-$STACK_VER -al
         
     - name: Get the datetime
       id: get_datetime
