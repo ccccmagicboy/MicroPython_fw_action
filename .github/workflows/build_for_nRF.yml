@@ -88,13 +88,14 @@ jobs:
         
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'
-      working-directory: ./my_micropython/ports/nrf/
+      working-directory: ./my_micropython/ports/nrf
       run: |
         echo 0
         
     - name: Download the blueteeth stack
+      working-directory: ./my_micropython/ports/nrf/drivers/bluetooth
       run: |
-        ./drivers/bluetooth/download_ble_stack.sh
+        ./download_ble_stack.sh
         
     - name: Build the nrf port
       working-directory: ./my_micropython/ports/nrf
