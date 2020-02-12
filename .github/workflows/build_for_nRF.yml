@@ -48,11 +48,11 @@ jobs:
       matrix:
         test-board:
         - pca10040
-        - pca10056
+        # - pca10056
         bt_stack:
-        - s110
-        - s132
-        - s140
+        - s110_nrf51
+        - s132_nrf52_6_1_1
+        - s140_nrf52_6_1_1
     
     steps:
     - name: Checkout this repos
@@ -89,6 +89,11 @@ jobs:
         echo $MOREF
         echo "::set-output name=version::$MOREF"
         echo "::set-output name=board::${{ matrix.test-board }}"        
+
+    - name: upip micropython modules from internet
+      working-directory: ./my_micropython/ports/unix
+      run: |
+        ./micropython -m upip install -p ../nrf/freeze micropython-pystone_lowmem        
         
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'
@@ -99,13 +104,15 @@ jobs:
     - name: Download the blueteeth stack
       working-directory: ./my_micropython/ports/nrf/drivers/bluetooth
       run: |
-        ./download_ble_stack.sh
+        ./download_ble_stack.sh {{ matrix.bt_stack }}
         
     - name: Build the nrf port
       working-directory: ./my_micropython/ports/nrf
+      env: 
+        STACK_VER: ${{ matrix.bt_stack }} 
       run: |
         make submodules
-        make V=1 BOARD=${{ matrix.test-board }} SD=${{ matrix.bt_stack }} all
+        make V=1 BOARD=${{ matrix.test-board }} SD=${STACK_VER:0:4} FROZEN_MPY_DIR=freeze all
         ls ./build-${{ matrix.test-board }}-${{ matrix.bt_stack }} -al
         
     - name: Get the datetime

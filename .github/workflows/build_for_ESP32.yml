@@ -136,6 +136,11 @@ jobs:
         echo "freeze('\$(MPY_DIR)/../modules/ESP32')" >> manifest.py
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
         echo "freeze('\$(PORT_DIR)/modules')" >> manifest.py
+        
+    - name: upip micropython modules from internet
+      working-directory: ./my_micropython/ports/unix
+      run: |
+        ./micropython -m upip install -p ../esp32/modules micropython-pystone_lowmem        
 
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
