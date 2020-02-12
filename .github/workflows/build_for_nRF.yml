@@ -109,11 +109,11 @@ jobs:
     - name: Build the nrf port
       working-directory: ./my_micropython/ports/nrf
       env: 
-        STACK_VER: ${{ matrix.bt_stack:0:4}} 
+        STACK_VER: ${{ matrix.bt_stack}} 
       run: |
         make submodules
-        make V=1 BOARD=${{ matrix.test-board }} SD=$STACK_VER FROZEN_MPY_DIR=freeze all
-        ls ./build-${{ matrix.test-board }}-$STACK_VER -al
+        make V=1 BOARD=${{ matrix.test-board }} SD=$STACK_VER:0:4 FROZEN_MPY_DIR=freeze all
+        ls ./build-${{ matrix.test-board }}-$STACK_VER:0:4 -al
         
     - name: Get the datetime
       id: get_datetime
