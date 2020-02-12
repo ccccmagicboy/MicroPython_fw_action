@@ -78,6 +78,11 @@ jobs:
         # mkdir -p ./JS/ulab
         # cp -R ./ulab/code/. ./JS/ulab
         # ls -al ./JS/ulab    
+        
+    - name: Build the mpy-cross tool
+      working-directory: ./my_micropython/mpy-cross
+      run: |
+        make        
 
     - name: Build the unix port
       id: unix_port
