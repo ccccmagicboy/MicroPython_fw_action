@@ -84,7 +84,7 @@ jobs:
     - name: Build the doc
       working-directory: ./my_micropython/docs
       run: |
-        make latexpdf
+        make latexpdfja
         ls ./ -al
         ls ./build -al
         
