@@ -86,8 +86,8 @@ jobs:
       working-directory: ./my_micropython/docs
       run: |
         make html
-        ls ./ -al
-        ls ./build -al
+        ls ./build/html -al
+        make latexpdf
         
     - name: Get the datetime
       id: get_datetime
