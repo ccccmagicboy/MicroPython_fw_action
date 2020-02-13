@@ -40,6 +40,7 @@ env:
   TOOLCHAIN_REPO_URL: https://github.com/pfalcon/esp-open-sdk.git
   TOOLCHAIN_REPO_BRANCH: master  
   TZ: Asia/Shanghai
+  CUSTOM_FACTORY_RESET: true
   CUSTOM_MPCONFIGPORT: true
   ADD_MPY_FROZEN_MODULES: true
   ADD_NATIVE_C_MPY_MODULES: true
@@ -133,7 +134,11 @@ jobs:
     - name: upip micropython modules from internet
       working-directory: ./my_micropython/ports/unix
       run: |
-        ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem        
+        ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem  
+
+    - name: Custom the inisetup file
+      if: env.CUSTOM_FACTORY_RESET == 'true'
+      uses: ccccmagicboy/hack_inisetup@master
         
     - name: Build the ESP8266 port
       run: |        
