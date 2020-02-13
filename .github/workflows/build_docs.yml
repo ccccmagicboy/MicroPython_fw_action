@@ -82,6 +82,10 @@ jobs:
         echo "::set-output name=board::${{ matrix.test-board }}"      
         echo "::set-output name=gitid::$(git rev-parse --short HEAD)"
         
+    - name: Config the theme
+      run: |
+        cp ./tools/conf.py ./my_micropython/docs/conf.py
+        
     - name: Build the doc
       working-directory: ./my_micropython/docs
       run: |
