@@ -38,6 +38,8 @@ env:
   REPO_BRANCH: master
   TOOLCHAIN_FROM_SCRATCH: false
   TZ: Asia/Shanghai
+  ADD_CUSTOM_BOARD: true  
+  CUSTOM_FACTORY_RESET: true  
   CUSTOM_MPCONFIGPORT: true
   ADD_MPY_FROZEN_MODULES: true
   ADD_NATIVE_C_MPY_MODULES: true
@@ -96,6 +98,12 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
+        
+    - name: Add Custom boards support
+      if: env.ADD_CUSTOM_BOARD == 'true'
+      working-directory: ./my_micropython/ports/esp32/boards
+      run: |
+        echo "0000"           
 
     - name: Clone the ulab external c modules
       working-directory: ./c_modules
@@ -121,6 +129,7 @@ jobs:
         echo $MOREF
         echo "::set-output name=version::$MOREF"
         echo "::set-output name=board::${{ matrix.test-board }}"
+        echo "::set-output name=gitid::$(git rev-parse --short HEAD)"
    
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'
@@ -140,7 +149,11 @@ jobs:
     - name: upip micropython modules from internet
       working-directory: ./my_micropython/ports/unix
       run: |
-        ./micropython -m upip install -p ../esp32/modules micropython-pystone_lowmem        
+        ./micropython -m upip install -p ../esp32/modules micropython-pystone_lowmem     
+
+    - name: Custom the inisetup file
+      if: env.CUSTOM_FACTORY_RESET == 'true'
+      uses: ccccmagicboy/hack_inisetup@master        
 
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
@@ -183,13 +196,13 @@ jobs:
         
     - name: Zip the artifact
       run: |
-        zip --junk-paths ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/esp32/build-${{ matrix.test-board }}/firmware.bin README.md MicroPython_fw_action_card.png
+        zip --junk-paths ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/esp32/build-${{ matrix.test-board }}/firmware.bin README.md MicroPython_fw_action_card.png
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.get_datetime.outputs.datetime_str }}
-        path: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
+        name: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}
+        path: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
     - name: Add native c mpy modules
       if: env.ADD_NATIVE_C_MPY_MODULES == 'true'
@@ -205,4 +218,21 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: factorial
-        path: c_mpy_modules/Universal/factorial/factorial.mpy    
+        path: c_mpy_modules/Universal/factorial/factorial.mpy 
+
+    - name: Upload to amazon S3
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ secrets.AWS_REGION }}
+      run: |
+        pip3 install awscli
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        aws configure set region $AWS_REGION
+        aws configure list
+        aws s3 cp ./ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/ESP32/${{ steps.unix_port.outputs.board }}/        
+
+        
+        
