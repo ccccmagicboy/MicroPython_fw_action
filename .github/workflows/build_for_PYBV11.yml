@@ -39,6 +39,7 @@ env:
   UPLOAD_FIRMWARE: true
   MAKE_A_RELEASE_DRAFT: false
   TZ: Asia/Shanghai
+  ADD_CUSTOM_BOARD: true
   CUSTOM_FACTORY_RESET: true
   CUSTOM_MPCONFIGPORT: true
   ADD_MPY_FROZEN_MODULES: true
@@ -56,7 +57,7 @@ jobs:
         test-board:
         - PYBV11
         # - PYBLITEV10
-        - BLUE_PILL_F103C8
+        # - BLUE_PILL_F103C8
         # - PYBV10
     
     steps:
@@ -66,10 +67,11 @@ jobs:
     - name: Clone the micropython source code
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
       
-    - name: Add Blue Pill STM32F103C8T6 support
+    - name: Add Custom boards support
+      if: env.ADD_CUSTOM_BOARD == 'true'
       working-directory: ./my_micropython/ports/stm32/boards
       run: |
-        git clone https://github.com/mcauser/BLUE_PILL_F103C8.git
+        echo "0000"
       
     - name: Clone the ulab external c modules
       working-directory: ./c_modules
