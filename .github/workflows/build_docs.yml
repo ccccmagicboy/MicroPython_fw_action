@@ -80,11 +80,12 @@ jobs:
         echo $MOREF
         echo "::set-output name=version::$MOREF"
         echo "::set-output name=board::${{ matrix.test-board }}"      
+        echo "::set-output name=gitid::$(git rev-parse --short HEAD)"
         
     - name: Build the doc
       working-directory: ./my_micropython/docs
       run: |
-        make latexpdfja
+        make html
         ls ./ -al
         ls ./build -al
         

@@ -95,6 +95,7 @@ jobs:
         echo $MOREF
         echo "::set-output name=version::$MOREF"
         echo "::set-output name=board::${{ matrix.test-board }}"        
+        echo "::set-output name=gitid::$(git rev-parse --short HEAD)"
         
     - name: Clone the emsdk
       run: |
