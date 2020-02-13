@@ -1,12 +1,12 @@
 #===================================================================================
 # https://github.com/ccccmagicboy/MicroPython_fw_action
-# Description: Build MicroPython firmware using GitHub Actions for Javascript (node.js)
+# Description: Build MicroPython docs using GitHub Actions
 # Lisence: MIT
 # Author: ccccmagicboy
 # Url: https://ccrobot-online.com
 #===================================================================================
 
-name: Javascript_BUILD
+name: DOC_BUILD
 
 on:
   pull_request:
@@ -16,10 +16,10 @@ on:
     branches:
     - master
     paths:
-    - '.github/workflows/build_for_JS.yml'
+    - '.github/workflows/build_docs.yml'
     - '!**.md'
   schedule:
-    - cron: 0 9 * * *
+    - cron: 0 8 * * *
   # watch:
     # types: [started]
     
@@ -46,10 +46,6 @@ jobs:
     steps:
     - name: Checkout this repos
       uses: actions/checkout@v2
-      
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
         
     - name: Get the python3
       uses: actions/setup-python@v1
@@ -59,25 +55,14 @@ jobs:
       
     - name: Install the depend
       run: |
-        sudo apt-get install libc6-dev
-        sudo apt install libc6-dev-i386
-        sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
-        flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
-        bash help2man wget bzip2 libtool-bin python-serial
-        npm install uglify-js -g
+        sudo apt-get install texlive-latex-recommended texlive-latex-extra
+        pip install sphinx
+        pip install sphinx_rtd_theme
       
     - name: Clone the micropython source code
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
         git submodule update --init
-        
-    # - name: Clone the ulab external c modules
-      # working-directory: ./c_modules
-      # run: |
-        # git clone https://github.com/v923z/micropython-ulab.git ulab
-        # mkdir -p ./JS/ulab
-        # cp -R ./ulab/code/. ./JS/ulab
-        # ls -al ./JS/ulab    
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
@@ -94,33 +79,13 @@ jobs:
         MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")
         echo $MOREF
         echo "::set-output name=version::$MOREF"
-        echo "::set-output name=board::${{ matrix.test-board }}"        
+        echo "::set-output name=board::${{ matrix.test-board }}"      
         
-    - name: Clone the emsdk
+    - name: Build the doc
+      working-directory: ./my_micropython/docs
       run: |
-        git clone https://github.com/emscripten-core/emsdk.git
-        cd emsdk
-        ./emsdk install latest
-        ./emsdk activate latest
-        source ./emsdk_env.sh 
-        
-    # - name: Custom the mpconfigport.h file
-      # if: env.CUSTOM_MPCONFIGPORT == 'true'
-      # working-directory: ./my_micropython/ports/javascript/
-      # run: |
-        # echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
-        # echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h            
-      
-    - name: Fix a bug
-      working-directory: ./
-      run: |
-        python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'javascript', 'Makefile');print(mk_path);replaceAll(mk_path, '-s \"BINARYEN_TRAP_MODE=\'clamp\'\"', '-s USE_SDL=2')"
-        
-    - name: Build the javascript port
-      working-directory: ./my_micropython/ports/javascript
-      run: |
-        source ../../../emsdk/emsdk_env.sh
-        make min
+        make latexpdf
+        ls ./ -al
         ls ./build -al
         
     - name: Get the datetime
