@@ -56,6 +56,7 @@ jobs:
     - name: Install the depend
       run: |
         sudo apt-get install texlive-latex-recommended texlive-latex-extra
+        sudo apt install latexmk
         pip install sphinx
         pip install sphinx_rtd_theme
       
