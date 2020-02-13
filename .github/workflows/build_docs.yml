@@ -87,7 +87,6 @@ jobs:
       run: |
         make html
         ls ./build/html -al
-        make latexpdf
         
     - name: Get the datetime
       id: get_datetime
