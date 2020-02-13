@@ -41,7 +41,7 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout this repos
@@ -55,10 +55,9 @@ jobs:
       
     - name: Install the depend
       run: |
-        sudo apt-get install texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
+        sudo apt-get install texlive-latex-recommended texlive-latex-extra
         sudo apt install latexmk
         pip install sphinx
-        pip install sphinx_rtd_theme
       
     - name: Clone the micropython source code
       run: |
