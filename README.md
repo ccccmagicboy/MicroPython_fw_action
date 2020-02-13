@@ -13,11 +13,11 @@
 | 5 	| ![](https://img.shields.io/badge/mpy_cross-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/mpy-cross_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3Ampy-cross_BUILD) 	|  	|  	|  	|  	|
 | 6 	| ![](https://img.shields.io/badge/ESP32-LoBo-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/ESP32_LoBo_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3Ampy-ESP32_LoBo_BUILD) 	|  	|  	|  	|  	|
 | 7 	| ![](https://img.shields.io/badge/Javascript-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/Javascript_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3AJavascript_BUILD) 	|  	|  	|  	|  	|
-
+| 8 	| ![](https://img.shields.io/badge/nRF-official-blue) 	| [![Actions Status](https://github.com/ccccmagicboy/MicroPython_fw_action/workflows/nRF_BUILD/badge.svg)](https://github.com/ccccmagicboy/MicroPython_fw_action/actions?query=workflow%3AnRF_BUILD) 	|  	|  	|  	|  	|
 
 Just 5 mins to get your own most up-to-date code from official micropython repository compiled only using free github account, click the star and have a try.
 
-now support stm32/esp32/esp32(loboris)/esp8266/x86(64bit)/javascript firmware build and mpy-cross tool build for different platforms. You can download artifacts that were uploaded during a workflow. Artifacts automatically expire after 90 days.
+now support stm32/esp32/esp32(loboris)/esp8266/x86(64bit)/javascript/nrf firmware build and mpy-cross tool build for different platforms. You can download artifacts that were uploaded during a workflow. Artifacts automatically expire after 90 days.
 
 Most binaries builded from official Micropython source code:
 - http://www.micropython.org/
