@@ -132,6 +132,16 @@ jobs:
         pip install cryptography==2.1.4
         pip install pyparsing==2.0.3
         pip install pyelftools==0.22
+        
+    - name: Down and install the toolchain
+      run: |
+        mkdir -p my_toolchain
+        cd my_toolchain
+        curl -O https://dl.espressif.com/dl/xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+        tar -xzf xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+        rm xtensa-esp32-elf-linux64-1.22.0-80-g6c4433a-5.2.0.tar.gz
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH
+        xtensa-esp32-elf-gcc --version        
 
     - name: Clone the source code and build the docs
       id: build_doc
