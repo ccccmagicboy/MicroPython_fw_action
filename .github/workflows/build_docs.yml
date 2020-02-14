@@ -110,7 +110,7 @@ jobs:
         name: Micropython_docs_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: Micropython_docs_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
-  build:
+  build_1:
     name: Build IDF docs
     runs-on: ubuntu-latest
 
