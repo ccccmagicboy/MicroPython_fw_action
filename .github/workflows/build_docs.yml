@@ -136,7 +136,8 @@ jobs:
       run: |
         git clone https://github.com/espressif/esp-idf.git esp-idf
         cd esp-idf/docs
-        make html
+        ./build_docs.py -t esp32 -l en build
+        ./build_docs.py -t esp32 -l zh_CN build
         ls ./build/html -al
         echo "::set-output name=gitid::$(git rev-parse --short HEAD)"
         
