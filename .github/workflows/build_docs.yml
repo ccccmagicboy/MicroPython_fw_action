@@ -146,6 +146,7 @@ jobs:
     - name: Clone the source code and build the docs
       id: build_doc
       run: |
+        ./export.sh
         git clone https://github.com/espressif/esp-idf.git esp-idf
         cd esp-idf/docs
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-esp32-elf/bin:$PATH        
