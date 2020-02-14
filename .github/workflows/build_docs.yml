@@ -127,11 +127,11 @@ jobs:
     - name: Install the depend
       run: |
         sudo apt-get install git wget flex bison gperf cmake ninja-build ccache libffi-dev libssl-dev
-        pip install click=5.0
-        pip install pyserial=3.0
-        pip install cryptography=2.1.4
-        pip install pyparsing=2.0.3
-        pip install pyelftools=0.22
+        pip install click==5.0
+        pip install pyserial==3.0
+        pip install cryptography==2.1.4
+        pip install pyparsing==2.0.3
+        pip install pyelftools==0.22
 
     - name: Clone the source code and build the docs
       id: build_doc
