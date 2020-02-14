@@ -17,7 +17,9 @@
 
 Just 5 mins to get your own most up-to-date code from official micropython repository compiled only using free github account, click the star and have a try.
 
-now support stm32/esp32/esp32(loboris)/esp8266/x86(64bit)/javascript/nrf firmware build and mpy-cross tool build for different platforms. You can download artifacts that were uploaded during a workflow. Artifacts automatically expire after 90 days.
+This project is under MIT license, and you can use this project as a starting point for building your own micropython firmware.
+
+now support stm32/esp32/esp32(loboris)/esp8266/x86(64bit)/javascript/nrf firmware build and mpy-cross tool build for different platforms. Also, you can only download artifacts that were uploaded during a workflow. Artifacts automatically expire after 90 days.
 
 Most binaries builded from official Micropython source code:
 - http://www.micropython.org/
