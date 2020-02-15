@@ -130,7 +130,8 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/esp8266/
       run: |
-        echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h        
+        echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h
+        echo "#define MODULE_HELLO_ENABLED (1)" >> mpconfigport.h        
         
     - name: Add micropython frozen modules
       working-directory: ./my_micropython/ports/esp8266/boards
@@ -142,7 +143,9 @@ jobs:
     - name: upip micropython modules from internet
       working-directory: ./my_micropython/ports/unix
       run: |
-        ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem  
+        ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem
+        ./micropython -m upip install -p ../esp8266/modules uiperf3
+        ./micropython -m upip install -p ../esp8266/modules notes-pico
 
     - name: Custom the inisetup file
       if: env.CUSTOM_FACTORY_RESET == 'true'
