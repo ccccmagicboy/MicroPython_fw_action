@@ -145,12 +145,15 @@ jobs:
       run: |
         ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem
         ./micropython -m upip install -p ../esp8266/modules uiperf3
-        
-#./micropython -m upip install -p ../esp8266/modules notes-pico
+        ./micropython -m upip install -p ../esp8266/modules notes-pico
 
     - name: Custom the inisetup file
       if: env.CUSTOM_FACTORY_RESET == 'true'
       uses: ccccmagicboy/hack_inisetup@master
+      
+    - name: Using 4MB reference board
+      run: |
+        python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'esp8266', 'boards', 'esp8266.ld');print(mk_path);replaceAll(mk_path, 'irom0_0_seg :  org = 0x40209000, len = 0x8f000', 'irom0_0_seg :  org = 0x40209000, len = 0xa7000')"        
         
     - name: Build the ESP8266 port
       run: |        
