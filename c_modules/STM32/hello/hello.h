@@ -1,3 +1,8 @@
+// 首先包含必要的定义
+#include "py/obj.h"
+#include "py/runtime.h"
+#include "py/builtin.h"
+
 // 定义hello模块里的常量   
 enum { 
         CONSTANTS0, 
