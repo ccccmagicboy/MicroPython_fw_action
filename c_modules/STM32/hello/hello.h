@@ -20,7 +20,7 @@ typedef struct _math_obj_t
 // 定义math类的构造函数
 STATIC mp_obj_t math_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args);
 // 定义math类里的函数     
-m_obj_t math_add(m_obj_t, self_in, mp_obj_t data);
+mp_obj_t math_add(mp_obj_t, self_in, mp_obj_t data);
 // 定义math类里函数的引用
 MP_DEFINE_CONST_FUN_OBJ_2(math_add_obj, math_add);
 // 定义math类里的所有属性值对
