@@ -32,7 +32,7 @@ mp_obj_t math_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const m
     return MP_OBJ_FROM_PTR(self);               //返回分配的指针
 }
 
-m_obj_t math_add(m_obj_t, self_in, mp_obj_t data)
+mp_obj_t math_add(mp_obj_t self_in, mp_obj_t data)
 {
     math_obj_t *self = MP_OBJ_TO_PTR(self_in);  //从第一参数里取出类self
     self->value1 = 100;
