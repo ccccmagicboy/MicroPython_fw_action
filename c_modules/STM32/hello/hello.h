@@ -14,7 +14,7 @@ STATIC mp_obj_t hello_world(mp_obj_t echo_obj);
 // 定义hello模块里函数的引用macro
 MP_DEFINE_CONST_FUN_OBJ_1(hello_hello_world_obj, hello_world);
 ////////////////////////////////////////////////////////////////////////////////////////
-extern const mp_obj_type_t hello_math_obj;//引用外部定义
+//extern const mp_obj_type_t hello_math_obj;//引用外部定义
 ////////////////////////////////////////////////////////////////////////////////////////
 // 定义模块的所有属性值对
 STATIC const mp_rom_map_elem_t hello_module_globals_table[] = {
@@ -22,7 +22,7 @@ STATIC const mp_rom_map_elem_t hello_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR_hello_world), MP_ROM_PTR(&hello_hello_world_obj) }, /*python暴露名hello_world与函数引用关联*/
     { MP_ROM_QSTR(MP_QSTR_C0), MP_ROM_INT(CONSTANTS0)}, /*python暴露名C0与常量CONSTANTS0关联*/
     { MP_ROM_QSTR(MP_QSTR_C1), MP_ROM_INT(CONSTANTS1)}, /*python暴露名C1与常量CONSTANTS1关联*/
-    { MP_ROM_QSTR(MP_QSTR_math), MP_ROM_PTR(&hello_math_obj)}, /*python暴露名math与math类（type）关联*/
+    //{ MP_ROM_QSTR(MP_QSTR_math), MP_ROM_PTR(&hello_math_obj)}, /*python暴露名math与math类（type）关联*/
 };
 // 定义模块的字典macro
 STATIC MP_DEFINE_CONST_DICT(hello_module_globals, hello_module_globals_table);
