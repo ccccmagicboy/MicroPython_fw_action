@@ -5,7 +5,7 @@
 // 包含标准库
 #include <stdio.h>
 // 包含这个模块用的头文件
-#include "example.h"
+#include "hello.h"
 
 // 自定义一个函数
 // https://mpy-c-gen.oliverrobson.tech/

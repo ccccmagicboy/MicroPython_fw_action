@@ -16,6 +16,7 @@ typedef struct _math_obj_t
     uint16_t value2;//成员变量value2
     uint16_t value3;//成员变量value3
 }math_obj_t;/*定义math类的结构体*/
+
 // 定义math类的构造函数
 STATIC mp_obj_t math_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args);
 // 定义math类里的函数     
