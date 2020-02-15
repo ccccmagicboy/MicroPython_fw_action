@@ -132,6 +132,11 @@ jobs:
         echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
         echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h       
         
+    - name: Fix a bug
+      working-directory: ./
+      run: |
+        python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'windows', 'mpconfigport.h');print(mk_path);replaceAll(mk_path, '#define MICROPY_PY_SYS_PLATFORM     \"win32\"', '#define MICROPY_PY_SYS_PLATFORM     \"win64\"')"
+        
     - name: Build the Windows port x64
       working-directory: ./my_micropython/ports/windows/
       run: |        
@@ -150,7 +155,11 @@ jobs:
         path: Micropython_x64_windows_${{ steps.get_datetime.outputs.datetime_str }}.zip
  
 #########################################################################
- 
+    - name: Fix a bug
+      working-directory: ./
+      run: |
+        python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'windows', 'mpconfigport.h');print(mk_path);replaceAll(mk_path, '#define MICROPY_PY_SYS_PLATFORM     \"win64\"', '#define MICROPY_PY_SYS_PLATFORM     \"win32\"')"
+        
     - name: Build the Windows port x86
       working-directory: ./my_micropython/ports/windows/
       run: |        
