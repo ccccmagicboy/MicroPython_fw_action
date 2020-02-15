@@ -67,6 +67,8 @@ jobs:
     - name: Install the gcc tool chain
       run: |
         sudo apt-get install gcc-arm-none-eabi
+        uname -a
+        arm-none-eabi-gcc -v
       
     - name: Clone the micropython source code
       run: |
