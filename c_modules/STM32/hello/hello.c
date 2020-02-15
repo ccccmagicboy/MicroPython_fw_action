@@ -42,5 +42,9 @@ mp_obj_t math_add(mp_obj_t self_in, mp_obj_t data)
     return mp_obj_new_int(self->value1 + self->value2 + self->value3);//返回计算结果
 }
 
-
+void math_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind)
+{
+    math_obj_t *self = MP_OBJ_TO_PTR(self_in);
+    mp_printf(print, "value3 is %d", self->value3);
+}
 

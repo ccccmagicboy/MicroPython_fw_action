@@ -20,7 +20,8 @@ typedef struct _math_obj_t
 // 定义math类的构造函数
 STATIC mp_obj_t math_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args);
 // 定义math类里的函数     
-mp_obj_t math_add(mp_obj_t self_in, mp_obj_t data);
+STATIC mp_obj_t math_add(mp_obj_t self_in, mp_obj_t data);
+STATIC void madc_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind);
 // 定义math类里函数的引用
 MP_DEFINE_CONST_FUN_OBJ_2(math_add_obj, math_add);
 // 定义math类里的所有属性值对
@@ -33,8 +34,9 @@ STATIC MP_DEFINE_CONST_DICT(math_type_locals, math_type_locals_table);
 const mp_obj_type_t hello_math_obj = {
     .base = { &mp_type_type },  /*这里与module不同*/
     .name = MP_QSTR_math,       /*python暴露名在这里定义*/
+    .print = math_print,        //print()时调用的函数
     .make_new = math_new,       //构造函数
-    .locals_dict = (mp_obj_dict_t*)&math_type_locals,
+    .locals_dict = (mp_obj_t*)&math_type_locals,
 };
 ////////////////////////////////////////////////////////////////////////////////////////
 // 定义模块的所有属性值对
@@ -51,7 +53,7 @@ STATIC MP_DEFINE_CONST_DICT(hello_module_globals, hello_module_globals_table);
 // 定义模块的实体
 const mp_obj_module_t hello_user_cmodule = {
     .base = { &mp_type_module },
-    .globals = (mp_obj_dict_t*)&hello_module_globals,
+    .globals = (mp_obj_t*)&hello_module_globals,
 };
 
 // 注册模块实体到暴露名，并关联一个使能常量
