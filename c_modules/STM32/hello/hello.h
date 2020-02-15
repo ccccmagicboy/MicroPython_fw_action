@@ -31,8 +31,8 @@ STATIC const mp_rom_map_elem_t math_type_locals_table[] = {
 STATIC MP_DEFINE_CONST_DICT(math_type_locals, math_type_locals_table);
 // 定义math类的实体
 const mp_obj_type_t hello_math_obj = {
-    .base = { &mp_type_type }, /*这里与module不同*/
-    .name = { MP_QSTR_math }, /*python暴露名在这里定义*/
+    .base = { &mp_type_type },  /*这里与module不同*/
+    .name = MP_QSTR_math,       /*python暴露名在这里定义*/
     .make_new = math_new,       //构造函数
     .locals_dict = (mp_obj_dict_t*)&math_type_locals,
 };
