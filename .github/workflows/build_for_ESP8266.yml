@@ -145,7 +145,8 @@ jobs:
       run: |
         ./micropython -m upip install -p ../esp8266/modules micropython-pystone_lowmem
         ./micropython -m upip install -p ../esp8266/modules uiperf3
-        ./micropython -m upip install -p ../esp8266/modules notes-pico
+        
+#./micropython -m upip install -p ../esp8266/modules notes-pico
 
     - name: Custom the inisetup file
       if: env.CUSTOM_FACTORY_RESET == 'true'
