@@ -18,6 +18,8 @@ on:
     paths:
     - '.github/workflows/build_for_PYBV11.yml'
     - '!**.md'
+    - './c_modules/STM32/*'
+    
   schedule:
     - cron: 0 8 * * *
   # watch:
