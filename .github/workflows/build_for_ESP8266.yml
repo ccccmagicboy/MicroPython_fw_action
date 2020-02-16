@@ -249,8 +249,11 @@ jobs:
         pip3 install pyelftools      
       
     - name: Clone the source code
+      id: clone_code
       run: |
         git clone --recursive https://github.com/ccccmagicboy/yaota8266.git my_bootloader
+        cd my_bootloader
+        echo "::set-output name=gitid::$(git rev-parse --short HEAD)"
         
     - name: Down and install the toolchain
       run: |
@@ -266,8 +269,7 @@ jobs:
       working-directory: ./my_bootloader/ota-client
       run: |
         ls -al
-        . gen_keys.sh
-        python -c "import rsa_sign; rsa_sign.dump_c(rsa_sign.load_key())" >> key.cccc
+        ./gen_keys.sh
         ls -al
         
     - name: Generate the config.h from public key
@@ -283,4 +285,13 @@ jobs:
         make all
         ls -al
         
+    - name: Zip the artifact
+      run: |
+        zip --junk-paths yaota8266_bootloader_${{ steps.clone_code.outputs.gitid }} my_bootloader/yaota8266.bin my_bootloader/ota-client/pub.key my_bootloader/ota-client/priv.key README.md MicroPython_fw_action_card.png        
+        
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: yaota8266_bootloader_${{ steps.clone_code.outputs.gitid }}
+        path: yaota8266_bootloader_${{ steps.clone_code.outputs.gitid }}.zip
         
