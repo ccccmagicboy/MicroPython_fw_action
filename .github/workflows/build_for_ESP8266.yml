@@ -251,6 +251,7 @@ jobs:
     - name: Clone the source code
       run: |
         git clone https://github.com/ccccmagicboy/yaota8266.git my_bootloader
+        git submodule update --init
         
     - name: Down and install the toolchain
       run: |
