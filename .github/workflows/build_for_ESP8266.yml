@@ -246,6 +246,6 @@ jobs:
     - name: Generate the key pair both public and private
       working-directory: ./my_bootloader/ota-client
       run: |
-        ./gen_keys.sh
+        sudo ./gen_keys.sh
         python -c "import rsa_sign; rsa_sign.dump_c(rsa_sign.load_key())"
         
