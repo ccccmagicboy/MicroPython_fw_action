@@ -310,7 +310,6 @@ jobs:
       id: get_name
       run: |
         ls -al
-        unzip bin_name
         echo "::set-output name=ota_bin_name::$(cat bin_name.txt)"
     
     - name: Download the ota bin file from previous build job
@@ -322,7 +321,6 @@ jobs:
     - name: Pack the bin files
       working-directory: ./
       run: |
-        unzip ${{ steps.get_name.outputs.ota_bin_name }}
         python ../../../tools/makeimg8266.py ./my_bootloader/yaota8266.bin ${{ steps.get_name.outputs.ota_bin_name }}.bin ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266.bin
         ls -al    
         
