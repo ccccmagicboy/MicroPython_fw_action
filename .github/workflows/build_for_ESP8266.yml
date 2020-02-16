@@ -269,7 +269,7 @@ jobs:
       working-directory: ./my_bootloader/ota-client
       run: |
         ls -al
-        ./gen_keys.sh
+        . gen_keys.sh
         ls -al
         
     - name: Generate the config.h from public key
