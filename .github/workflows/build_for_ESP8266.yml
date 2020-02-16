@@ -231,5 +231,21 @@ jobs:
         aws s3 cp ./ESP8266_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/ESP8266/${{ steps.unix_port.outputs.board }}/
         aws s3 cp ./ESP8266_ota_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/ESP8266/${{ steps.unix_port.outputs.board }}/
         
+  build_1:
+    name: Build for yaota8266 bootloader
+    runs-on: ubuntu-16.04
+
+    steps:
+    - name: Checkout this repos
+      uses: actions/checkout@v2  
+      
+    - name: Clone the source code
+      run: |
+        git clone https://github.com/pfalcon/yaota8266.git my_bootloader
         
+    - name: Generate the key pair both public and private
+      working-directory: ./my_bootloader/ota-client
+      run: |
+        ./gen_keys.sh
+        python -c "import rsa_sign; rsa_sign.dump_c(rsa_sign.load_key())"
         
