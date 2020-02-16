@@ -184,8 +184,20 @@ jobs:
         make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/ESP8266 ota
         
     - name: Zip the artifact
+      id: zip_ota_bin
       run: |
-        zip --junk-paths ESP8266_ota_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/esp8266/build-${{ matrix.test-board }}/firmware-ota.bin README.md MicroPython_fw_action_card.png        
+        zip --junk-paths ESP8266_ota_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/esp8266/build-${{ matrix.test-board }}/firmware-ota.bin README.md MicroPython_fw_action_card.png    
+        echo "::set-output name=ota_bin::ESP8266_ota_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip"
+        
+    - name: Write the ota file name
+      run: |
+        echo "${{ steps.zip_ota_bin.outputs.ota_bin }}" >> bin_name.txt
+
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: bin_name
+        path: bin_name.txt
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
@@ -234,6 +246,7 @@ jobs:
   build_1:
     name: Build for yaota8266 bootloader
     runs-on: ubuntu-16.04
+    needs: [build]
 
     steps:
     - name: Checkout this repos
@@ -275,7 +288,7 @@ jobs:
     - name: Generate the config.h from public key
       working-directory: ./my_bootloader
       run: |
-        echo "0000"
+        echo "0000 to be continue..."
         cp ./config.h.example ./config.h
         
     - name: Build the bin
@@ -283,15 +296,40 @@ jobs:
       run: |
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
         make all
-        ls -al
+        ls -al    
+        
+    - name: Download the ota bin name form previous build job
+      uses: actions/download-artifact@v1
+      with:
+        name: bin_name   
+            
+    - name: Display the bin name
+      id: get_name
+      run: |
+        unzip bin_name.zip
+        echo "::set-output name=ota_bin_name::$(cat bin_name.txt)"
+    
+    - name: Download the ota bin file from previous build job
+      uses: actions/download-artifact@v1
+      with:
+        name: ${{ steps.get_name.outputs.ota_bin_name }}
+
+    - name: Pack the bin files
+      working-directory: ./
+      run: |
+        unzip ${{ steps.get_name.outputs.ota_bin_name }}
+        python ../../../tools/makeimg8266.py ./my_bootloader/yaota8266.bin ${{ steps.get_name.outputs.ota_bin_name }}.bin ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266.bin
+        ls -al    
         
     - name: Zip the artifact
       run: |
-        zip --junk-paths yaota8266_bootloader_${{ steps.clone_code.outputs.gitid }} my_bootloader/yaota8266.bin my_bootloader/ota-client/pub.key my_bootloader/ota-client/priv.key README.md MicroPython_fw_action_card.png        
+        zip --junk-paths ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266_${{ steps.clone_code.outputs.gitid }} my_bootloader/yaota8266.bin ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266.bin my_bootloader/ota-client/pub.key my_bootloader/ota-client/priv.key README.md MicroPython_fw_action_card.png        
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
       with:
-        name: yaota8266_bootloader_${{ steps.clone_code.outputs.gitid }}
-        path: yaota8266_bootloader_${{ steps.clone_code.outputs.gitid }}.zip
+        name: ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266_${{ steps.clone_code.outputs.gitid }}
+        path: ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266_${{ steps.clone_code.outputs.gitid }}.zip
+        
+        
         
