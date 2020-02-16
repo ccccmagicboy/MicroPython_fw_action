@@ -268,6 +268,7 @@ jobs:
         cp ./config.h.example ./config.h
         
     - name: Build the bin
+      working-directory: ./my_bootloader
       run: |
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH
         make all
