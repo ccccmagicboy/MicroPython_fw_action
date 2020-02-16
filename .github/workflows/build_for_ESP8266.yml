@@ -321,7 +321,7 @@ jobs:
     - name: Pack the bin files
       working-directory: ./
       run: |
-        unzip ${{ steps.get_name.outputs.ota_bin_name }}
+        unzip -n ${{ steps.get_name.outputs.ota_bin_name }}
         python ./tools/makeimg8266.py ./my_bootloader/yaota8266.bin firmware-ota.bin firmware_with_yaota8266.bin
         ls -al    
         
