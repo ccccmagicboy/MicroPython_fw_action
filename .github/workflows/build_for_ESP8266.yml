@@ -304,15 +304,17 @@ jobs:
         name: bin_name   
             
     - name: Display the bin name
+      working-directory: ./bin_name
       id: get_name
       run: |
-        unzip bin_name.zip
+        unzip bin_name
         echo "::set-output name=ota_bin_name::$(cat bin_name.txt)"
     
     - name: Download the ota bin file from previous build job
       uses: actions/download-artifact@v1
       with:
         name: ${{ steps.get_name.outputs.ota_bin_name }}
+        path: ./
 
     - name: Pack the bin files
       working-directory: ./
