@@ -58,8 +58,11 @@ jobs:
       matrix:
         test-board:
         - PYBV11
+        #support H7 series
+        - NUCLEO_H743ZI
+        #support ethernet RMII
+        - NUCLEO_F767ZI
         # - PYBLITEV10
-        # - BLUE_PILL_F103C8
         # - PYBV10
     
     steps:
