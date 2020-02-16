@@ -321,7 +321,8 @@ jobs:
     - name: Pack the bin files
       working-directory: ./
       run: |
-        python ../../../tools/makeimg8266.py ./my_bootloader/yaota8266.bin ${{ steps.get_name.outputs.ota_bin_name }}.bin ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266.bin
+        unzip ${{ steps.get_name.outputs.ota_bin_name }}
+        python ./tools/makeimg8266.py ./my_bootloader/yaota8266.bin ${{ steps.get_name.outputs.ota_bin_name }}.bin ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266.bin
         ls -al    
         
     - name: Zip the artifact
