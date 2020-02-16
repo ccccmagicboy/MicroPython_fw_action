@@ -239,6 +239,15 @@ jobs:
     - name: Checkout this repos
       uses: actions/checkout@v2  
       
+    - name: Install require for toolchain
+      run: |
+        sudo apt-get install make unrar-free autoconf automake libtool gcc g++ gperf \
+        flex bison texinfo gawk ncurses-dev libexpat-dev python-dev sed git unzip \
+        bash help2man wget bzip2 libtool-bin python-serial
+        pip3 --version        
+        pip3 install --upgrade pip
+        pip3 install pyelftools      
+      
     - name: Clone the source code
       run: |
         git clone https://github.com/ccccmagicboy/yaota8266.git my_bootloader
