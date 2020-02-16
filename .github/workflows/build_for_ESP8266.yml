@@ -229,3 +229,7 @@ jobs:
         aws configure set region $AWS_REGION
         aws configure list
         aws s3 cp ./ESP8266_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/ESP8266/${{ steps.unix_port.outputs.board }}/
+        aws s3 cp ./ESP8266_ota_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/ESP8266/${{ steps.unix_port.outputs.board }}/
+        
+        
+        
