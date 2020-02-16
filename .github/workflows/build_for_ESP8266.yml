@@ -47,6 +47,7 @@ env:
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
   USE_4MB_BOARD: true
+  USE_S3: false
   
 jobs:
   build:
@@ -229,6 +230,7 @@ jobs:
         path: c_mpy_modules/Universal/factorial/factorial.mpy
         
     - name: Upload to amazon S3
+      if: env.USE_S3 == 'true'
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -307,6 +309,7 @@ jobs:
       working-directory: ./bin_name
       id: get_name
       run: |
+        ls -al
         unzip bin_name
         echo "::set-output name=ota_bin_name::$(cat bin_name.txt)"
     
