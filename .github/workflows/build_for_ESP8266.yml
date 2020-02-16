@@ -46,6 +46,7 @@ env:
   ADD_MPY_FROZEN_MODULES: true
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
+  4MB_BOARD: true
   
 jobs:
   build:
@@ -152,8 +153,16 @@ jobs:
       uses: ccccmagicboy/hack_inisetup@master
       
     - name: Using 4MB reference board
+      if: env.4MB_BOARD == 'true'
       run: |
         python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'esp8266', 'boards', 'esp8266.ld');print(mk_path);replaceAll(mk_path, 'irom0_0_seg :  org = 0x40209000, len = 0x8f000', 'irom0_0_seg :  org = 0x40209000, len = 0xa7000')"        
+
+    - name: Get the datetime
+      id: get_datetime
+      uses: ccccmagicboy/get_datetime@master
+      with:
+        tz1: 'Asia'
+        tz2: 'Shanghai'
         
     - name: Build the ESP8266 port
       run: |        
@@ -161,19 +170,27 @@ jobs:
         pwd
         ls -al
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH        
+        make clean
         make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/ESP8266 all
         ls -al
-        
-    - name: Get the datetime
-      id: get_datetime
-      uses: ccccmagicboy/get_datetime@master
-      with:
-        tz1: 'Asia'
-        tz2: 'Shanghai'           
         
     - name: Zip the artifact
       run: |
         zip --junk-paths ESP8266_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/esp8266/build-${{ matrix.test-board }}/firmware-combined.bin README.md MicroPython_fw_action_card.png
+        
+    - name: Build the ESP8266 port ota
+      run: |        
+        cd my_micropython/ports/esp8266/
+        pwd
+        ls -al
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_toolchain/xtensa-lx106-elf/bin:$PATH        
+        make clean
+        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/ESP8266 ota
+        ls -al
+        
+    - name: Zip the artifact
+      run: |
+        zip --junk-paths ESP8266_ota_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/esp8266/build-${{ matrix.test-board }}/firmware-ota.bin README.md MicroPython_fw_action_card.png        
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
