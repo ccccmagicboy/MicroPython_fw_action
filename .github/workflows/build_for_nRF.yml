@@ -108,11 +108,6 @@ jobs:
       run: |
         ./download_ble_stack.sh ${{ matrix.bt_stack }}
         
-    - name: Fix a bug
-      working-directory: ./
-      run: |
-        python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'nrf', 'drivers', 'bluetooth', 'ble_drv.c');print(mk_path);replaceAll(mk_path, 'nrf_nvic_state = {0};', 'nrf_nvic_state = {{0},0};')"        
-        
     - name: Build the nrf port
       working-directory: ./my_micropython/ports/nrf
       env: 
