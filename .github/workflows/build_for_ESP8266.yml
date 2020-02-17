@@ -151,7 +151,9 @@ jobs:
 
     - name: Custom the inisetup file
       if: env.CUSTOM_FACTORY_RESET == 'true'
-      uses: ccccmagicboy/hack_inisetup@master
+      uses: ccccmagicboy/hack_inisetup@esp8266_default
+      with:
+        cpu: 160
       
     - name: Using 4MB reference board
       if: env.USE_4MB_BOARD == 'true'
