@@ -1,0 +1,106 @@
+#===================================================================================
+# https://github.com/ccccmagicboy/MicroPython_fw_action
+# Description: Build MicroPython firmware using GitHub Actions for minimal
+# Lisence: MIT
+# Author: ccccmagicboy
+# Url: https://ccrobot-online.com
+#===================================================================================
+
+name: minimal_BUILD
+
+on:
+  pull_request:
+    branches:
+    - master
+  push:
+    branches:
+    - master
+    paths:
+    - '.github/workflows/build_for_minimal.yml'
+    - '!**.md'
+  schedule:
+    - cron: 0 10 * * *
+  # watch:
+    # types: [started]
+    
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of the month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+# │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+# │ │ │ │ │                                   
+# │ │ │ │ │
+# │ │ │ │ │
+# * * * * *  
+
+env:
+  REPO_URL: https://github.com/micropython/micropython.git
+  REPO_BRANCH: master
+  CUSTOM_MPCONFIGPORT: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: Checkout this repos
+      uses: actions/checkout@v2 
+      
+    - name: Install the depend
+      run: |
+        sudo apt-get install gcc-multilib
+        sudo apt-get install gcc-arm-none-eabi
+      
+    - name: Clone the micropython source code
+      run: |
+        git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+        git submodule update --init
+        
+    - name: Build the mpy-cross tool
+      working-directory: ./my_micropython/mpy-cross
+      run: |
+        make
+
+    - name: Build the unix port
+      id: unix_port
+      run: |
+        cd my_micropython/ports/unix
+        make submodules
+        make
+        find . -name "*micropython*"
+        MOREF=$(./micropython -c "import sys;print('v{0:d}_{1:d}'.format(sys.implementation[1][0], sys.implementation[1][1]))")
+        echo $MOREF
+        echo "::set-output name=version::$MOREF"
+        echo "::set-output name=gitid::$(git rev-parse --short HEAD)"
+        
+    - name: Custom the mpconfigport.h file
+      working-directory: ./my_micropython/ports/minimal/
+      run: |
+        echo "#define MODULE_XXX_ENABLED (1)" >> mpconfigport.h       
+
+    - name: Get the datetime
+      id: get_datetime
+      uses: ccccmagicboy/get_datetime@master
+      with:
+        tz1: 'Asia'
+        tz2: 'Shanghai'
+        
+    - name: Build the minimal port linux
+      working-directory: ./my_micropython/ports/minimal
+      run: |
+        make clean
+        make
+        ls ./build -al
+        file ./build/firmware.elf
+        
+    - name: Build the minimal port arm
+      working-directory: ./my_micropython/ports/minimal
+      run: |
+        make clean
+        make CROSS=1
+        ls ./build -al
+        file ./build/firmware.elf     
+                
+                
+        
