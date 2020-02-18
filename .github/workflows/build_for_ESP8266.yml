@@ -338,4 +338,4 @@ jobs:
         path: ${{ steps.get_name.outputs.ota_bin_name }}_with_yaota8266_${{ steps.clone_code.outputs.gitid }}.zip
         
         
-        
+  
