@@ -62,7 +62,7 @@ jobs:
         - PYBV11
         - NUCLEO_F429ZI
         - STM32F429DISC
-        - OLIMEX_E407
+        #- OLIMEX_E407
         #support H7 series
         - NUCLEO_H743ZI
         #support ethernet RMII
