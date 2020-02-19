@@ -193,6 +193,7 @@ jobs:
       working-directory: ./my_micropython/ports/stm32/
       run: |
         make BOARD=${{ matrix.test-board }} USE_MBOOT=1 USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 clean all
+        ls -al ./build-${{ matrix.test-board }}
         echo "::set-output name=mboot::mboot"
         
     - name: Get the datetime
