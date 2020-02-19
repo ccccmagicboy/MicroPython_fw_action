@@ -177,6 +177,7 @@ jobs:
         ls -al ./build-${{ matrix.test-board }}
         cd build-${{ matrix.test-board }}
         cp firmware.dfu mboot.dfu
+        cp firmware.bin mboot.bin
         
     - name: Build the dfu file - ${{ matrix.test-board }}
       id: build_no_mboot
@@ -196,6 +197,12 @@ jobs:
         ls -al ./build-${{ matrix.test-board }}
         echo "::set-output name=mboot::mboot"
         
+    - name: Build the first time dfu file
+      if: env.USE_MBOOT == 'true'
+      working-directory: ./my_micropython/ports/stm32/
+      run: |
+        python ../../../tools/dfu.py -b 0x08000000:mboot/build-${{ matrix.test-board }}/mboot.bin -b 0x08020000:build-${{ matrix.test-board }}/firmware.bin build-${{ matrix.test-board }}/firmware_all.dfu
+        
     - name: Get the datetime
       id: get_datetime
       uses: ccccmagicboy/get_datetime@master
@@ -204,8 +211,14 @@ jobs:
         tz2: 'Shanghai'            
         
     - name: Zip the artifact
+      if: env.USE_MBOOT == 'true'
       run: |
-        zip --junk-paths ${{ steps.unix_port.outputs.board }}_${{ steps.build_no_mboot.outputs.mboot}}${{ steps.build_mboot.outputs.mboot}}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}  my_micropython/ports/stm32/build-${{ matrix.test-board }}/firmware.dfu my_micropython/ports/stm32/mboot/build-${{ matrix.test-board }}/mboot.dfu README.md MicroPython_fw_action_card.png
+        zip --junk-paths ${{ steps.unix_port.outputs.board }}_${{ steps.build_no_mboot.outputs.mboot}}${{ steps.build_mboot.outputs.mboot}}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/stm32/build-${{ matrix.test-board }}/firmware.dfu my_micropython/ports/stm32/build-${{ matrix.test-board }}/firmware_all.dfu my_micropython/ports/stm32/mboot/build-${{ matrix.test-board }}/mboot.dfu README.md MicroPython_fw_action_card.png
+        
+    - name: Zip the artifact
+      if: env.USE_MBOOT == 'false'
+      run: |
+        zip --junk-paths ${{ steps.unix_port.outputs.board }}_${{ steps.build_no_mboot.outputs.mboot}}${{ steps.build_mboot.outputs.mboot}}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }} my_micropython/ports/stm32/build-${{ matrix.test-board }}/firmware.dfu README.md MicroPython_fw_action_card.png
 
     - name: Upload Zip file
       uses: actions/upload-artifact@master
