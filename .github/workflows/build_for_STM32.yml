@@ -60,13 +60,13 @@ jobs:
       matrix:
         test-board:
         - PYBV11
-        - NUCLEO_F429ZI
-        - STM32F429DISC
+        #- NUCLEO_F429ZI
+        #- STM32F429DISC
         #- OLIMEX_E407
         #support H7 series
-        - NUCLEO_H743ZI
+        #- NUCLEO_H743ZI
         #support ethernet RMII
-        - NUCLEO_F767ZI
+        #- NUCLEO_F767ZI
         # - PYBLITEV10
         # - PYBV10
     
