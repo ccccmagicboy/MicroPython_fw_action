@@ -201,7 +201,7 @@ jobs:
       if: env.USE_MBOOT == 'true'
       working-directory: ./my_micropython/ports/stm32/
       run: |
-        python ../../../tools/dfu.py -b 0x08000000:mboot/build-${{ matrix.test-board }}/mboot.bin -b 0x08020000:build-${{ matrix.test-board }}/firmware.bin build-${{ matrix.test-board }}/firmware_all.dfu
+        python ../../tools/dfu.py -b 0x08000000:mboot/build-${{ matrix.test-board }}/mboot.bin -b 0x08020000:build-${{ matrix.test-board }}/firmware.bin build-${{ matrix.test-board }}/firmware_all.dfu
         
     - name: Get the datetime
       id: get_datetime
