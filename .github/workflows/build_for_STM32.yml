@@ -47,6 +47,7 @@ env:
   ADD_MPY_FROZEN_MODULES: true
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
+  USE_MBOOT: true
 
 jobs:
   build:
@@ -165,10 +166,29 @@ jobs:
         name: factorial
         path: c_mpy_modules/Universal/factorial/factorial.mpy
         
+    - name: Build the Mboot
+      if: env.USE_MBOOT == 'true'
+      working-directory: ./my_micropython/ports/stm32/mboot
+      run: |
+        cp fwupdate.py ../modules
+        cp mboot.py ../modules
+        ls -al ../modules
+        make BOARD=${{ matrix.test-board }} USE_MBOOT=1 clean all
+        ls -al ./
+        ls -al ./build
+        ls -al ./build-${{ matrix.test-board }}
+        
     - name: Build the dfu file - ${{ matrix.test-board }}
+      if: env.USE_MBOOT == 'false'
       working-directory: ./my_micropython/ports/stm32/
       run: |
-        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 all
+        make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 clean all
+
+    - name: Build the dfu file - ${{ matrix.test-board }}
+      if: env.USE_MBOOT == 'true'
+      working-directory: ./my_micropython/ports/stm32/
+      run: |
+        make BOARD=${{ matrix.test-board }} USE_MBOOT=1 USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 clean all
         
     - name: Get the datetime
       id: get_datetime
