@@ -196,7 +196,8 @@ jobs:
         make BOARD=${{ matrix.test-board }} USE_MBOOT=1 USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 clean all
         ls -al ./build-${{ matrix.test-board }}
         cd ./build-${{ matrix.test-board }}
-        gzip -f firmware.dfu
+        gzip -f -k -L firmware.dfu
+        ls -al
         echo "::set-output name=mboot::mboot"
         
     - name: Build the first time st hard dfu file
