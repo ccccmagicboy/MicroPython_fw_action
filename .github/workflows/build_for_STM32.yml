@@ -48,6 +48,7 @@ env:
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
   USE_MBOOT: true
+  USE_S3: false
 
 jobs:
   build:
@@ -172,23 +173,24 @@ jobs:
       run: |
         cp fwupdate.py ../modules
         cp mboot.py ../modules
-        ls -al ../modules
         make BOARD=${{ matrix.test-board }} USE_MBOOT=1 clean all
-        ls -al ./
-        ls -al ./build
         ls -al ./build-${{ matrix.test-board }}
         
     - name: Build the dfu file - ${{ matrix.test-board }}
+      id: build_no_mboot
       if: env.USE_MBOOT == 'false'
       working-directory: ./my_micropython/ports/stm32/
       run: |
         make BOARD=${{ matrix.test-board }} USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 clean all
+        echo "::set-output name=mboot::no_mboot"
 
     - name: Build the dfu file - ${{ matrix.test-board }}
+      id: build_mboot
       if: env.USE_MBOOT == 'true'
       working-directory: ./my_micropython/ports/stm32/
       run: |
         make BOARD=${{ matrix.test-board }} USE_MBOOT=1 USER_C_MODULES=../../../c_modules/STM32 MICROPY_PY_WIZNET5K=5500 clean all
+        echo "::set-output name=mboot::mboot"
         
     - name: Get the datetime
       id: get_datetime
@@ -199,44 +201,16 @@ jobs:
         
     - name: Zip the artifact
       run: |
-        zip --junk-paths ${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}  my_micropython/ports/stm32/build-${{ matrix.test-board }}/firmware.dfu my_micropython/ports/stm32/build-${{ matrix.test-board }}/firmware.hex README.md MicroPython_fw_action_card.png
+        zip --junk-paths ${{ steps.unix_port.outputs.board }}_${{ steps.build_no_mboot.outputs.mboot}}${{ steps.build_mboot.outputs.mboot}}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}  my_micropython/ports/stm32/build-${{ matrix.test-board }}/firmware.dfu my_micropython/ports/stm32/mboot/build-${{ matrix.test-board }}/firmware.dfu README.md MicroPython_fw_action_card.png
 
     - name: Upload Zip file
       uses: actions/upload-artifact@master
       with:
-        name: ${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
-        path: ${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
-        
-    - name: Create Release
-      if: env.MAKE_A_RELEASE_DRAFT == 'true'
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-      with:
-        tag_name: v1.0
-        release_name: v1.0
-        body: |
-          Changes in this Release
-          - First Change xxx
-          - Second Change xxx
-          - XXX
-        draft: true
-        prerelease: false
-        
-    - name: Upload Release Asset
-      if: env.MAKE_A_RELEASE_DRAFT == 'true'
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: ./${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
-        asset_name: ${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
-        asset_content_type: application/zip     
-      
+        name: ${{ steps.unix_port.outputs.board }}_${{ steps.build_no_mboot.outputs.mboot}}${{ steps.build_mboot.outputs.mboot}}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
+        path: ${{ steps.unix_port.outputs.board }}_${{ steps.build_no_mboot.outputs.mboot}}${{ steps.build_mboot.outputs.mboot}}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip
+              
     - name: Upload to amazon S3
+      if: env.USE_S3 == true
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -248,7 +222,7 @@ jobs:
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set region $AWS_REGION
         aws configure list
-        aws s3 cp ./${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/STM32/${{ steps.unix_port.outputs.board }}/
+        aws s3 cp ./${{ steps.unix_port.outputs.board }}_${{ steps.build_no_mboot.outputs.mboot}}${{ steps.build_mboot.outputs.mboot}}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/STM32/${{ steps.unix_port.outputs.board }}/
 
 
         
