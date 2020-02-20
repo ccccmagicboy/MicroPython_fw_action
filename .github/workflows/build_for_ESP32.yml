@@ -106,7 +106,7 @@ jobs:
     - name: Checkout
       if: env.USB_DETACHED_HEAD == 'true'
       run: |
-        git checkout ${{ matrix.tag }}
+        git reset --hard ${{ matrix.tag }}
               
     - name: Add Custom boards support
       if: env.ADD_CUSTOM_BOARD == 'true'
