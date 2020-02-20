@@ -65,7 +65,7 @@ jobs:
         - IDF4
         tag:
         # v1.12
-        - 1f37194
+        - 1f371947309c5ea6023b6d9065415697cbc75578
 
     steps:
     - name: Checkout this repos
