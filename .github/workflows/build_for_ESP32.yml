@@ -45,6 +45,7 @@ env:
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
   USE_S3: false
+  USB_DETACHED_HEAD: true
   
 jobs:
   build:
@@ -62,6 +63,9 @@ jobs:
         idf-select:
         - IDF3
         - IDF4
+        tag:
+        # v1.12
+        - 1f37194
 
     steps:
     - name: Checkout this repos
@@ -97,9 +101,13 @@ jobs:
         
     - name: Clone the micropython source code
       run: |
-        git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
-        git submodule update --init
-        
+        git clone --recursive $REPO_URL -b $REPO_BRANCH my_micropython
+       
+    - name: Checkout
+      if: env.USB_DETACHED_HEAD == 'true'
+      run: |
+        git checkout ${{ matrix.tag }}
+              
     - name: Add Custom boards support
       if: env.ADD_CUSTOM_BOARD == 'true'
       working-directory: ./my_micropython/ports/esp32/boards
