@@ -157,6 +157,7 @@ jobs:
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
         
     - name: upip micropython modules from internet
+      if: env.ADD_MPY_FROZEN_MODULES == 'true'
       working-directory: ./my_micropython/ports/unix
       run: |
         ./micropython -m upip install -p ../esp32/modules micropython-pystone_lowmem     
