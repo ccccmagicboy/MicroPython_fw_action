@@ -45,7 +45,7 @@ env:
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
   USE_S3: false
-  USB_DETACHED_HEAD: true
+  USB_DETACHED_HEAD: false
   
 jobs:
   build:
