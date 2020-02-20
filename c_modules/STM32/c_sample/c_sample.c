@@ -28,6 +28,19 @@ STATIC MP_DEFINE_CONST_FUN_OBJ_0(c_sample_call_callback_obj, c_sample_call_callb
 
 STATIC mp_obj_t c_sample_func_0(void) {
     printf("c_sample_func_0\n");
+    
+    mp_obj_t gc_module_obj = mp_module_get(MP_QSTR_gc);
+    
+    if (gc_module_obj) 
+    {
+        mp_obj_t gc_disable_fn = mp_load_attr(gc_module_obj, MP_QSTR_disable);
+        
+        if (gc_disable_fn)
+        {
+            mp_call_function_0(gc_disable_fn);
+        }
+    }
+    
     return mp_const_none;
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_0(c_sample_func_0_obj, c_sample_func_0);
