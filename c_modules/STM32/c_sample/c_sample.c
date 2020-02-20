@@ -4,6 +4,12 @@
 #include "py/runtime.h"
 #include "py/mperrno.h"
 #include "py/mphal.h"
+#include "py/compile.h"
+#include "py/objmodule.h"
+#include "py/persistentcode.h"
+#include "py/builtin.h"
+#include "py/frozenmod.h"
+
 #include "portmodules.h"
 #include <string.h>
 #include <stdio.h>
