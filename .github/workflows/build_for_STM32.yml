@@ -49,6 +49,7 @@ env:
   ADD_EXTERNAL_C_MODULES: true
   USE_MBOOT: true
   USE_S3: false
+  USB_DETACHED_HEAD: false  
 
 jobs:
   build:
@@ -69,13 +70,24 @@ jobs:
         #- NUCLEO_F767ZI
         # - PYBLITEV10
         # - PYBV10
+        tag:
+        # v1.12
+        - master
+        
     
     steps:
     - name: Checkout this repos
       uses: actions/checkout@v2    
-
+      
     - name: Clone the micropython source code
-      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH my_micropython
+      run: |
+        git clone --recursive $REPO_URL -b $REPO_BRANCH my_micropython
+       
+    - name: Checkout
+      working-directory: ./my_micropython
+      if: env.USB_DETACHED_HEAD == 'true'
+      run: |
+        git checkout ${{ matrix.tag }}      
       
     - name: Add Custom boards support
       if: env.ADD_CUSTOM_BOARD == 'true'
