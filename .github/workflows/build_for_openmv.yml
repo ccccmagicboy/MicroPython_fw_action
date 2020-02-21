@@ -85,10 +85,17 @@ jobs:
         pip3 install --upgrade pip
         pip3 install pyelftools
         
+    - name: Build the mpy-cross tool
+      working-directory: ./openmv/src/micropython/mpy-cross
+      run: |
+        make        
+        
     - name: Build
       working-directory: ./openmv/src
       run: |
-        make
+        make V=1
+        ls -al
+        ls ./build -al
                       
     - name: Get the datetime
       id: get_datetime
