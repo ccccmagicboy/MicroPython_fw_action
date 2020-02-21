@@ -93,7 +93,7 @@ jobs:
     - name: Build
       working-directory: ./openmv/src
       run: |
-        make V=1
+        make V=1 TARGET=OPENMV4 all
         ls -al
         ls ./build -al
                       
