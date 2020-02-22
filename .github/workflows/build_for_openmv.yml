@@ -80,10 +80,17 @@ jobs:
    
     - name: Get the cross-toolchain
       run: |
-        sudo apt-get install gcc-arm-none-eabi
-        sudo apt-get install gcc-multilib
-        pip3 install --upgrade pip
-        pip3 install pyelftools
+        sudo apt-get remove gcc-arm-none-eabi
+        sudo apt-get autoremove
+        sudo add-apt-repository ppa:team-gcc-arm-embedded/ppa
+        sudo apt-get update
+        sudo apt-get install gcc-arm-embedded
+        sudo apt-get install libc6-i386
+        sudo apt-get install python2.7 python-dev python-pip
+        sudo apt-get install libusb-1.0-0 libusb-1.0-0-dev
+        sudo apt-get install python-gtksourceview2
+        sudo pip install numpy pyserial==2.7 pyusb==1.0.0b2 Pillow
+        sudo apt-get install make
         
     - name: Build the mpy-cross tool
       working-directory: ./openmv/src/micropython/mpy-cross
