@@ -49,9 +49,6 @@ jobs:
       max-parallel: 2
       matrix:
         board:
-        - OPENMV1
-        - OPENMV2
-        - OPENMV3
         - OPENMV4
         - OPENMV4P
         tag:
