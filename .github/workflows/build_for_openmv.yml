@@ -37,17 +37,7 @@ on:
 env:
   REPO_URL: https://github.com/openmv/openmv.git
   REPO_BRANCH: master
-  UPLOAD_FIRMWARE: true
-  MAKE_A_RELEASE_DRAFT: false
   TZ: Asia/Shanghai
-  ADD_CUSTOM_BOARD: true
-  CUSTOM_FACTORY_RESET: true
-  CUSTOM_MPCONFIGPORT: true
-  ADD_MPY_FROZEN_MODULES: true
-  ADD_NATIVE_C_MPY_MODULES: true
-  ADD_EXTERNAL_C_MODULES: true
-  USE_MBOOT: true
-  USE_S3: false
   USB_DETACHED_HEAD: false  
 
 jobs:
@@ -58,7 +48,7 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        test-board:
+        board:
         - PYBV11
         tag:
         # v1.12
@@ -100,9 +90,8 @@ jobs:
     - name: Build
       working-directory: ./openmv/src
       run: |
-        make V=1 TARGET=OPENMV4 all
-        ls -al
-        ls ./build -al
+        make V=0 TARGET=OPENMV4 all
+        ls ./build/bin -al
                       
     - name: Get the datetime
       id: get_datetime
@@ -122,20 +111,5 @@ jobs:
         name: xxx
         path: xxx.zip
               
-    - name: Upload to amazon S3
-      if: env.USE_S3 == true
-      env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-      run: |
-        pip3 install awscli
-        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-        aws configure set region $AWS_REGION
-        aws configure list
-        aws s3 cp ./${{ steps.unix_port.outputs.board }}_${{ steps.build_no_mboot.outputs.mboot}}${{ steps.build_mboot.outputs.mboot}}_fw_${{ steps.unix_port.outputs.version }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/STM32/${{ steps.unix_port.outputs.board }}/
-
-
-        
+              
+              
