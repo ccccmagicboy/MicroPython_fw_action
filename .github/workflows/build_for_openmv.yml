@@ -49,9 +49,12 @@ jobs:
       max-parallel: 2
       matrix:
         board:
-        - PYBV11
+        - OPENMV1
+        - OPENMV2
+        - OPENMV3
+        - OPENMV4
+        - OPENMV4P
         tag:
-        # v1.12
         - master
         
     steps:
@@ -90,7 +93,7 @@ jobs:
     - name: Build
       working-directory: ./openmv/src
       run: |
-        make V=0 TARGET=OPENMV4 all
+        make V=0 TARGET=${{ matrix.test-board }} all
         ls ./build/bin -al
                       
     - name: Get the datetime
