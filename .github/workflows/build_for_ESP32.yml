@@ -168,6 +168,11 @@ jobs:
       uses: ccccmagicboy/hack_inisetup@esp32_default
       with:
         cpu: 240
+        
+    - name: Use SDMMC_FREQ_HIGHSPEED instead of default 20MHz
+      working-directory: ./
+      run: |
+        python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'esp32', 'machine_sdcard.c');print(mk_path);replaceAll(mk_path, 'sdmmc_host_t _temp_host = SDMMC_HOST_DEFAULT();', 'sdmmc_host_t _temp_host = SDMMC_HOST_DEFAULT();_temp_host.max_freq_khz = SDMMC_FREQ_HIGHSPEED;')"
 
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
