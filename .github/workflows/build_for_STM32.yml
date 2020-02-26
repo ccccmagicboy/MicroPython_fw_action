@@ -43,6 +43,7 @@ env:
   TZ: Asia/Shanghai
   ADD_CUSTOM_BOARD: true
   CUSTOM_FACTORY_RESET: true
+  CUSTOM_USB_STRING: true
   CUSTOM_MPCONFIGPORT: true
   ADD_MPY_FROZEN_MODULES: true
   ADD_NATIVE_C_MPY_MODULES: true
@@ -142,6 +143,11 @@ jobs:
       if: env.CUSTOM_FACTORY_RESET == 'true'
       run: |
         echo "0"
+
+    - name: Custom the usbd_desc.c file
+      if: env.CUSTOM_USB_STRING == 'true'
+      run: |
+        echo "0"        
       
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'

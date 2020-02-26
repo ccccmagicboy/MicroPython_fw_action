@@ -44,6 +44,7 @@ env:
   ADD_MPY_FROZEN_MODULES: false
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
+  ADD_PR: true
   USE_S3: false
   USB_DETACHED_HEAD: false
   
@@ -168,12 +169,21 @@ jobs:
       uses: ccccmagicboy/hack_inisetup@esp32_default
       with:
         cpu: 240
+#######################################################################################        
+    - name: Apply new PRs
+      if: env.ADD_PR == 'true'
+      working-directory: ./my_micropython
+      run: |
+        git branch -a
+        git fetch origin pull/4471/head:esp32-i2s
+        git checkout esp32-i2s
+        git log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         
     - name: Use SDMMC_FREQ_HIGHSPEED or SDMMC_FREQ_DEFAULT
       working-directory: ./
       run: |
         python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'esp32', 'machine_sdcard.c');print(mk_path);replaceAll(mk_path, 'sdmmc_host_t _temp_host = SDMMC_HOST_DEFAULT();', 'sdmmc_host_t _temp_host = SDMMC_HOST_DEFAULT();_temp_host.max_freq_khz = SDMMC_FREQ_HIGHSPEED;')"
-
+########################################################################################
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
       uses: ccccmagicboy/FW_esp32_get_IDF_hash_action@master
