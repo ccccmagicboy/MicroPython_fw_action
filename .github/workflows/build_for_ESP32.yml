@@ -177,7 +177,8 @@ jobs:
         git branch -a
         git fetch origin pull/4471/head:esp32-i2s
         git checkout esp32-i2s
-        git log --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
+        git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
+        git status
         
     - name: Use SDMMC_FREQ_HIGHSPEED or SDMMC_FREQ_DEFAULT
       working-directory: ./
