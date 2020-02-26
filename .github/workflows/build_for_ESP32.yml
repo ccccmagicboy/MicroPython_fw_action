@@ -174,6 +174,8 @@ jobs:
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
+        git config --global user.email "cuiwei_cv@163.com"
+        git config --global user.name "cccc"
         git commit -a -m "all my doing commiting"
         git branch -a
         git fetch origin pull/4471/head:esp32-i2s
