@@ -181,8 +181,6 @@ jobs:
         
     - name: Apply new PR - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
-      env: 
-        PICK = '0000'
       working-directory: ./my_micropython
       run: |
         git checkout master
@@ -190,6 +188,7 @@ jobs:
         git branch -a
         git checkout use_40MHz_for_esp32_sdmmc
         PICK = $(git rev-parse --short HEAD)
+        echo $PICK
         git checkout master
         git cherry-pick PICK
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
@@ -197,9 +196,7 @@ jobs:
         git describe --tags --always --dirty="-dev"
         
     - name: Apply new PR - https://github.com/micropython/micropython/pull/4471
-      if: env.ADD_PR == 'true'
-      env: 
-        PICK = '0000'      
+      if: env.ADD_PR == 'true'  
       working-directory: ./my_micropython
       run: |
         git checkout master
@@ -207,6 +204,7 @@ jobs:
         git branch -a
         git checkout esp32-i2s        
         PICK = $(git rev-parse --short HEAD)
+        echo $PICK
         git checkout master
         git cherry-pick PICK
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
