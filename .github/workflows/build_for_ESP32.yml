@@ -197,6 +197,8 @@ jobs:
         echo $PICK
         git checkout master
         git cherry-pick $PICK --no-commit
+        git add -A
+        git commit -m "add pr 5695"
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         git describe --tags --always --dirty="-dev"
@@ -213,7 +215,9 @@ jobs:
         export PICK=$(git rev-parse --short HEAD)
         echo $PICK
         git checkout master
-        git cherry-pick $PICK
+        git cherry-pick $PICK --no-commit
+        git add -A
+        git commit -m "add pr 4471"
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         git describe --tags --always --dirty="-dev"
