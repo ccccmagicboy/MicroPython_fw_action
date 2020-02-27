@@ -178,7 +178,7 @@ jobs:
         git config --global user.name "cccc"
         git commit -a -m "all my doing commiting"
         
-    - name: Apply new PRs - 5695 - Use SDMMC_FREQ_HIGHSPEED for SDMMC_FREQ_DEFAULT
+    - name: Apply new PRs - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
@@ -189,7 +189,7 @@ jobs:
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         
-    - name: Apply new PRs - 4471 - I2S SUPPORT
+    - name: Apply new PRs - https://github.com/micropython/micropython/pull/4471
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
