@@ -177,31 +177,34 @@ jobs:
         git config --global user.email "cuiwei_cv@163.com"
         git config --global user.name "cccc"
         git commit -a -m "all my doing commiting"
-        git describe --dirty --always
+        git describe --tags --always --dirty="-dev"
         
-    - name: Apply new PRs - https://github.com/micropython/micropython/pull/5695
+    - name: Apply new PR at cccc branch - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
-        git fetch origin pull/5695/head:use_40MHz_for_esp32_sdmmc
-        git branch -a
         git checkout master
+        git fetch origin pull/5695/head:use_40MHz_for_esp32_sdmmc
+        git checkout -b cccc
+        git branch -a
         git rebase use_40MHz_for_esp32_sdmmc
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
-        git describe --dirty --always
+        git describe --tags --always --dirty="-dev"
         
-    - name: Apply new PRs - https://github.com/micropython/micropython/pull/4471
+    - name: Apply new PR at cccc branch - https://github.com/micropython/micropython/pull/4471
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
+        git checkout master
         git fetch origin pull/4471/head:esp32-i2s
-        git branch -a        
+        git checkout -b cccc
+        git branch -a
         git checkout master
         git rebase esp32-i2s
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
-        git describe --dirty --always
+        git describe --tags --always --dirty="-dev"
         
 ########################################################################################
     - name: Get the IDF git hash of the only version(two of them)
