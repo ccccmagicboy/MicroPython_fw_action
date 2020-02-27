@@ -170,7 +170,7 @@ jobs:
       with:
         cpu: 240
 #######################################################################################        
-    - name: Apply new PRs: 4471: I2S SUPPORT
+    - name: Apply new PRs - 4471 - I2S SUPPORT
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
@@ -184,7 +184,7 @@ jobs:
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         
-    - name: Apply new PRs: 5695: Use SDMMC_FREQ_HIGHSPEED or SDMMC_FREQ_DEFAULT
+    - name: Apply new PRs - 5695 - Use SDMMC_FREQ_HIGHSPEED for SDMMC_FREQ_DEFAULT
       if: env.ADD_PR == 'true'
       working-directory: ./
       run: |
