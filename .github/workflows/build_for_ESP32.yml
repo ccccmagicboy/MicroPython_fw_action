@@ -64,9 +64,9 @@ jobs:
         idf-select:
         - IDF3
         - IDF4
-        tag:
+        #tag:
         # v1.12
-        - 1f371947309c5ea6023b6d9065415697cbc75578
+        #- 1f371947309c5ea6023b6d9065415697cbc75578
 
     steps:
     - name: Checkout this repos
@@ -178,6 +178,7 @@ jobs:
         git config --global user.name "cccc"
         git commit -a -m "all my doing commiting"
         git describe --tags --always --dirty="-dev"
+        git checkout -b cccc
         
     - name: Apply new PR at cccc branch - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
@@ -185,7 +186,7 @@ jobs:
       run: |
         git checkout master
         git fetch origin pull/5695/head:use_40MHz_for_esp32_sdmmc
-        git checkout -b cccc
+        git checkout cccc
         git branch -a
         git rebase use_40MHz_for_esp32_sdmmc
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
@@ -198,7 +199,7 @@ jobs:
       run: |
         git checkout master
         git fetch origin pull/4471/head:esp32-i2s
-        git checkout -b cccc
+        git checkout cccc
         git branch -a
         git checkout master
         git rebase esp32-i2s
