@@ -188,7 +188,7 @@ jobs:
     - name: Apply new PR - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
-      continue-on-error: true
+      continue-on-error: false
       run: |
         git checkout master
         git fetch origin pull/5695/head:use_40MHz_for_esp32_sdmmc
@@ -197,9 +197,7 @@ jobs:
         export PICK=$(git rev-parse --short HEAD)
         echo $PICK
         git checkout master
-        git cherry-pick $PICK --no-commit
-        git add -A
-        git commit -m "add pr 5695"
+        git rebase use_40MHz_for_esp32_sdmmc
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         git describe --tags --always --dirty="-dev"
@@ -208,7 +206,7 @@ jobs:
     - name: Apply new PR - https://github.com/micropython/micropython/pull/4471
       if: env.ADD_PR == 'true'  
       working-directory: ./my_micropython
-      continue-on-error: true
+      continue-on-error: false
       run: |
         git checkout master
         git fetch origin pull/4471/head:esp32-i2s
@@ -217,9 +215,7 @@ jobs:
         export PICK=$(git rev-parse --short HEAD)
         echo $PICK
         git checkout master
-        git cherry-pick $PICK --no-commit
-        git add -A
-        git commit -m "add pr 4471"
+        git cherry-pick $PICK
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         git describe --tags --always --dirty="-dev"
