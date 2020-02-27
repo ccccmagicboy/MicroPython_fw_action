@@ -170,15 +170,20 @@ jobs:
       with:
         cpu: 240
 #######################################################################################        
-    - name: Apply new PRs - 5695 - Use SDMMC_FREQ_HIGHSPEED for SDMMC_FREQ_DEFAULT
+    - name: Commit first
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
         git config --global user.email "cuiwei_cv@163.com"
         git config --global user.name "cccc"
         git commit -a -m "all my doing commiting"
-        git branch -a
+        
+    - name: Apply new PRs - 5695 - Use SDMMC_FREQ_HIGHSPEED for SDMMC_FREQ_DEFAULT
+      if: env.ADD_PR == 'true'
+      working-directory: ./my_micropython
+      run: |
         git fetch origin pull/5695/head:use_40MHz_for_esp32_sdmmc
+        git branch -a
         git checkout master
         git rebase use_40MHz_for_esp32_sdmmc
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
@@ -188,11 +193,8 @@ jobs:
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
-        git config --global user.email "cuiwei_cv@163.com"
-        git config --global user.name "cccc"
-        git commit -a -m "all my doing commiting"
-        git branch -a
         git fetch origin pull/4471/head:esp32-i2s
+        git branch -a        
         git checkout master
         git rebase esp32-i2s
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
