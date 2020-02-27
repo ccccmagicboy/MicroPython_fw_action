@@ -80,7 +80,7 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/unix/
       run: |
-        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+        # echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
         echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h            
         
     - name: Get the datetime
