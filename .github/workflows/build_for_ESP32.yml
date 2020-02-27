@@ -141,7 +141,7 @@ jobs:
         echo "::set-output name=version::$MOREF"
         echo "::set-output name=board::${{ matrix.test-board }}"
         echo "::set-output name=gitid::$(git rev-parse --short HEAD)"
-        echo "::set-output name=gitid2::$(git describe --tags --always --dirty="-dev")"
+        echo "::set-output name=gitid2::$(git describe --tags --always --dirty=\"-dev\")"
    
     - name: Custom the mpconfigport.h file
       if: env.CUSTOM_MPCONFIGPORT == 'true'
@@ -173,12 +173,14 @@ jobs:
 #######################################################################################        
     - name: Commit first
       if: env.ADD_PR == 'true'
+      id: commit_cccc
       working-directory: ./my_micropython
       run: |
         git config --global user.email "cuiwei_cv@163.com"
         git config --global user.name "cccc"
         git commit -a -m "all my dirty things"
         git describe --tags --always --dirty="-dev"
+        echo "::set-output name=ver::$(git describe --tags --always --dirty=\"-dev\")"
         
     - name: Apply new PR - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
@@ -195,6 +197,7 @@ jobs:
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         git describe --tags --always --dirty="-dev"
+        git shortlog --no-merges master --not ${{ steps.commit_cccc.outputs.ver }}
         
     - name: Apply new PR - https://github.com/micropython/micropython/pull/4471
       if: env.ADD_PR == 'true'  
@@ -211,6 +214,7 @@ jobs:
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         git describe --tags --always --dirty="-dev"
+        git shortlog --no-merges master --not ${{ steps.commit_cccc.outputs.ver }}
         
 ########################################################################################
     - name: Get the IDF git hash of the only version(two of them)
