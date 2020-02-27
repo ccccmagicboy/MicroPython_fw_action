@@ -188,6 +188,7 @@ jobs:
     - name: Apply new PR - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
+      continue-on-error: 'true'
       run: |
         git checkout master
         git fetch origin pull/5695/head:use_40MHz_for_esp32_sdmmc
@@ -207,6 +208,7 @@ jobs:
     - name: Apply new PR - https://github.com/micropython/micropython/pull/4471
       if: env.ADD_PR == 'true'  
       working-directory: ./my_micropython
+      continue-on-error: 'true'
       run: |
         git checkout master
         git fetch origin pull/4471/head:esp32-i2s
