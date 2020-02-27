@@ -186,7 +186,7 @@ jobs:
         
     - name: Apply new PRs - 5695 - Use SDMMC_FREQ_HIGHSPEED for SDMMC_FREQ_DEFAULT
       if: env.ADD_PR == 'true'
-      working-directory: ./
+      working-directory: ./my_micropython
       run: |
         git config --global user.email "cuiwei_cv@163.com"
         git config --global user.name "cccc"
