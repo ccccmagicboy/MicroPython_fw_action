@@ -170,7 +170,7 @@ jobs:
       with:
         cpu: 240
 #######################################################################################        
-    - name: Commit first
+    - name: Commit first and use cccc branch
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
