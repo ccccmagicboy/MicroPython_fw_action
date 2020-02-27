@@ -177,6 +177,7 @@ jobs:
         git config --global user.email "cuiwei_cv@163.com"
         git config --global user.name "cccc"
         git commit -a -m "all my doing commiting"
+        git describe --dirty --always
         
     - name: Apply new PRs - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
@@ -188,6 +189,7 @@ jobs:
         git rebase use_40MHz_for_esp32_sdmmc
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
+        git describe --dirty --always
         
     - name: Apply new PRs - https://github.com/micropython/micropython/pull/4471
       if: env.ADD_PR == 'true'
@@ -199,6 +201,7 @@ jobs:
         git rebase esp32-i2s
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
+        git describe --dirty --always
         
 ########################################################################################
     - name: Get the IDF git hash of the only version(two of them)
