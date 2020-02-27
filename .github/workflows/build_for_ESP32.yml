@@ -187,7 +187,7 @@ jobs:
         git fetch origin pull/5695/head:use_40MHz_for_esp32_sdmmc
         git branch -a
         git checkout use_40MHz_for_esp32_sdmmc
-        PICK = $(git rev-parse --short HEAD)
+        export PICK=$(git rev-parse --short HEAD)
         echo $PICK
         git checkout master
         git cherry-pick PICK
@@ -203,7 +203,7 @@ jobs:
         git fetch origin pull/4471/head:esp32-i2s
         git branch -a
         git checkout esp32-i2s        
-        PICK = $(git rev-parse --short HEAD)
+        export PICK=$(git rev-parse --short HEAD)
         echo $PICK
         git checkout master
         git cherry-pick PICK
