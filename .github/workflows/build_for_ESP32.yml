@@ -182,6 +182,9 @@ jobs:
         git describe --tags --always --dirty="-dev"
         echo "::set-output name=ver::$(git describe --tags --always --dirty=\"-dev\")"
         
+    - name: Debug the action
+      uses: p3terx/debugger-action@master   
+            
     - name: Apply new PR - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
