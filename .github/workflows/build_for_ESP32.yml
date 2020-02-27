@@ -170,39 +170,45 @@ jobs:
       with:
         cpu: 240
 #######################################################################################        
-    - name: Commit first and use cccc branch
+    - name: Commit first
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       run: |
         git config --global user.email "cuiwei_cv@163.com"
         git config --global user.name "cccc"
-        git commit -a -m "all my doing commiting"
+        git commit -a -m "all my dirty things"
         git describe --tags --always --dirty="-dev"
-        git checkout -b cccc
         
-    - name: Apply new PR at cccc branch - https://github.com/micropython/micropython/pull/5695
+    - name: Apply new PR - https://github.com/micropython/micropython/pull/5695
       if: env.ADD_PR == 'true'
+      env: 
+        PICK = '0000'
       working-directory: ./my_micropython
       run: |
         git checkout master
         git fetch origin pull/5695/head:use_40MHz_for_esp32_sdmmc
-        git checkout cccc
         git branch -a
-        git rebase use_40MHz_for_esp32_sdmmc
+        git checkout use_40MHz_for_esp32_sdmmc
+        PICK = $(git rev-parse --short HEAD)
+        git checkout master
+        git cherry-pick PICK
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         git describe --tags --always --dirty="-dev"
         
-    - name: Apply new PR at cccc branch - https://github.com/micropython/micropython/pull/4471
+    - name: Apply new PR - https://github.com/micropython/micropython/pull/4471
       if: env.ADD_PR == 'true'
+      env: 
+        PICK = '0000'      
       working-directory: ./my_micropython
       run: |
         git checkout master
         git fetch origin pull/4471/head:esp32-i2s
-        git checkout cccc
         git branch -a
+        git checkout esp32-i2s        
+        PICK = $(git rev-parse --short HEAD)
         git checkout master
-        git rebase esp32-i2s
+        git cherry-pick PICK
         git log -10 --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\n--abbrev-commit --date=relative
         git status
         git describe --tags --always --dirty="-dev"
