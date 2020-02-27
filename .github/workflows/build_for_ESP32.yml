@@ -203,7 +203,7 @@ jobs:
         echo $PICK
         git checkout master
         git rebase use_40MHz_for_esp32_sdmmc
-        git log --all --decorate --oneline --graph
+        git log -10 --all --decorate --oneline --graph
         git status
         git describe --tags --always --dirty="-dev"
         git shortlog --no-merges master --not ${{ steps.commit_cccc.outputs.ver }}
@@ -221,7 +221,7 @@ jobs:
         echo $PICK
         git checkout master
         git cherry-pick $PICK
-        git log --all --decorate --oneline --graph
+        git log -10 --all --decorate --oneline --graph
         git status
         git describe --tags --always --dirty="-dev"
         git shortlog --no-merges master --not ${{ steps.commit_cccc.outputs.ver }}
