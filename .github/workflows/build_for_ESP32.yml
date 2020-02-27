@@ -171,7 +171,11 @@ jobs:
       uses: ccccmagicboy/hack_inisetup@esp32_default
       with:
         cpu: 240
-#######################################################################################        
+####################################################################################### 
+    - name: test
+      run: |
+        echo "0000"
+        
     - name: Commit first
       if: env.ADD_PR == 'true'
       id: commit_cccc
