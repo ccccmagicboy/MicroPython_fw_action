@@ -89,8 +89,9 @@ jobs:
         pip3 install --upgrade pip
         pip3 install pyserial 'pyparsing<2.4'
         pip3 install pyelftools
-        sudo apt install uncrustify
+        # sudo apt install uncrustify
         pip3 install black
+        black --version
         
     - name: Down and install the toolchain
       if: env.TOOLCHAIN_FROM_SCRATCH == 'false'
@@ -185,6 +186,7 @@ jobs:
       run: |
         git config --global user.email "cuiwei_cv@163.com"
         git config --global user.name "cccc"
+        git diff --name-only
         git commit -a -m "all my dirty things"
         git describe --tags --always --dirty="-dev"
         echo "::set-output name=ver::$(git describe --tags --always --dirty=\"-dev\")"
@@ -233,7 +235,15 @@ jobs:
       working-directory: ./my_micropython/tools
       continue-on-error: true
       run: |
+        git clone https://github.com/uncrustify/uncrustify.git uncrustify
+        git -C uncrustify checkout uncrustify-0.70.1
+        mkdir -p uncrustify/build
+        cd uncrustify/build
+        cmake ..
+        make
+        cd ../..        
         python codeformat.py
+        git diff --exit-code
 ########################################################################################
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
