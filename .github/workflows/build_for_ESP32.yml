@@ -241,7 +241,8 @@ jobs:
         cd uncrustify/build
         cmake ..
         make
-        cd ../..        
+        cd ../..
+        export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_micropython/tools/uncrustify/build:$PATH
         python codeformat.py
         git diff --exit-code
 ########################################################################################
