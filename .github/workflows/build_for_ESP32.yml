@@ -230,7 +230,7 @@ jobs:
     - name: Check the source code 
       if: env.ADD_PR == 'true'  
       working-directory: ./my_micropython/tools
-      continue-on-error: false
+      continue-on-error: true
       run: |
         python codeformat.py
 ########################################################################################
