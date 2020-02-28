@@ -226,6 +226,12 @@ jobs:
         git describe --tags --always --dirty="-dev"
         git shortlog --no-merges master --not ${{ steps.commit_cccc.outputs.ver }}
         
+    - name: Check the source code 
+      if: env.ADD_PR == 'true'  
+      working-directory: ./my_micropython/tools
+      continue-on-error: false
+      run: |
+        python codeformat.py
 ########################################################################################
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
