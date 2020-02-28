@@ -243,8 +243,8 @@ jobs:
         make
         cd ../..
         export PATH=/home/runner/work/MicroPython_fw_action/MicroPython_fw_action/my_micropython/tools/uncrustify/build:$PATH
-        python codeformat.py
-        git diff --exit-code
+        python codeformat.py ../ports/esp32/machine_sdcard.c
+        # git diff --exit-code
 ########################################################################################
     - name: Get the IDF git hash of the only version(two of them)
       id: get_hash
@@ -298,6 +298,12 @@ jobs:
       with:
         name: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
+        
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: machine_sdcard
+        path: my_micropython/ports/esp32/machine_sdcard.c   
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
