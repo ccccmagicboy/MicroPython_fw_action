@@ -89,6 +89,7 @@ jobs:
         pip3 install --upgrade pip
         pip3 install pyserial 'pyparsing<2.4'
         pip3 install pyelftools
+        sudo apt install uncrustify
         
     - name: Down and install the toolchain
       if: env.TOOLCHAIN_FROM_SCRATCH == 'false'
