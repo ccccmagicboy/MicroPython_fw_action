@@ -134,7 +134,23 @@ jobs:
         git clone https://github.com/devbis/st7789_mpy.git
         mkdir -p ./ESP32/st7789
         cp -R ./st7789_mpy/st7789/. ./ESP32/st7789
-        ls -al ./ESP32/st7789                
+        ls -al ./ESP32/st7789   
+
+    - name: Clone the modbus py modules - https://github.com/pycom/pycom-modbus.git
+      working-directory: ./modules
+      run: |
+        git clone https://github.com/pycom/pycom-modbus.git
+        mkdir -p ./ESP32/uModbus
+        cp -R ./pycom-modbus/uModbus/. ./ESP32/uModbus
+        ls -al ./ESP32/uModbus
+
+    - name: Clone the modbus py modules - https://github.com/techbase123/micropython-modbus.git
+      working-directory: ./modules
+      run: |
+        git clone https://github.com/techbase123/micropython-modbus.git
+        mkdir -p ./ESP32/Modbus
+        cp -R ./micropython-modbus/. ./ESP32/Modbus
+        ls -al ./ESP32/Modbus
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
