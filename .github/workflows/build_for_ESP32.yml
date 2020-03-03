@@ -160,7 +160,7 @@ jobs:
       working-directory: ./my_micropython/ports/esp32/
       run: |
         echo "#define MODULE_ST7789_ENABLED (1)" >> mpconfigport.h
-        echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
+        # echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
         echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h
         echo "#define MODULE_HELLO_ENABLED (1)" >> mpconfigport.h        
    
