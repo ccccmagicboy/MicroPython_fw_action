@@ -48,6 +48,7 @@ env:
   ADD_PR: true
   USE_S3: false
   USB_DETACHED_HEAD: false
+  USB_BIGGER_FLASH: true
   
 jobs:
   build:
@@ -159,6 +160,13 @@ jobs:
         mkdir -p ./ESP32/BME280
         cp -R ./BME280/*.py ./ESP32/BME280
         ls -al ./ESP32/BME280
+        
+    - name: Change the partitions.csv
+      working-directory: ./
+      run: |
+        python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'esp32', 'partitions.csv');print(mk_path);replaceAll(mk_path, 'app,  factory, 0x10000, 0x180000', 'app,  factory, 0x10000, 0x1D0000')"
+        python -c "import os;from tools.mpy_cross_win_tool import replaceAll;mk_path = os.path.join(os.getcwd(), 'my_micropython', 'ports', 'esp32', 'partitions.csv');print(mk_path);replaceAll(mk_path, 'data, fat,     0x200000, 0x200000', 'data, fat,     0x200000, 0xE00000')"
+        
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
