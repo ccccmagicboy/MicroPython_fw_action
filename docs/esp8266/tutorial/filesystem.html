@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>3. The internal filesystem &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Network basics" href="network_basics.html" />
+    <link rel="prev" title="2. Getting a MicroPython REPL prompt" href="repl.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="network_basics.html" title="4. Network basics"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="repl.html" title="2. Getting a MicroPython REPL prompt"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the ESP8266</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for ESP8266</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-internal-filesystem">
+<h1><span class="section-number">3. </span>The internal filesystem<a class="headerlink" href="#the-internal-filesystem" title="Permalink to this headline">¶</a></h1>
+<p>If your devices has 1Mbyte or more of storage then it will be set up (upon first
+boot) to contain a filesystem.  This filesystem uses the FAT format and is
+stored in the flash after the MicroPython firmware.</p>
+<div class="section" id="creating-and-reading-files">
+<h2><span class="section-number">3.1. </span>Creating and reading files<a class="headerlink" href="#creating-and-reading-files" title="Permalink to this headline">¶</a></h2>
+<p>MicroPython on the ESP8266 supports the standard way of accessing files in
+Python, using the built-in <code class="docutils literal notranslate"><span class="pre">open()</span></code> function.</p>
+<p>To create a file try:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;some data&#39;</span><span class="p">)</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The “9” is the number of bytes that were written with the <code class="docutils literal notranslate"><span class="pre">write()</span></code> method.
+Then you can read back the contents of this new file using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="go">&#39;some data&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that the default mode when opening a file is to open it in read-only mode,
+and as a text file.  Specify <code class="docutils literal notranslate"><span class="pre">'wb'</span></code> as the second argument to <code class="docutils literal notranslate"><span class="pre">open()</span></code> to
+open for writing in binary mode, and <code class="docutils literal notranslate"><span class="pre">'rb'</span></code> to open for reading in binary
+mode.</p>
+</div>
+<div class="section" id="listing-file-and-more">
+<h2><span class="section-number">3.2. </span>Listing file and more<a class="headerlink" href="#listing-file-and-more" title="Permalink to this headline">¶</a></h2>
+<p>The os module can be used for further control over the filesystem.  First
+import the module:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+<p>Then try listing the contents of the filesystem:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">()</span>
+<span class="go">[&#39;boot.py&#39;, &#39;port_config.py&#39;, &#39;data.txt&#39;]</span>
+</pre></div>
+</div>
+<p>You can make directories:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;dir&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And remove entries:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;data.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="start-up-scripts">
+<h2><span class="section-number">3.3. </span>Start up scripts<a class="headerlink" href="#start-up-scripts" title="Permalink to this headline">¶</a></h2>
+<p>There are two files that are treated specially by the ESP8266 when it starts up:
+boot.py and main.py.  The boot.py script is executed first (if it exists) and
+then once it completes the main.py script is executed.  You can create these
+files yourself and populate them with the code that you want to run when the
+device starts up.</p>
+</div>
+<div class="section" id="accessing-the-filesystem-via-webrepl">
+<h2><span class="section-number">3.4. </span>Accessing the filesystem via WebREPL<a class="headerlink" href="#accessing-the-filesystem-via-webrepl" title="Permalink to this headline">¶</a></h2>
+<p>You can access the filesystem over WebREPL using the web client in a browser
+or via the command-line tool. Please refer to Quick Reference and Tutorial
+sections for more information about WebREPL.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. The internal filesystem</a><ul>
+<li><a class="reference internal" href="#creating-and-reading-files">3.1. Creating and reading files</a></li>
+<li><a class="reference internal" href="#listing-file-and-more">3.2. Listing file and more</a></li>
+<li><a class="reference internal" href="#start-up-scripts">3.3. Start up scripts</a></li>
+<li><a class="reference internal" href="#accessing-the-filesystem-via-webrepl">3.4. Accessing the filesystem via WebREPL</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="repl.html"
+                        title="previous chapter"><span class="section-number">2. </span>Getting a MicroPython REPL prompt</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="network_basics.html"
+                        title="next chapter"><span class="section-number">4. </span>Network basics</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/esp8266/tutorial/filesystem.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="network_basics.html" title="4. Network basics"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="repl.html" title="2. Getting a MicroPython REPL prompt"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the ESP8266</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for ESP8266</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

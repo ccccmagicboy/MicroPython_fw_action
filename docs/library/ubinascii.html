@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>ubinascii – binary/ASCII conversions &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ucollections – collection and container types" href="ucollections.html" />
+    <link rel="prev" title="uarray – arrays of numeric data" href="uarray.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ucollections.html" title="ucollections – collection and container types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="uarray.html" title="uarray – arrays of numeric data"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ubinascii">
+<span id="ubinascii-binary-ascii-conversions"></span><h1><a class="reference internal" href="#module-ubinascii" title="ubinascii: binary/ASCII conversions"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ubinascii</span></code></a> – binary/ASCII conversions<a class="headerlink" href="#module-ubinascii" title="Permalink to this headline">¶</a></h1>
+<p><a href="#id1"><span class="problematic" id="id2">|see_cpython_module|</span></a> <code class="xref py py-mod docutils literal notranslate"><span class="pre">python:binascii</span></code>.</p>
+<p>This module implements conversions between binary data and various
+encodings of it in ASCII form (in both directions).</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ubinascii.hexlify">
+<code class="sig-prename descclassname">ubinascii.</code><code class="sig-name descname">hexlify</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="optional">[</span>, <em class="sig-param">sep</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#ubinascii.hexlify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert binary data to hexadecimal representation. Returns bytes string.</p>
+<div class="attention admonition">
+<p class="admonition-title">Difference to CPython</p>
+<p>If additional argument, <em>sep</em> is supplied, it is used as a separator
+between hexadecimal values.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="ubinascii.unhexlify">
+<code class="sig-prename descclassname">ubinascii.</code><code class="sig-name descname">unhexlify</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#ubinascii.unhexlify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert hexadecimal data to binary representation. Returns bytes string.
+(i.e. inverse of hexlify)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ubinascii.a2b_base64">
+<code class="sig-prename descclassname">ubinascii.</code><code class="sig-name descname">a2b_base64</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#ubinascii.a2b_base64" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode base64-encoded data, ignoring invalid characters in the input.
+Conforms to <a class="reference external" href="https://tools.ietf.org/html/rfc2045#section-6.8">RFC 2045 s.6.8</a>.
+Returns a bytes object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ubinascii.b2a_base64">
+<code class="sig-prename descclassname">ubinascii.</code><code class="sig-name descname">b2a_base64</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#ubinascii.b2a_base64" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode binary data in base64 format, as in <a class="reference external" href="https://tools.ietf.org/html/rfc3548.html">RFC 3548</a>. Returns the encoded data
+followed by a newline character, as a bytes object.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ubinascii</span></code> – binary/ASCII conversions</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="uarray.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uarray</span></code> – arrays of numeric data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ucollections.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ucollections</span></code> – collection and container types</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/ubinascii.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ucollections.html" title="ucollections – collection and container types"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="uarray.html" title="uarray – arrays of numeric data"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

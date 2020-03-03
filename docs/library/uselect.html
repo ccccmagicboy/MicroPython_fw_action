@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>uselect – wait for events on a set of streams &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="usocket – socket module" href="usocket.html" />
+    <link rel="prev" title="ure – simple regular expressions" href="ure.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="usocket.html" title="usocket – socket module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ure.html" title="ure – simple regular expressions"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-uselect">
+<span id="uselect-wait-for-events-on-a-set-of-streams"></span><h1><a class="reference internal" href="#module-uselect" title="uselect: wait for events on a set of streams"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uselect</span></code></a> – wait for events on a set of streams<a class="headerlink" href="#module-uselect" title="Permalink to this headline">¶</a></h1>
+<p><a href="#id1"><span class="problematic" id="id2">|see_cpython_module|</span></a> <code class="xref py py-mod docutils literal notranslate"><span class="pre">python:select</span></code>.</p>
+<p>This module provides functions to efficiently wait for events on multiple
+<cite>streams &lt;stream&gt;</cite> (select streams which are ready for operations).</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="uselect.poll">
+<code class="sig-prename descclassname">uselect.</code><code class="sig-name descname">poll</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uselect.poll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the Poll class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="uselect.select">
+<code class="sig-prename descclassname">uselect.</code><code class="sig-name descname">select</code><span class="sig-paren">(</span><em class="sig-param">rlist</em>, <em class="sig-param">wlist</em>, <em class="sig-param">xlist</em><span class="optional">[</span>, <em class="sig-param">timeout</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#uselect.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for activity on a set of objects.</p>
+<p>This function is provided by some MicroPython ports for compatibility
+and is not efficient. Usage of <code class="xref py py-class docutils literal notranslate"><span class="pre">Poll</span></code> is recommended instead.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="class-poll">
+<h2>class <code class="docutils literal notranslate"><span class="pre">Poll</span></code><a class="headerlink" href="#class-poll" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
+<dl class="method">
+<dt id="uselect.poll.register">
+<code class="sig-prename descclassname">poll.</code><code class="sig-name descname">register</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="optional">[</span>, <em class="sig-param">eventmask</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#uselect.poll.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register <cite>stream</cite> <em>obj</em> for polling. <em>eventmask</em> is logical OR of:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">uselect.POLLIN</span></code>  - data available for reading</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uselect.POLLOUT</span></code> - more data can be written</p></li>
+</ul>
+<p>Note that flags like <code class="docutils literal notranslate"><span class="pre">uselect.POLLHUP</span></code> and <code class="docutils literal notranslate"><span class="pre">uselect.POLLERR</span></code> are
+<em>not</em> valid as input eventmask (these are unsolicited events which
+will be returned from <cite>poll()</cite> regardless of whether they are asked
+for). This semantics is per POSIX.</p>
+<p><em>eventmask</em> defaults to <code class="docutils literal notranslate"><span class="pre">uselect.POLLIN</span> <span class="pre">|</span> <span class="pre">uselect.POLLOUT</span></code>.</p>
+<p>It is OK to call this function multiple times for the same <em>obj</em>.
+Successive calls will update <em>obj</em>’s eventmask to the value of
+<em>eventmask</em> (i.e. will behave as <cite>modify()</cite>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uselect.poll.unregister">
+<code class="sig-prename descclassname">poll.</code><code class="sig-name descname">unregister</code><span class="sig-paren">(</span><em class="sig-param">obj</em><span class="sig-paren">)</span><a class="headerlink" href="#uselect.poll.unregister" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister <em>obj</em> from polling.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uselect.poll.modify">
+<code class="sig-prename descclassname">poll.</code><code class="sig-name descname">modify</code><span class="sig-paren">(</span><em class="sig-param">obj</em>, <em class="sig-param">eventmask</em><span class="sig-paren">)</span><a class="headerlink" href="#uselect.poll.modify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modify the <em>eventmask</em> for <em>obj</em>. If <em>obj</em> is not registered, <cite>OSError</cite>
+is raised with error of ENOENT.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uselect.poll.poll">
+<code class="sig-prename descclassname">poll.</code><code class="sig-name descname">poll</code><span class="sig-paren">(</span><em class="sig-param">timeout=-1</em>, <em class="sig-param">/</em><span class="sig-paren">)</span><a class="headerlink" href="#uselect.poll.poll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait for at least one of the registered objects to become ready or have an
+exceptional condition, with optional timeout in milliseconds (if <em>timeout</em>
+arg is not specified or -1, there is no timeout).</p>
+<p>Returns list of (<code class="docutils literal notranslate"><span class="pre">obj</span></code>, <code class="docutils literal notranslate"><span class="pre">event</span></code>, …) tuples. There may be other elements in
+tuple, depending on a platform and version, so don’t assume that its size is 2.
+The <code class="docutils literal notranslate"><span class="pre">event</span></code> element specifies which events happened with a stream and
+is a combination of <code class="docutils literal notranslate"><span class="pre">uselect.POLL*</span></code> constants described above. Note that
+flags <code class="docutils literal notranslate"><span class="pre">uselect.POLLHUP</span></code> and <code class="docutils literal notranslate"><span class="pre">uselect.POLLERR</span></code> can be returned at any time
+(even if were not asked for), and must be acted on accordingly (the
+corresponding stream unregistered from poll and likely closed), because
+otherwise all further invocations of <cite>poll()</cite> may return immediately with
+these flags set for this stream again.</p>
+<p>In case of timeout, an empty list is returned.</p>
+<div class="attention admonition">
+<p class="admonition-title">Difference to CPython</p>
+<p>Tuples returned may contain more than 2 elements as described above.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="uselect.poll.ipoll">
+<code class="sig-prename descclassname">poll.</code><code class="sig-name descname">ipoll</code><span class="sig-paren">(</span><em class="sig-param">timeout=-1</em>, <em class="sig-param">flags=0</em>, <em class="sig-param">/</em><span class="sig-paren">)</span><a class="headerlink" href="#uselect.poll.ipoll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#uselect.poll.poll" title="uselect.poll.poll"><code class="xref py py-meth docutils literal notranslate"><span class="pre">poll.poll()</span></code></a>, but instead returns an iterator which yields a
+<cite>callee-owned tuple</cite>. This function provides an efficient, allocation-free
+way to poll on streams.</p>
+<p>If <em>flags</em> is 1, one-shot behavior for events is employed: streams for
+which events happened will have their event masks automatically reset
+(equivalent to <code class="docutils literal notranslate"><span class="pre">poll.modify(obj,</span> <span class="pre">0)</span></code>), so new events for such a stream
+won’t be processed until new mask is set with <cite>poll.modify()</cite>. This
+behavior is useful for asynchronous I/O schedulers.</p>
+<div class="attention admonition">
+<p class="admonition-title">Difference to CPython</p>
+<p>This function is a MicroPython extension.</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uselect</span></code> – wait for events on a set of streams</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#class-poll">class <code class="docutils literal notranslate"><span class="pre">Poll</span></code></a><ul>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="ure.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ure</span></code> – simple regular expressions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usocket.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">usocket</span></code> – socket module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/uselect.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="usocket.html" title="usocket – socket module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ure.html" title="ure – simple regular expressions"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>8. Analog to Digital Conversion &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="9. Power control" href="powerctrl.html" />
+    <link rel="prev" title="7. Pulse Width Modulation" href="pwm.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="powerctrl.html" title="9. Power control"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pwm.html" title="7. Pulse Width Modulation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the ESP8266</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for ESP8266</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="analog-to-digital-conversion">
+<h1><span class="section-number">8. </span>Analog to Digital Conversion<a class="headerlink" href="#analog-to-digital-conversion" title="Permalink to this headline">¶</a></h1>
+<p>The ESP8266 has a single pin (separate to the GPIO pins) which can be used to
+read analog voltages and convert them to a digital value.  You can construct
+such an ADC pin object using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">machine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">adc</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">ADC</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then read its value with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">adc</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="go">58</span>
+</pre></div>
+</div>
+<p>The values returned from the <code class="docutils literal notranslate"><span class="pre">read()</span></code> function are between 0 (for 0.0 volts)
+and 1024 (for 1.0 volts).  Please note that this input can only tolerate a
+maximum of 1.0 volts and you must use a voltage divider circuit to measure
+larger voltages.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pwm.html"
+                        title="previous chapter"><span class="section-number">7. </span>Pulse Width Modulation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="powerctrl.html"
+                        title="next chapter"><span class="section-number">9. </span>Power control</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/esp8266/tutorial/adc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="powerctrl.html" title="9. Power control"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pwm.html" title="7. Pulse Width Modulation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the ESP8266</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for ESP8266</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

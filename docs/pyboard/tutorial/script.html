@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>2. Running your first script &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. Getting a MicroPython REPL prompt" href="repl.html" />
+    <link rel="prev" title="1. Introduction to the pyboard" href="intro.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="repl.html" title="3. Getting a MicroPython REPL prompt"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="1. Introduction to the pyboard"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="running-your-first-script">
+<h1><span class="section-number">2. </span>Running your first script<a class="headerlink" href="#running-your-first-script" title="Permalink to this headline">¶</a></h1>
+<p>Let’s jump right in and get a Python script running on the pyboard.  After
+all, that’s what it’s all about!</p>
+<div class="section" id="connecting-your-pyboard">
+<h2><span class="section-number">2.1. </span>Connecting your pyboard<a class="headerlink" href="#connecting-your-pyboard" title="Permalink to this headline">¶</a></h2>
+<p>Connect your pyboard to your PC (Windows, Mac or Linux) with a micro USB cable.
+There is only one way that the cable will connect, so you can’t get it wrong.</p>
+<img alt="../../_images/pyboard_usb_micro.jpg" src="../../_images/pyboard_usb_micro.jpg" />
+<p>When the pyboard is connected to your PC it will power on and enter the start up
+process (the boot process).  The green LED should light up for half a second or
+less, and when it turns off it means the boot process has completed.</p>
+</div>
+<div class="section" id="opening-the-pyboard-usb-drive">
+<h2><span class="section-number">2.2. </span>Opening the pyboard USB drive<a class="headerlink" href="#opening-the-pyboard-usb-drive" title="Permalink to this headline">¶</a></h2>
+<p>Your PC should now recognise the pyboard.  It depends on the type of PC you
+have as to what happens next:</p>
+<blockquote>
+<div><ul>
+<li><p><strong>Windows</strong>: Your pyboard will appear as a removable USB flash drive.
+Windows may automatically pop-up a window, or you may need to go there
+using Explorer.</p>
+<p>Windows will also see that the pyboard has a serial device, and it will
+try to automatically configure this device.  If it does, cancel the process.
+We will get the serial device working in the next tutorial.</p>
+</li>
+<li><p><strong>Mac</strong>: Your pyboard will appear on the desktop as a removable disc.
+It will probably be called <code class="docutils literal notranslate"><span class="pre">PYBFLASH</span></code>.  Click on it to open the pyboard folder.</p></li>
+<li><p><strong>Linux</strong>: Your pyboard will appear as a removable medium.  On Ubuntu
+it will mount automatically and pop-up a window with the pyboard folder.
+On other Linux distributions, the pyboard may be mounted automatically,
+or you may need to do it manually.  At a terminal command line, type <code class="docutils literal notranslate"><span class="pre">lsblk</span></code>
+to see a list of connected drives, and then <code class="docutils literal notranslate"><span class="pre">mount</span> <span class="pre">/dev/sdb1</span></code> (replace <code class="docutils literal notranslate"><span class="pre">sdb1</span></code>
+with the appropriate device).  You may need to be root to do this.</p></li>
+</ul>
+</div></blockquote>
+<p>Okay, so you should now have the pyboard connected as a USB flash drive, and
+a window (or command line) should be showing the files on the pyboard drive.</p>
+<p>The drive you are looking at is known as <code class="docutils literal notranslate"><span class="pre">/flash</span></code> by the pyboard, and should contain
+the following 4 files:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference external" href="http://micropython.org/resources/fresh-pyboard/boot.py">boot.py</a> – the various configuration options for the pyboard.</dt><dd><p>It is executed when the pyboard boots up.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="http://micropython.org/resources/fresh-pyboard/main.py">main.py</a> – the Python program to be run.</dt><dd><p>It is executed after <code class="docutils literal notranslate"><span class="pre">boot.py</span></code>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="http://micropython.org/resources/fresh-pyboard/README.txt">README.txt</a> – basic information about getting started with the pyboard.</dt><dd><p>This provides pointers for new users and can be safely deleted.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference external" href="http://micropython.org/resources/fresh-pyboard/pybcdc.inf">pybcdc.inf</a> – the Windows driver file to configure the serial USB device.</dt><dd><p>More about this in the next tutorial.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="editing-main-py">
+<h2><span class="section-number">2.3. </span>Editing <code class="docutils literal notranslate"><span class="pre">main.py</span></code><a class="headerlink" href="#editing-main-py" title="Permalink to this headline">¶</a></h2>
+<p>Now we are going to write our Python program, so open the <code class="docutils literal notranslate"><span class="pre">main.py</span></code>
+file in a text editor.  On Windows you can use notepad, or any other editor.
+On Mac and Linux, use your favourite text editor.  With the file open you will
+see it contains 1 line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py -- put your code here!</span>
+</pre></div>
+</div>
+<p>This line starts with a # character, which means that it is a <em>comment</em>.  Such
+lines will not do anything, and are there for you to write notes about your
+program.</p>
+<p>Let’s add 2 lines to this <code class="docutils literal notranslate"><span class="pre">main.py</span></code> file, to make it look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py -- put your code here!</span>
+<span class="kn">import</span> <span class="nn">pyb</span>
+<span class="n">pyb</span><span class="o">.</span><span class="n">LED</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The first line we wrote says that we want to use the <code class="docutils literal notranslate"><span class="pre">pyb</span></code> module.
+This module contains all the functions and classes to control the features
+of the pyboard.</p>
+<p>The second line that we wrote turns the blue LED on: it first gets the <code class="docutils literal notranslate"><span class="pre">LED</span></code>
+class from the <code class="docutils literal notranslate"><span class="pre">pyb</span></code> module, creates LED number 4 (the blue LED), and then
+turns it on.</p>
+</div>
+<div class="section" id="resetting-the-pyboard">
+<h2><span class="section-number">2.4. </span>Resetting the pyboard<a class="headerlink" href="#resetting-the-pyboard" title="Permalink to this headline">¶</a></h2>
+<p>To run this little script, you need to first save and close the <code class="docutils literal notranslate"><span class="pre">main.py</span></code> file,
+and then eject (or unmount) the pyboard USB drive.  Do this like you would a
+normal USB flash drive.</p>
+<p>When the drive is safely ejected/unmounted you can get to the fun part:
+press the RST switch on the pyboard to reset and run your script. The RST
+switch is the small black button just below the USB connector on the board,
+on the right edge.</p>
+<p>When you press RST the green LED will flash quickly, and then the blue
+LED should turn on and stay on.</p>
+<p>Congratulations!  You have written and run your very first MicroPython
+program!</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Running your first script</a><ul>
+<li><a class="reference internal" href="#connecting-your-pyboard">2.1. Connecting your pyboard</a></li>
+<li><a class="reference internal" href="#opening-the-pyboard-usb-drive">2.2. Opening the pyboard USB drive</a></li>
+<li><a class="reference internal" href="#editing-main-py">2.3. Editing <code class="docutils literal notranslate"><span class="pre">main.py</span></code></a></li>
+<li><a class="reference internal" href="#resetting-the-pyboard">2.4. Resetting the pyboard</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter"><span class="section-number">1. </span>Introduction to the pyboard</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="repl.html"
+                        title="next chapter"><span class="section-number">3. </span>Getting a MicroPython REPL prompt</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/pyboard/tutorial/script.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="repl.html" title="3. Getting a MicroPython REPL prompt"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="1. Introduction to the pyboard"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

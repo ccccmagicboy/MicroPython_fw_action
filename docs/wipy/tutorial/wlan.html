@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>4. WLAN step by step &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5. Hardware timers" href="timer.html" />
+    <link rel="prev" title="3. Getting started with Blynk and the WiPy" href="blynk.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="timer.html" title="5. Hardware timers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="blynk.html" title="3. Getting started with Blynk and the WiPy"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the WiPy</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">WiPy tutorials and examples</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="wlan-step-by-step">
+<h1><span class="section-number">4. </span>WLAN step by step<a class="headerlink" href="#wlan-step-by-step" title="Permalink to this headline">¶</a></h1>
+<p>The WLAN is a system feature of the WiPy, therefore it is always enabled
+(even while in <code class="docutils literal notranslate"><span class="pre">machine.SLEEP</span></code>), except when deepsleep mode is entered.</p>
+<p>In order to retrieve the current WLAN instance, do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">network</span> <span class="kn">import</span> <span class="n">WLAN</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wlan</span> <span class="o">=</span> <span class="n">WLAN</span><span class="p">()</span> <span class="c1"># we call the constructor without params</span>
+</pre></div>
+</div>
+<p>You can check the current mode (which is always <code class="docutils literal notranslate"><span class="pre">WLAN.AP</span></code> after power up):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">wlan</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When you change the WLAN mode following the instructions below, your WLAN
+connection to the WiPy will be broken. This means you will not be able
+to run these commands interactively over the WLAN.</p>
+<dl class="simple">
+<dt>There are two ways around this::</dt><dd><ol class="arabic simple">
+<li><p>put this setup code into your <a class="reference internal" href="../general.html#wipy-filesystem"><span class="std std-ref">boot.py file</span></a> so that it gets executed automatically after reset.</p></li>
+<li><p><a class="reference internal" href="repl.html#wipy-uart"><span class="std std-ref">duplicate the REPL on UART</span></a>, so that you can run commands via USB.</p></li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="connecting-to-your-home-router">
+<h2><span class="section-number">4.1. </span>Connecting to your home router<a class="headerlink" href="#connecting-to-your-home-router" title="Permalink to this headline">¶</a></h2>
+<p>The WLAN network card always boots in <code class="docutils literal notranslate"><span class="pre">WLAN.AP</span></code> mode, so we must first configure
+it as a station:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">network</span> <span class="kn">import</span> <span class="n">WLAN</span>
+<span class="n">wlan</span> <span class="o">=</span> <span class="n">WLAN</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">WLAN</span><span class="o">.</span><span class="n">STA</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now you can proceed to scan for networks:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nets</span> <span class="o">=</span> <span class="n">wlan</span><span class="o">.</span><span class="n">scan</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">net</span> <span class="ow">in</span> <span class="n">nets</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">net</span><span class="o">.</span><span class="n">ssid</span> <span class="o">==</span> <span class="s1">&#39;mywifi&#39;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Network found!&#39;</span><span class="p">)</span>
+        <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">ssid</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">sec</span><span class="p">,</span> <span class="s1">&#39;mywifikey&#39;</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="n">machine</span><span class="o">.</span><span class="n">idle</span><span class="p">()</span> <span class="c1"># save power while waiting</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WLAN connection succeeded!&#39;</span><span class="p">)</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="assigning-a-static-ip-address-when-booting">
+<h2><span class="section-number">4.2. </span>Assigning a static IP address when booting<a class="headerlink" href="#assigning-a-static-ip-address-when-booting" title="Permalink to this headline">¶</a></h2>
+<p>If you want your WiPy to connect to your home router after boot-up, and with a fixed
+IP address so that you can access it via telnet or FTP, use the following script as /flash/boot.py:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
+<span class="kn">from</span> <span class="nn">network</span> <span class="kn">import</span> <span class="n">WLAN</span>
+<span class="n">wlan</span> <span class="o">=</span> <span class="n">WLAN</span><span class="p">()</span> <span class="c1"># get current object, without changing the mode</span>
+
+<span class="k">if</span> <span class="n">machine</span><span class="o">.</span><span class="n">reset_cause</span><span class="p">()</span> <span class="o">!=</span> <span class="n">machine</span><span class="o">.</span><span class="n">SOFT_RESET</span><span class="p">:</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">WLAN</span><span class="o">.</span><span class="n">STA</span><span class="p">)</span>
+    <span class="c1"># configuration below MUST match your home router settings!!</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;192.168.178.107&#39;</span><span class="p">,</span> <span class="s1">&#39;255.255.255.0&#39;</span><span class="p">,</span> <span class="s1">&#39;192.168.178.1&#39;</span><span class="p">,</span> <span class="s1">&#39;8.8.8.8&#39;</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+    <span class="c1"># change the line below to match your network ssid, security and password</span>
+    <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;mywifi&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">WLAN</span><span class="o">.</span><span class="n">WPA2</span><span class="p">,</span> <span class="s1">&#39;mywifikey&#39;</span><span class="p">),</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="n">machine</span><span class="o">.</span><span class="n">idle</span><span class="p">()</span> <span class="c1"># save power while waiting</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice how we check for the reset cause and the connection status, this is crucial in order
+to be able to soft reset the WiPy during a telnet session without breaking the connection.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4. WLAN step by step</a><ul>
+<li><a class="reference internal" href="#connecting-to-your-home-router">4.1. Connecting to your home router</a></li>
+<li><a class="reference internal" href="#assigning-a-static-ip-address-when-booting">4.2. Assigning a static IP address when booting</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="blynk.html"
+                        title="previous chapter"><span class="section-number">3. </span>Getting started with Blynk and the WiPy</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="timer.html"
+                        title="next chapter"><span class="section-number">5. </span>Hardware timers</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/wipy/tutorial/wlan.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="timer.html" title="5. Hardware timers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="blynk.html" title="3. Getting started with Blynk and the WiPy"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the WiPy</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >WiPy tutorials and examples</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

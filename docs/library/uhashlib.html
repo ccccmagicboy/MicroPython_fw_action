@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>uhashlib – hashing algorithms &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="uheapq – heap queue algorithm" href="uheapq.html" />
+    <link rel="prev" title="uerrno – system error codes" href="uerrno.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="uheapq.html" title="uheapq – heap queue algorithm"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="uerrno.html" title="uerrno – system error codes"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-uhashlib">
+<span id="uhashlib-hashing-algorithms"></span><h1><a class="reference internal" href="#module-uhashlib" title="uhashlib: hashing algorithms"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uhashlib</span></code></a> – hashing algorithms<a class="headerlink" href="#module-uhashlib" title="Permalink to this headline">¶</a></h1>
+<p><a href="#id1"><span class="problematic" id="id2">|see_cpython_module|</span></a> <code class="xref py py-mod docutils literal notranslate"><span class="pre">python:hashlib</span></code>.</p>
+<p>This module implements binary data hashing algorithms. The exact inventory
+of available algorithms depends on a board. Among the algorithms which may
+be implemented:</p>
+<ul class="simple">
+<li><p>SHA256 - The current generation, modern hashing algorithm (of SHA2 series).
+It is suitable for cryptographically-secure purposes. Included in the
+MicroPython core and any board is recommended to provide this, unless
+it has particular code size constraints.</p></li>
+<li><p>SHA1 - A previous generation algorithm. Not recommended for new usages,
+but SHA1 is a part of number of Internet standards and existing
+applications, so boards targeting network connectivity and
+interoperability will try to provide this.</p></li>
+<li><p>MD5 - A legacy algorithm, not considered cryptographically secure. Only
+selected boards, targeting interoperability with legacy applications,
+will offer this.</p></li>
+</ul>
+<div class="section" id="constructors">
+<h2>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="uhashlib.uhashlib.sha256">
+<em class="property">class </em><code class="sig-prename descclassname">uhashlib.</code><code class="sig-name descname">sha256</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">data</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#uhashlib.uhashlib.sha256" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an SHA256 hasher object and optionally feed <code class="docutils literal notranslate"><span class="pre">data</span></code> into it.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="uhashlib.uhashlib.sha1">
+<em class="property">class </em><code class="sig-prename descclassname">uhashlib.</code><code class="sig-name descname">sha1</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">data</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#uhashlib.uhashlib.sha1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an SHA1 hasher object and optionally feed <code class="docutils literal notranslate"><span class="pre">data</span></code> into it.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="uhashlib.uhashlib.md5">
+<em class="property">class </em><code class="sig-prename descclassname">uhashlib.</code><code class="sig-name descname">md5</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">data</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#uhashlib.uhashlib.md5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an MD5 hasher object and optionally feed <code class="docutils literal notranslate"><span class="pre">data</span></code> into it.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="uhashlib.hash.update">
+<code class="sig-prename descclassname">hash.</code><code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="headerlink" href="#uhashlib.hash.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feed more binary data into hash.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uhashlib.hash.digest">
+<code class="sig-prename descclassname">hash.</code><code class="sig-name descname">digest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uhashlib.hash.digest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return hash for all data passed through hash, as a bytes object. After this
+method is called, more data cannot be fed into the hash any longer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="uhashlib.hash.hexdigest">
+<code class="sig-prename descclassname">hash.</code><code class="sig-name descname">hexdigest</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#uhashlib.hash.hexdigest" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is NOT implemented. Use <code class="docutils literal notranslate"><span class="pre">ubinascii.hexlify(hash.digest())</span></code>
+to achieve a similar effect.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uhashlib</span></code> – hashing algorithms</a><ul>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="uerrno.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uerrno</span></code> – system error codes</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="uheapq.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uheapq</span></code> – heap queue algorithm</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/uhashlib.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="uheapq.html" title="uheapq – heap queue algorithm"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="uerrno.html" title="uerrno – system error codes"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>6. The accelerometer &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7. Safe mode and factory reset" href="reset.html" />
+    <link rel="prev" title="5. Switches, callbacks and interrupts" href="switch.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reset.html" title="7. Safe mode and factory reset"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="switch.html" title="5. Switches, callbacks and interrupts"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-accelerometer">
+<h1><span class="section-number">6. </span>The accelerometer<a class="headerlink" href="#the-accelerometer" title="Permalink to this headline">¶</a></h1>
+<p>Here you will learn how to read the accelerometer and signal using LEDs states like tilt left and tilt right.</p>
+<div class="section" id="using-the-accelerometer">
+<h2><span class="section-number">6.1. </span>Using the accelerometer<a class="headerlink" href="#using-the-accelerometer" title="Permalink to this headline">¶</a></h2>
+<p>The pyboard has an accelerometer (a tiny mass on a tiny spring) that can be used
+to detect the angle of the board and motion. There is a different sensor for
+each of the x, y, z directions. To get the value of the accelerometer, create a
+pyb.Accel() object and then call the x() method.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">accel</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">Accel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">accel</span><span class="o">.</span><span class="n">x</span><span class="p">()</span>
+<span class="go">7</span>
+</pre></div>
+</div>
+<p>This returns a signed integer with a value between around -30 and 30. Note that
+the measurement is very noisy, this means that even if you keep the board
+perfectly still there will be some variation in the number that you measure.
+Because of this, you shouldn’t use the exact value of the x() method but see if
+it is in a certain range.</p>
+<p>We will start by using the accelerometer to turn on a light if it is not flat.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">accel</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">Accel</span><span class="p">()</span>
+<span class="n">light</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">LED</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">SENSITIVITY</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">accel</span><span class="o">.</span><span class="n">x</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">SENSITIVITY</span><span class="p">:</span>
+        <span class="n">light</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">light</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+    <span class="n">pyb</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We create Accel and LED objects, then get the value of the x direction of the
+accelerometer. If the magnitude of x is bigger than a certain value <code class="docutils literal notranslate"><span class="pre">SENSITIVITY</span></code>,
+then the LED turns on, otherwise it turns off. The loop has a small <code class="docutils literal notranslate"><span class="pre">pyb.delay()</span></code>
+otherwise the LED flashes annoyingly when the value of x is close to
+<code class="docutils literal notranslate"><span class="pre">SENSITIVITY</span></code>. Try running this on the pyboard and tilt the board left and right
+to make the LED turn on and off.</p>
+<p><strong>Exercise: Change the above script so that the blue LED gets brighter the more
+you tilt the pyboard.  HINT: You will need to rescale the values, intensity goes
+from 0-255.</strong></p>
+</div>
+<div class="section" id="making-a-spirit-level">
+<h2><span class="section-number">6.2. </span>Making a spirit level<a class="headerlink" href="#making-a-spirit-level" title="Permalink to this headline">¶</a></h2>
+<p>The example above is only sensitive to the angle in the x direction but if we
+use the <code class="docutils literal notranslate"><span class="pre">y()</span></code> value and more LEDs we can turn the pyboard into a spirit level.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xlights</span> <span class="o">=</span> <span class="p">(</span><span class="n">pyb</span><span class="o">.</span><span class="n">LED</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">pyb</span><span class="o">.</span><span class="n">LED</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ylights</span> <span class="o">=</span> <span class="p">(</span><span class="n">pyb</span><span class="o">.</span><span class="n">LED</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">pyb</span><span class="o">.</span><span class="n">LED</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">accel</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">Accel</span><span class="p">()</span>
+<span class="n">SENSITIVITY</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">accel</span><span class="o">.</span><span class="n">x</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">SENSITIVITY</span><span class="p">:</span>
+        <span class="n">xlights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">xlights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">SENSITIVITY</span><span class="p">:</span>
+        <span class="n">xlights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">xlights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">xlights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">xlights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">accel</span><span class="o">.</span><span class="n">y</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">SENSITIVITY</span><span class="p">:</span>
+        <span class="n">ylights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">ylights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="o">-</span><span class="n">SENSITIVITY</span><span class="p">:</span>
+        <span class="n">ylights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on</span><span class="p">()</span>
+        <span class="n">ylights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ylights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+        <span class="n">ylights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">off</span><span class="p">()</span>
+
+    <span class="n">pyb</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We start by creating a tuple of LED objects for the x and y directions. Tuples
+are immutable objects in python which means they can’t be modified once they are
+created. We then proceed as before but turn on a different LED for positive and
+negative x values. We then do the same for the y direction. This isn’t
+particularly sophisticated but it does the job. Run this on your pyboard and you
+should see different LEDs turning on depending on how you tilt the board.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">6. The accelerometer</a><ul>
+<li><a class="reference internal" href="#using-the-accelerometer">6.1. Using the accelerometer</a></li>
+<li><a class="reference internal" href="#making-a-spirit-level">6.2. Making a spirit level</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="switch.html"
+                        title="previous chapter"><span class="section-number">5. </span>Switches, callbacks and interrupts</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reset.html"
+                        title="next chapter"><span class="section-number">7. </span>Safe mode and factory reset</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/pyboard/tutorial/accel.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reset.html" title="7. Safe mode and factory reset"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="switch.html" title="5. Switches, callbacks and interrupts"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

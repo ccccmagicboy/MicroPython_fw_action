@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>2. Making a UART - USB pass through &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Quick reference for the ESP8266" href="../../esp8266/quickref.html" />
+    <link rel="prev" title="1. Debouncing a pin input" href="debounce.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../esp8266/quickref.html" title="Quick reference for the ESP8266"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="debounce.html" title="1. Debouncing a pin input"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="making-a-uart-usb-pass-through">
+<h1><span class="section-number">2. </span>Making a UART - USB pass through<a class="headerlink" href="#making-a-uart-usb-pass-through" title="Permalink to this headline">¶</a></h1>
+<p>It’s as simple as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyb</span>
+<span class="kn">import</span> <span class="nn">select</span>
+
+<span class="k">def</span> <span class="nf">pass_through</span><span class="p">(</span><span class="n">usb</span><span class="p">,</span> <span class="n">uart</span><span class="p">):</span>
+    <span class="n">usb</span><span class="o">.</span><span class="n">setinterrupt</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">usb</span><span class="p">,</span> <span class="n">uart</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[])</span>
+        <span class="k">if</span> <span class="n">usb</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">uart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">usb</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">uart</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="n">usb</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">uart</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span>
+
+<span class="n">pass_through</span><span class="p">(</span><span class="n">pyb</span><span class="o">.</span><span class="n">USB_VCP</span><span class="p">(),</span> <span class="n">pyb</span><span class="o">.</span><span class="n">UART</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9600</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="debounce.html"
+                        title="previous chapter"><span class="section-number">1. </span>Debouncing a pin input</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../esp8266/quickref.html"
+                        title="next chapter">Quick reference for the ESP8266</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/pyboard/tutorial/pass_through.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../esp8266/quickref.html" title="Quick reference for the ESP8266"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="debounce.html" title="1. Debouncing a pin input"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>1. Debouncing a pin input &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Making a UART - USB pass through" href="pass_through.html" />
+    <link rel="prev" title="5. The LCD160CR skin" href="lcd160cr_skin.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pass_through.html" title="2. Making a UART - USB pass through"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lcd160cr_skin.html" title="5. The LCD160CR skin"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="debouncing-a-pin-input">
+<h1><span class="section-number">1. </span>Debouncing a pin input<a class="headerlink" href="#debouncing-a-pin-input" title="Permalink to this headline">¶</a></h1>
+<p>A pin used as input from a switch or other mechanical device can have a lot
+of noise on it, rapidly changing from low to high when the switch is first
+pressed or released.  This noise can be eliminated using a capacitor (a
+debouncing circuit).  It can also be eliminated using a simple function that
+makes sure the value on the pin is stable.</p>
+<p>The following function does just this.  It gets the current value of the given
+pin, and then waits for the value to change.  The new pin value must be stable
+for a continuous 20ms for it to register the change.  You can adjust this time
+(to say 50ms) if you still have noise.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyb</span>
+
+<span class="k">def</span> <span class="nf">wait_pin_change</span><span class="p">(</span><span class="n">pin</span><span class="p">):</span>
+    <span class="c1"># wait for pin to change value</span>
+    <span class="c1"># it needs to be stable for a continuous 20ms</span>
+    <span class="n">cur_value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">active</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">pin</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">!=</span> <span class="n">cur_value</span><span class="p">:</span>
+            <span class="n">active</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">active</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">pyb</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Use it something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyb</span>
+
+<span class="n">pin_x1</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="s1">&#39;X1&#39;</span><span class="p">,</span> <span class="n">pyb</span><span class="o">.</span><span class="n">Pin</span><span class="o">.</span><span class="n">IN</span><span class="p">,</span> <span class="n">pyb</span><span class="o">.</span><span class="n">Pin</span><span class="o">.</span><span class="n">PULL_DOWN</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">wait_pin_change</span><span class="p">(</span><span class="n">pin_x1</span><span class="p">)</span>
+    <span class="n">pyb</span><span class="o">.</span><span class="n">LED</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">toggle</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lcd160cr_skin.html"
+                        title="previous chapter"><span class="section-number">5. </span>The LCD160CR skin</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pass_through.html"
+                        title="next chapter"><span class="section-number">2. </span>Making a UART - USB pass through</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/pyboard/tutorial/debounce.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pass_through.html" title="2. Making a UART - USB pass through"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lcd160cr_skin.html" title="5. The LCD160CR skin"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

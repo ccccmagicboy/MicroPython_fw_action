@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>machine — functions related to the hardware &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="class Pin – control I/O pins" href="machine.Pin.html" />
+    <link rel="prev" title="framebuf — frame buffer manipulation" href="framebuf.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="machine.Pin.html" title="class Pin – control I/O pins"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="framebuf.html" title="framebuf — frame buffer manipulation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-machine">
+<span id="machine-functions-related-to-the-hardware"></span><h1><a class="reference internal" href="#module-machine" title="machine: functions related to the hardware"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code></a> — functions related to the hardware<a class="headerlink" href="#module-machine" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">machine</span></code> module contains specific functions related to the hardware
+on a particular board. Most functions in this module allow to achieve direct
+and unrestricted access to and control of hardware blocks on a system
+(like CPU, timers, buses, etc.). Used incorrectly, this can lead to
+malfunction, lockups, crashes of your board, and in extreme cases, hardware
+damage.</p>
+<p id="machine-callbacks">A note of callbacks used by functions and class methods of <a class="reference internal" href="#module-machine" title="machine: functions related to the hardware"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code></a> module:
+all these callbacks should be considered as executing in an interrupt context.
+This is true for both physical devices with IDs &gt;= 0 and “virtual” devices
+with negative IDs like -1 (these “virtual” devices are still thin shims on
+top of real hardware and real hardware interrupts). See <a class="reference internal" href="../reference/isr_rules.html#isr-rules"><span class="std std-ref">Writing interrupt handlers</span></a>.</p>
+<div class="section" id="reset-related-functions">
+<h2>Reset related functions<a class="headerlink" href="#reset-related-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="machine.reset">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the device in a manner similar to pushing the external RESET
+button.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.soft_reset">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">soft_reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.soft_reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a soft reset of the interpreter, deleting all Python objects and
+resetting the Python heap.  It tries to retain the method by which the user
+is connected to the MicroPython REPL (eg serial, USB, Wifi).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.reset_cause">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">reset_cause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.reset_cause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the reset cause. See <a class="reference internal" href="#machine-constants"><span class="std std-ref">constants</span></a> for the possible return values.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="interrupt-related-functions">
+<h2>Interrupt related functions<a class="headerlink" href="#interrupt-related-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="machine.disable_irq">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">disable_irq</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.disable_irq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable interrupt requests.
+Returns the previous IRQ state which should be considered an opaque value.
+This return value should be passed to the <cite>enable_irq()</cite> function to restore
+interrupts to their original state, before <cite>disable_irq()</cite> was called.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.enable_irq">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">enable_irq</code><span class="sig-paren">(</span><em class="sig-param">state</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.enable_irq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Re-enable interrupt requests.
+The <em>state</em> parameter should be the value that was returned from the most
+recent call to the <cite>disable_irq()</cite> function.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="power-related-functions">
+<h2>Power related functions<a class="headerlink" href="#power-related-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="machine.freq">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">freq</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.freq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns CPU frequency in hertz.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.idle">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">idle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.idle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gates the clock to the CPU, useful to reduce power consumption at any time during
+short or long periods. Peripherals continue working and execution resumes as soon
+as any interrupt is triggered (on many ports this includes system timer
+interrupt occurring at regular intervals on the order of millisecond).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.sleep">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">sleep</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function is deprecated, use <cite>lightsleep()</cite> instead with no arguments.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.lightsleep">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">lightsleep</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">time_ms</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.lightsleep" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.deepsleep">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">deepsleep</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">time_ms</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.deepsleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops execution in an attempt to enter a low power state.</p>
+<p>If <em>time_ms</em> is specified then this will be the maximum time in milliseconds that
+the sleep will last for.  Otherwise the sleep can last indefinitely.</p>
+<p>With or without a timout, execution may resume at any time if there are events
+that require processing.  Such events, or wake sources, should be configured before
+sleeping, like <cite>Pin</cite> change or <cite>RTC</cite> timeout.</p>
+<p>The precise behaviour and power-saving capabilities of lightsleep and deepsleep is
+highly dependent on the underlying hardware, but the general properties are:</p>
+<ul class="simple">
+<li><p>A lightsleep has full RAM and state retention.  Upon wake execution is resumed
+from the point where the sleep was requested, with all subsystems operational.</p></li>
+<li><p>A deepsleep may not retain RAM or any other state of the system (for example
+peripherals or network interfaces).  Upon wake execution is resumed from the main
+script, similar to a hard or power-on reset. The <cite>reset_cause()</cite> function will
+return <cite>machine.DEEPSLEEP</cite> and this can be used to distinguish a deepsleep wake
+from other resets.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.wake_reason">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">wake_reason</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.wake_reason" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the wake reason. See <a class="reference internal" href="#machine-constants"><span class="std std-ref">constants</span></a> for the possible return values.</p>
+<p>Availability: ESP32, WiPy.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="miscellaneous-functions">
+<h2>Miscellaneous functions<a class="headerlink" href="#miscellaneous-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="machine.unique_id">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">unique_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.unique_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a byte string with a unique identifier of a board/SoC. It will vary
+from a board/SoC instance to another, if underlying hardware allows. Length
+varies by hardware (so use substring of a full value if you expect a short
+ID). In some MicroPython ports, ID corresponds to the network MAC address.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.time_pulse_us">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">time_pulse_us</code><span class="sig-paren">(</span><em class="sig-param">pin</em>, <em class="sig-param">pulse_level</em>, <em class="sig-param">timeout_us=1000000</em>, <em class="sig-param">/</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.time_pulse_us" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time a pulse on the given <em>pin</em>, and return the duration of the pulse in
+microseconds.  The <em>pulse_level</em> argument should be 0 to time a low pulse
+or 1 to time a high pulse.</p>
+<p>If the current input value of the pin is different to <em>pulse_level</em>,
+the function first (*) waits until the pin input becomes equal to <em>pulse_level</em>,
+then (**) times the duration that the pin is equal to <em>pulse_level</em>.
+If the pin is already equal to <em>pulse_level</em> then timing starts straight away.</p>
+<p>The function will return -2 if there was timeout waiting for condition marked
+(*) above, and -1 if there was timeout during the main measurement, marked (**)
+above. The timeout is the same for both cases and given by <em>timeout_us</em> (which
+is in microseconds).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="machine.rng">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">rng</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.rng" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a 24-bit software generated random number.</p>
+<p>Availability: WiPy.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="constants">
+<span id="machine-constants"></span><h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="machine.machine.IDLE">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">IDLE</code><a class="headerlink" href="#machine.machine.IDLE" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.machine.SLEEP">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">SLEEP</code><a class="headerlink" href="#machine.machine.SLEEP" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.machine.DEEPSLEEP">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">DEEPSLEEP</code><a class="headerlink" href="#machine.machine.DEEPSLEEP" title="Permalink to this definition">¶</a></dt>
+<dd><p>IRQ wake values.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="machine.machine.PWRON_RESET">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">PWRON_RESET</code><a class="headerlink" href="#machine.machine.PWRON_RESET" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.machine.HARD_RESET">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">HARD_RESET</code><a class="headerlink" href="#machine.machine.HARD_RESET" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.machine.WDT_RESET">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">WDT_RESET</code><a class="headerlink" href="#machine.machine.WDT_RESET" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.machine.DEEPSLEEP_RESET">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">DEEPSLEEP_RESET</code><a class="headerlink" href="#machine.machine.DEEPSLEEP_RESET" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.machine.SOFT_RESET">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">SOFT_RESET</code><a class="headerlink" href="#machine.machine.SOFT_RESET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset causes.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="machine.machine.WLAN_WAKE">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">WLAN_WAKE</code><a class="headerlink" href="#machine.machine.WLAN_WAKE" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.machine.PIN_WAKE">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">PIN_WAKE</code><a class="headerlink" href="#machine.machine.PIN_WAKE" title="Permalink to this definition">¶</a></dt>
+<dt id="machine.machine.RTC_WAKE">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">RTC_WAKE</code><a class="headerlink" href="#machine.machine.RTC_WAKE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wake-up reasons.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="machine.Pin.html">class Pin – control I/O pins</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.Signal.html">class Signal – control and sense external I/O devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.ADC.html">class ADC – analog to digital conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.UART.html">class UART – duplex serial communication bus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.SPI.html">class SPI – a Serial Peripheral Interface bus protocol (master side)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.I2C.html">class I2C – a two-wire serial protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.RTC.html">class RTC – real time clock</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.Timer.html">class Timer – control hardware timers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.WDT.html">class WDT – watchdog timer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.SD.html">class SD – secure digital memory card (cc3200 port only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.SDCard.html">class SDCard – secure digital memory card</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code> — functions related to the hardware</a><ul>
+<li><a class="reference internal" href="#reset-related-functions">Reset related functions</a></li>
+<li><a class="reference internal" href="#interrupt-related-functions">Interrupt related functions</a></li>
+<li><a class="reference internal" href="#power-related-functions">Power related functions</a></li>
+<li><a class="reference internal" href="#miscellaneous-functions">Miscellaneous functions</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="framebuf.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">framebuf</span></code> — frame buffer manipulation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="machine.Pin.html"
+                        title="next chapter">class Pin – control I/O pins</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/machine.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="machine.Pin.html" title="class Pin – control I/O pins"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="framebuf.html" title="framebuf — frame buffer manipulation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

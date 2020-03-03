@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>7. Safe mode and factory reset &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="8. Making the pyboard act as a USB mouse" href="usb_mouse.html" />
+    <link rel="prev" title="6. The accelerometer" href="accel.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="usb_mouse.html" title="8. Making the pyboard act as a USB mouse"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="accel.html" title="6. The accelerometer"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="safe-mode-and-factory-reset">
+<h1><span class="section-number">7. </span>Safe mode and factory reset<a class="headerlink" href="#safe-mode-and-factory-reset" title="Permalink to this headline">¶</a></h1>
+<p>If something goes wrong with your pyboard, don’t panic!  It is almost
+impossible for you to break the pyboard by programming the wrong thing.</p>
+<p>The first thing to try is to enter safe mode: this temporarily skips
+execution of <code class="docutils literal notranslate"><span class="pre">boot.py</span></code> and <code class="docutils literal notranslate"><span class="pre">main.py</span></code> and gives default USB settings.</p>
+<p>If you have problems with the filesystem you can do a factory reset,
+which restores the filesystem to its original state.</p>
+<div class="section" id="safe-mode">
+<h2><span class="section-number">7.1. </span>Safe mode<a class="headerlink" href="#safe-mode" title="Permalink to this headline">¶</a></h2>
+<p>To enter safe mode, do the following steps:</p>
+<ol class="arabic simple">
+<li><p>Connect the pyboard to USB so it powers up.</p></li>
+<li><p>Hold down the USR switch.</p></li>
+<li><p>While still holding down USR, press and release the RST switch.</p></li>
+<li><p>The LEDs will then cycle green to orange to green+orange and back again.</p></li>
+<li><p>Keep holding down USR until <em>only the orange LED is lit</em>, and then let
+go of the USR switch.</p></li>
+<li><p>The orange LED should flash quickly 4 times, and then turn off.</p></li>
+<li><p>You are now in safe mode.</p></li>
+</ol>
+<p>In safe mode, the <code class="docutils literal notranslate"><span class="pre">boot.py</span></code> and <code class="docutils literal notranslate"><span class="pre">main.py</span></code> files are not executed, and so
+the pyboard boots up with default settings.  This means you now have access
+to the filesystem (the USB drive should appear), and you can edit <code class="docutils literal notranslate"><span class="pre">boot.py</span></code>
+and <code class="docutils literal notranslate"><span class="pre">main.py</span></code> to fix any problems.</p>
+<p>Entering safe mode is temporary, and does not make any changes to the
+files on the pyboard.</p>
+</div>
+<div class="section" id="factory-reset-the-filesystem">
+<h2><span class="section-number">7.2. </span>Factory reset the filesystem<a class="headerlink" href="#factory-reset-the-filesystem" title="Permalink to this headline">¶</a></h2>
+<p>If you pyboard’s filesystem gets corrupted (for example, you forgot to
+eject/unmount it), or you have some code in <code class="docutils literal notranslate"><span class="pre">boot.py</span></code> or <code class="docutils literal notranslate"><span class="pre">main.py</span></code> which
+you can’t escape from, then you can reset the filesystem.</p>
+<p>Resetting the filesystem deletes all files on the internal pyboard storage
+(not the SD card), and restores the files <code class="docutils literal notranslate"><span class="pre">boot.py</span></code>, <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, <code class="docutils literal notranslate"><span class="pre">README.txt</span></code>
+and <code class="docutils literal notranslate"><span class="pre">pybcdc.inf</span></code> back to their original state.</p>
+<p>To do a factory reset of the filesystem you follow a similar procedure as
+you did to enter safe mode, but release USR on green+orange:</p>
+<ol class="arabic simple">
+<li><p>Connect the pyboard to USB so it powers up.</p></li>
+<li><p>Hold down the USR switch.</p></li>
+<li><p>While still holding down USR, press and release the RST switch.</p></li>
+<li><p>The LEDs will then cycle green to orange to green+orange and back again.</p></li>
+<li><p>Keep holding down USR until <em>both the green and orange LEDs are lit</em>, and
+then let go of the USR switch.</p></li>
+<li><p>The green and orange LEDs should flash quickly 4 times.</p></li>
+<li><p>The red LED will turn on (so red, green and orange are now on).</p></li>
+<li><p>The pyboard is now resetting the filesystem (this takes a few seconds).</p></li>
+<li><p>The LEDs all turn off.</p></li>
+<li><p>You now have a reset filesystem, and are in safe mode.</p></li>
+<li><p>Press and release the RST switch to boot normally.</p></li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7. Safe mode and factory reset</a><ul>
+<li><a class="reference internal" href="#safe-mode">7.1. Safe mode</a></li>
+<li><a class="reference internal" href="#factory-reset-the-filesystem">7.2. Factory reset the filesystem</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="accel.html"
+                        title="previous chapter"><span class="section-number">6. </span>The accelerometer</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usb_mouse.html"
+                        title="next chapter"><span class="section-number">8. </span>Making the pyboard act as a USB mouse</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/pyboard/tutorial/reset.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="usb_mouse.html" title="8. Making the pyboard act as a USB mouse"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="accel.html" title="6. The accelerometer"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

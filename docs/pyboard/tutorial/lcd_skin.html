@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>3. The LCD and touch-sensor skin &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. The AMP audio skin" href="amp_skin.html" />
+    <link rel="prev" title="2. Fading LEDs" href="fading_led.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="amp_skin.html" title="4. The AMP audio skin"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="fading_led.html" title="2. Fading LEDs"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="the-lcd-and-touch-sensor-skin">
+<h1><span class="section-number">3. </span>The LCD and touch-sensor skin<a class="headerlink" href="#the-lcd-and-touch-sensor-skin" title="Permalink to this headline">¶</a></h1>
+<p>Soldering and using the LCD and touch-sensor skin.</p>
+<a class="reference internal image-reference" href="../../_images/skin_lcd_1.jpg"><img alt="pyboard with LCD skin" src="../../_images/skin_lcd_1.jpg" style="width: 250px;" /></a>
+<a class="reference internal image-reference" href="../../_images/skin_lcd_2.jpg"><img alt="pyboard with LCD skin" src="../../_images/skin_lcd_2.jpg" style="width: 250px;" /></a>
+<p>The following video shows how to solder the headers onto the LCD skin.
+At the end of the video, it shows you how to correctly connect the LCD skin to the pyboard.</p>
+<iframe style="margin-left:3em;" width="560" height="315" src="http://www.youtube.com/embed/PowCzdLYbFM?rel=0" frameborder="0" allowfullscreen></iframe><p>For circuit schematics and datasheets for the components on the skin see <a class="reference internal" href="../general.html#hardware-index"><span class="std std-ref">The pyboard hardware</span></a>.</p>
+<div class="section" id="using-the-lcd">
+<h2><span class="section-number">3.1. </span>Using the LCD<a class="headerlink" href="#using-the-lcd" title="Permalink to this headline">¶</a></h2>
+<p>To get started using the LCD, try the following at the MicroPython prompt.
+Make sure the LCD skin is attached to the pyboard as pictured at the top of this page.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lcd</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">LCD</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lcd</span><span class="o">.</span><span class="n">light</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lcd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Hello uPy!</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can make a simple animation using the code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyb</span>
+<span class="n">lcd</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">LCD</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">lcd</span><span class="o">.</span><span class="n">light</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="mi">128</span><span class="p">):</span>
+    <span class="n">lcd</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">lcd</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;Hello uPy!&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">lcd</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">pyb</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-the-touch-sensor">
+<h2><span class="section-number">3.2. </span>Using the touch sensor<a class="headerlink" href="#using-the-touch-sensor" title="Permalink to this headline">¶</a></h2>
+<p>To read the touch-sensor data you need to use the I2C bus.  The
+MPR121 capacitive touch sensor has address 90.</p>
+<p>To get started, try:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i2c</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">I2C</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pyb</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">MASTER</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i2c</span><span class="o">.</span><span class="n">mem_write</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mh">0x5e</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">touch</span> <span class="o">=</span> <span class="n">i2c</span><span class="o">.</span><span class="n">mem_read</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The first line above makes an I2C object, and the second line
+enables the 4 touch sensors.  The third line reads the touch
+status and the <code class="docutils literal notranslate"><span class="pre">touch</span></code> variable holds the state of the 4 touch
+buttons (A, B, X, Y).</p>
+<p>There is a simple driver <a class="reference external" href="http://micropython.org/resources/examples/mpr121.py">here</a>
+which allows you to set the threshold and debounce parameters, and
+easily read the touch status and electrode voltage levels.  Copy
+this script to your pyboard (either flash or SD card, in the top
+directory or <code class="docutils literal notranslate"><span class="pre">lib/</span></code> directory) and then try:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyb</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mpr121</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">mpr121</span><span class="o">.</span><span class="n">MPR121</span><span class="p">(</span><span class="n">pyb</span><span class="o">.</span><span class="n">I2C</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pyb</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">MASTER</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+<span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">touch_status</span><span class="p">())</span>
+<span class="gp">... </span>  <span class="n">pyb</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>This will continuously print out the touch status of all electrodes.
+Try touching each one in turn.</p>
+<p>Note that if you put the LCD skin in the Y-position, then you need to
+initialise the I2C bus using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m</span> <span class="o">=</span> <span class="n">mpr121</span><span class="o">.</span><span class="n">MPR121</span><span class="p">(</span><span class="n">pyb</span><span class="o">.</span><span class="n">I2C</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">pyb</span><span class="o">.</span><span class="n">I2C</span><span class="o">.</span><span class="n">MASTER</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>There is also a demo which uses the LCD and the touch sensors together,
+and can be found <a class="reference external" href="http://micropython.org/resources/examples/lcddemo.py">here</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">3. The LCD and touch-sensor skin</a><ul>
+<li><a class="reference internal" href="#using-the-lcd">3.1. Using the LCD</a></li>
+<li><a class="reference internal" href="#using-the-touch-sensor">3.2. Using the touch sensor</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="fading_led.html"
+                        title="previous chapter"><span class="section-number">2. </span>Fading LEDs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="amp_skin.html"
+                        title="next chapter"><span class="section-number">4. </span>The AMP audio skin</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/pyboard/tutorial/lcd_skin.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="amp_skin.html" title="4. The AMP audio skin"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="fading_led.html" title="2. Fading LEDs"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

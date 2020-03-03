@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>uheapq – heap queue algorithm &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="uio – input/output streams" href="uio.html" />
+    <link rel="prev" title="uhashlib – hashing algorithms" href="uhashlib.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="uio.html" title="uio – input/output streams"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="uhashlib.html" title="uhashlib – hashing algorithms"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-uheapq">
+<span id="uheapq-heap-queue-algorithm"></span><h1><a class="reference internal" href="#module-uheapq" title="uheapq: heap queue algorithm"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uheapq</span></code></a> – heap queue algorithm<a class="headerlink" href="#module-uheapq" title="Permalink to this headline">¶</a></h1>
+<p><a href="#id1"><span class="problematic" id="id2">|see_cpython_module|</span></a> <code class="xref py py-mod docutils literal notranslate"><span class="pre">python:heapq</span></code>.</p>
+<p>This module implements the heap queue algorithm.</p>
+<p>A heap queue is simply a list that has its elements stored in a certain way.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="uheapq.heappush">
+<code class="sig-prename descclassname">uheapq.</code><code class="sig-name descname">heappush</code><span class="sig-paren">(</span><em class="sig-param">heap</em>, <em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#uheapq.heappush" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push the <code class="docutils literal notranslate"><span class="pre">item</span></code> onto the <code class="docutils literal notranslate"><span class="pre">heap</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="uheapq.heappop">
+<code class="sig-prename descclassname">uheapq.</code><code class="sig-name descname">heappop</code><span class="sig-paren">(</span><em class="sig-param">heap</em><span class="sig-paren">)</span><a class="headerlink" href="#uheapq.heappop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pop the first item from the <code class="docutils literal notranslate"><span class="pre">heap</span></code>, and return it.  Raises IndexError if
+heap is empty.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="uheapq.heapify">
+<code class="sig-prename descclassname">uheapq.</code><code class="sig-name descname">heapify</code><span class="sig-paren">(</span><em class="sig-param">x</em><span class="sig-paren">)</span><a class="headerlink" href="#uheapq.heapify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the list <code class="docutils literal notranslate"><span class="pre">x</span></code> into a heap.  This is an in-place operation.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uheapq</span></code> – heap queue algorithm</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="uhashlib.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uhashlib</span></code> – hashing algorithms</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="uio.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uio</span></code> – input/output streams</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/uheapq.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="uio.html" title="uio – input/output streams"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="uhashlib.html" title="uhashlib – hashing algorithms"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

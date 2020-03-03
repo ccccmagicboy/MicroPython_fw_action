@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>class SPI – a Serial Peripheral Interface bus protocol (master side) &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="class I2C – a two-wire serial protocol" href="machine.I2C.html" />
+    <link rel="prev" title="class UART – duplex serial communication bus" href="machine.UART.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="machine.I2C.html" title="class I2C – a two-wire serial protocol"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="machine.UART.html" title="class UART – duplex serial communication bus"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="machine.html" accesskey="U"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code> — functions related to the hardware</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="class-spi-a-serial-peripheral-interface-bus-protocol-master-side">
+<span id="machine-spi"></span><h1>class SPI – a Serial Peripheral Interface bus protocol (master side)<a class="headerlink" href="#class-spi-a-serial-peripheral-interface-bus-protocol-master-side" title="Permalink to this headline">¶</a></h1>
+<p>SPI is a synchronous serial protocol that is driven by a master. At the
+physical level, a bus consists of 3 lines: SCK, MOSI, MISO. Multiple devices
+can share the same bus. Each device should have a separate, 4th signal,
+SS (Slave Select), to select a particular device on a bus with which
+communication takes place. Management of an SS signal should happen in
+user code (via machine.Pin class).</p>
+<div class="section" id="constructors">
+<h2>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="machine.SPI">
+<em class="property">class </em><code class="sig-prename descclassname">machine.</code><code class="sig-name descname">SPI</code><span class="sig-paren">(</span><em class="sig-param">id</em>, <em class="sig-param">...</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.SPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an SPI object on the given bus, <code class="docutils literal notranslate"><span class="pre">id</span></code>. Values of <code class="docutils literal notranslate"><span class="pre">id</span></code> depend
+on a particular port and its hardware. Values 0, 1, etc. are commonly used
+to select hardware SPI block #0, #1, etc. Value -1 can be used for
+bitbanging (software) implementation of SPI (if supported by a port).</p>
+<p>With no additional parameters, the SPI object is created but not
+initialised (it has the settings from the last initialisation of
+the bus, if any).  If extra arguments are given, the bus is initialised.
+See <code class="docutils literal notranslate"><span class="pre">init</span></code> for parameters of initialisation.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="machine.SPI.init">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">init</code><span class="sig-paren">(</span><em class="sig-param">baudrate=1000000</em>, <em class="sig-param">*</em>, <em class="sig-param">polarity=0</em>, <em class="sig-param">phase=0</em>, <em class="sig-param">bits=8</em>, <em class="sig-param">firstbit=SPI.MSB</em>, <em class="sig-param">sck=None</em>, <em class="sig-param">mosi=None</em>, <em class="sig-param">miso=None</em>, <em class="sig-param">pins=(SCK</em>, <em class="sig-param">MOSI</em>, <em class="sig-param">MISO)</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.SPI.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise the SPI bus with the given parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">baudrate</span></code> is the SCK clock rate.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">polarity</span></code> can be 0 or 1, and is the level the idle clock line sits at.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">phase</span></code> can be 0 or 1 to sample data on the first or second clock edge
+respectively.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bits</span></code> is the width in bits of each transfer. Only 8 is guaranteed to be supported by all hardware.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">firstbit</span></code> can be <code class="docutils literal notranslate"><span class="pre">SPI.MSB</span></code> or <code class="docutils literal notranslate"><span class="pre">SPI.LSB</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sck</span></code>, <code class="docutils literal notranslate"><span class="pre">mosi</span></code>, <code class="docutils literal notranslate"><span class="pre">miso</span></code> are pins (machine.Pin) objects to use for bus signals. For most
+hardware SPI blocks (as selected by <code class="docutils literal notranslate"><span class="pre">id</span></code> parameter to the constructor), pins are fixed
+and cannot be changed. In some cases, hardware blocks allow 2-3 alternative pin sets for
+a hardware SPI block. Arbitrary pin assignments are possible only for a bitbanging SPI driver
+(<code class="docutils literal notranslate"><span class="pre">id</span></code> = -1).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pins</span></code> - WiPy port doesn’t <code class="docutils literal notranslate"><span class="pre">sck</span></code>, <code class="docutils literal notranslate"><span class="pre">mosi</span></code>, <code class="docutils literal notranslate"><span class="pre">miso</span></code> arguments, and instead allows to
+specify them as a tuple of <code class="docutils literal notranslate"><span class="pre">pins</span></code> parameter.</p></li>
+</ul>
+</div></blockquote>
+<p>In the case of hardware SPI the actual clock frequency may be lower than the
+requested baudrate. This is dependant on the platform hardware. The actual
+rate may be determined by printing the SPI object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.SPI.deinit">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">deinit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.SPI.deinit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off the SPI bus.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.SPI.read">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param">nbytes</em>, <em class="sig-param">write=0x00</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.SPI.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a number of bytes specified by <code class="docutils literal notranslate"><span class="pre">nbytes</span></code> while continuously writing
+the single byte given by <code class="docutils literal notranslate"><span class="pre">write</span></code>.
+Returns a <code class="docutils literal notranslate"><span class="pre">bytes</span></code> object with the data that was read.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.SPI.readinto">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">readinto</code><span class="sig-paren">(</span><em class="sig-param">buf</em>, <em class="sig-param">write=0x00</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.SPI.readinto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read into the buffer specified by <code class="docutils literal notranslate"><span class="pre">buf</span></code> while continuously writing the
+single byte given by <code class="docutils literal notranslate"><span class="pre">write</span></code>.
+Returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>Note: on WiPy this function returns the number of bytes read.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.SPI.write">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param">buf</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.SPI.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the bytes contained in <code class="docutils literal notranslate"><span class="pre">buf</span></code>.
+Returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>Note: on WiPy this function returns the number of bytes written.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.SPI.write_readinto">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">write_readinto</code><span class="sig-paren">(</span><em class="sig-param">write_buf</em>, <em class="sig-param">read_buf</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.SPI.write_readinto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the bytes from <code class="docutils literal notranslate"><span class="pre">write_buf</span></code> while reading into <code class="docutils literal notranslate"><span class="pre">read_buf</span></code>.  The
+buffers can be the same or different, but both buffers must have the
+same length.
+Returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>Note: on WiPy this function returns the number of bytes written.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="machine.SPI.MASTER">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">MASTER</code><a class="headerlink" href="#machine.SPI.MASTER" title="Permalink to this definition">¶</a></dt>
+<dd><p>for initialising the SPI bus to master; this is only used for the WiPy</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="machine.SPI.MSB">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">MSB</code><a class="headerlink" href="#machine.SPI.MSB" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the first bit to be the most significant bit</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="machine.SPI.LSB">
+<code class="sig-prename descclassname">SPI.</code><code class="sig-name descname">LSB</code><a class="headerlink" href="#machine.SPI.LSB" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the first bit to be the least significant bit</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">class SPI – a Serial Peripheral Interface bus protocol (master side)</a><ul>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="machine.UART.html"
+                        title="previous chapter">class UART – duplex serial communication bus</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="machine.I2C.html"
+                        title="next chapter">class I2C – a two-wire serial protocol</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/machine.SPI.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="machine.I2C.html" title="class I2C – a two-wire serial protocol"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="machine.UART.html" title="class UART – duplex serial communication bus"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="machine.html" ><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code> — functions related to the hardware</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

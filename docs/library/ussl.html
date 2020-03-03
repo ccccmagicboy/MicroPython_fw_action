@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>ussl – SSL/TLS module &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ustruct – pack and unpack primitive data types" href="ustruct.html" />
+    <link rel="prev" title="usocket – socket module" href="usocket.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ustruct.html" title="ustruct – pack and unpack primitive data types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usocket.html" title="usocket – socket module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-ussl">
+<span id="ussl-ssl-tls-module"></span><h1><a class="reference internal" href="#module-ussl" title="ussl: TLS/SSL wrapper for socket objects"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ussl</span></code></a> – SSL/TLS module<a class="headerlink" href="#module-ussl" title="Permalink to this headline">¶</a></h1>
+<p><a href="#id1"><span class="problematic" id="id2">|see_cpython_module|</span></a> <code class="xref py py-mod docutils literal notranslate"><span class="pre">python:ssl</span></code>.</p>
+<p>This module provides access to Transport Layer Security (previously and
+widely known as “Secure Sockets Layer”) encryption and peer authentication
+facilities for network sockets, both client-side and server-side.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="ussl.ussl.wrap_socket">
+<code class="sig-prename descclassname">ussl.</code><code class="sig-name descname">wrap_socket</code><span class="sig-paren">(</span><em class="sig-param">sock</em>, <em class="sig-param">server_side=False</em>, <em class="sig-param">keyfile=None</em>, <em class="sig-param">certfile=None</em>, <em class="sig-param">cert_reqs=CERT_NONE</em>, <em class="sig-param">ca_certs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#ussl.ussl.wrap_socket" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes a <cite>stream</cite> <em>sock</em> (usually usocket.socket instance of <code class="docutils literal notranslate"><span class="pre">SOCK_STREAM</span></code> type),
+and returns an instance of ssl.SSLSocket, which wraps the underlying stream in
+an SSL context. Returned object has the usual <cite>stream</cite> interface methods like
+<code class="docutils literal notranslate"><span class="pre">read()</span></code>, <code class="docutils literal notranslate"><span class="pre">write()</span></code>, etc. In MicroPython, the returned object does not expose
+socket interface and methods like <code class="docutils literal notranslate"><span class="pre">recv()</span></code>, <code class="docutils literal notranslate"><span class="pre">send()</span></code>. In particular, a
+server-side SSL socket should be created from a normal socket returned from
+<a class="reference internal" href="usocket.html#usocket.socket.accept" title="usocket.socket.accept"><code class="xref py py-meth docutils literal notranslate"><span class="pre">accept()</span></code></a> on a non-SSL listening server socket.</p>
+<p>Depending on the underlying module implementation in a particular
+<cite>MicroPython port</cite>, some or all keyword arguments above may be not supported.</p>
+</dd></dl>
+
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Some implementations of <code class="docutils literal notranslate"><span class="pre">ussl</span></code> module do NOT validate server certificates,
+which makes an SSL connection established prone to man-in-the-middle attacks.</p>
+</div>
+</div>
+<div class="section" id="exceptions">
+<h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="ussl.ssl.SSLError">
+<code class="sig-prename descclassname">ssl.</code><code class="sig-name descname">SSLError</code><a class="headerlink" href="#ussl.ssl.SSLError" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception does NOT exist. Instead its base class, OSError, is used.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="ussl.ussl.CERT_NONE">
+<code class="sig-prename descclassname">ussl.</code><code class="sig-name descname">CERT_NONE</code><a class="headerlink" href="#ussl.ussl.CERT_NONE" title="Permalink to this definition">¶</a></dt>
+<dt id="ussl.ussl.CERT_OPTIONAL">
+<code class="sig-prename descclassname">ussl.</code><code class="sig-name descname">CERT_OPTIONAL</code><a class="headerlink" href="#ussl.ussl.CERT_OPTIONAL" title="Permalink to this definition">¶</a></dt>
+<dt id="ussl.ussl.CERT_REQUIRED">
+<code class="sig-prename descclassname">ussl.</code><code class="sig-name descname">CERT_REQUIRED</code><a class="headerlink" href="#ussl.ussl.CERT_REQUIRED" title="Permalink to this definition">¶</a></dt>
+<dd><p>Supported values for <em>cert_reqs</em> parameter.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ussl</span></code> – SSL/TLS module</a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#exceptions">Exceptions</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usocket.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">usocket</span></code> – socket module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ustruct.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ustruct</span></code> – pack and unpack primitive data types</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/ussl.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ustruct.html" title="ustruct – pack and unpack primitive data types"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="usocket.html" title="usocket – socket module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

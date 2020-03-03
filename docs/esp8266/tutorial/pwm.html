@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>7. Pulse Width Modulation &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="8. Analog to Digital Conversion" href="adc.html" />
+    <link rel="prev" title="6. GPIO Pins" href="pins.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="adc.html" title="8. Analog to Digital Conversion"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pins.html" title="6. GPIO Pins"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the ESP8266</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for ESP8266</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pulse-width-modulation">
+<h1><span class="section-number">7. </span>Pulse Width Modulation<a class="headerlink" href="#pulse-width-modulation" title="Permalink to this headline">¶</a></h1>
+<p>Pulse width modulation (PWM) is a way to get an artificial analog output on a
+digital pin.  It achieves this by rapidly toggling the pin from low to high.
+There are two parameters associated with this: the frequency of the toggling,
+and the duty cycle.  The duty cycle is defined to be how long the pin is high
+compared with the length of a single period (low plus high time).  Maximum
+duty cycle is when the pin is high all of the time, and minimum is when it is
+low all of the time.</p>
+<p>On the ESP8266 the pins 0, 2, 4, 5, 12, 13, 14 and 15 all support PWM.  The
+limitation is that they must all be at the same frequency, and the frequency
+must be between 1Hz and 1kHz.</p>
+<p>To use PWM on a pin you must first create the pin object, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">machine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p12</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then create the PWM object using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pwm12</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">p12</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can set the frequency and duty cycle using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pwm12</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pwm12</span><span class="o">.</span><span class="n">duty</span><span class="p">(</span><span class="mi">512</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that the duty cycle is between 0 (all off) and 1023 (all on), with 512
+being a 50% duty. Values beyond this min/max will be clipped. If you
+print the PWM object then it will tell you its current configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pwm12</span>
+<span class="go">PWM(12, freq=500, duty=512)</span>
+</pre></div>
+</div>
+<p>You can also call the <code class="docutils literal notranslate"><span class="pre">freq()</span></code> and <code class="docutils literal notranslate"><span class="pre">duty()</span></code> methods with no arguments to
+get their current values.</p>
+<p>The pin will continue to be in PWM mode until you deinitialise it using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pwm12</span><span class="o">.</span><span class="n">deinit</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="fading-an-led">
+<h2><span class="section-number">7.1. </span>Fading an LED<a class="headerlink" href="#fading-an-led" title="Permalink to this headline">¶</a></h2>
+<p>Let’s use the PWM feature to fade an LED.  Assuming your board has an LED
+connected to pin 2 (ESP-12 modules do) we can create an LED-PWM object using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">led</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notice that we can set the frequency in the PWM constructor.</p>
+<p>For the next part we will use timing and some math, so import these modules:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">math</span>
+</pre></div>
+</div>
+<p>Then create a function to pulse the LED:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">pulse</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="n">l</span><span class="o">.</span><span class="n">duty</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="mi">500</span> <span class="o">+</span> <span class="mi">500</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="n">time</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can try this function out using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pulse</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a nice effect you can pulse many times in a row:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">pulse</span><span class="p">(</span><span class="n">led</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Remember you can use ctrl-C to interrupt the code.</p>
+</div>
+<div class="section" id="control-a-hobby-servo">
+<h2><span class="section-number">7.2. </span>Control a hobby servo<a class="headerlink" href="#control-a-hobby-servo" title="Permalink to this headline">¶</a></h2>
+<p>Hobby servo motors can be controlled using PWM.  They require a frequency of
+50Hz and then a duty between about 40 and 115, with 77 being the centre value.
+If you connect a servo to the power and ground pins, and then the signal line
+to pin 12 (other pins will work just as well), you can control the motor using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">servo</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> <span class="n">freq</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">servo</span><span class="o">.</span><span class="n">duty</span><span class="p">(</span><span class="mi">40</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">servo</span><span class="o">.</span><span class="n">duty</span><span class="p">(</span><span class="mi">115</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">servo</span><span class="o">.</span><span class="n">duty</span><span class="p">(</span><span class="mi">77</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7. Pulse Width Modulation</a><ul>
+<li><a class="reference internal" href="#fading-an-led">7.1. Fading an LED</a></li>
+<li><a class="reference internal" href="#control-a-hobby-servo">7.2. Control a hobby servo</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pins.html"
+                        title="previous chapter"><span class="section-number">6. </span>GPIO Pins</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="adc.html"
+                        title="next chapter"><span class="section-number">8. </span>Analog to Digital Conversion</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/esp8266/tutorial/pwm.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="adc.html" title="8. Analog to Digital Conversion"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pins.html" title="6. GPIO Pins"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the ESP8266</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for ESP8266</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

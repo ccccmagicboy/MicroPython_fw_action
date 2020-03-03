@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>2. Fading LEDs &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. The LCD and touch-sensor skin" href="lcd_skin.html" />
+    <link rel="prev" title="1. Controlling hobby servo motors" href="servo.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lcd_skin.html" title="3. The LCD and touch-sensor skin"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="servo.html" title="1. Controlling hobby servo motors"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fading-leds">
+<h1><span class="section-number">2. </span>Fading LEDs<a class="headerlink" href="#fading-leds" title="Permalink to this headline">¶</a></h1>
+<p>In addition to turning LEDs on and off, it is also possible to control the brightness of an LED using <a class="reference external" href="http://en.wikipedia.org/wiki/Pulse-width_modulation">Pulse-Width Modulation (PWM)</a>, a common technique for obtaining variable output from a digital pin. This allows us to fade an LED:</p>
+<img alt="http://upload.wikimedia.org/wikipedia/commons/a/a9/Fade.gif" src="http://upload.wikimedia.org/wikipedia/commons/a/a9/Fade.gif" />
+<div class="section" id="components">
+<h2><span class="section-number">2.1. </span>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<p>You will need:</p>
+<ul class="simple">
+<li><p>Standard 5 or 3 mm LED</p></li>
+<li><p>100 Ohm resistor</p></li>
+<li><p>Wires</p></li>
+<li><p><a class="reference external" href="http://en.wikipedia.org/wiki/Breadboard">Breadboard</a> (optional, but makes things easier)</p></li>
+</ul>
+</div>
+<div class="section" id="connecting-things-up">
+<h2><span class="section-number">2.2. </span>Connecting Things Up<a class="headerlink" href="#connecting-things-up" title="Permalink to this headline">¶</a></h2>
+<p>For this tutorial, we will use the <code class="docutils literal notranslate"><span class="pre">X1</span></code> pin. Connect one end of the resistor to <code class="docutils literal notranslate"><span class="pre">X1</span></code>, and the other end to the <strong>anode</strong> of the LED, which is the longer leg. Connect the <strong>cathode</strong> of the LED to ground.</p>
+<img alt="../../_images/fading_leds_breadboard_fritzing.png" src="../../_images/fading_leds_breadboard_fritzing.png" />
+</div>
+<div class="section" id="code">
+<h2><span class="section-number">2.3. </span>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<p>By examining the <a class="reference internal" href="../quickref.html#pyboard-quickref"><span class="std std-ref">Quick reference for the pyboard</span></a>, we see that <code class="docutils literal notranslate"><span class="pre">X1</span></code> is connected to channel 1 of timer 5 (<code class="docutils literal notranslate"><span class="pre">TIM5</span> <span class="pre">CH1</span></code>). Therefore we will first create a <code class="docutils literal notranslate"><span class="pre">Timer</span></code> object for timer 5, then create a <code class="docutils literal notranslate"><span class="pre">TimerChannel</span></code> object for channel 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyb</span> <span class="kn">import</span> <span class="n">Timer</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="c1"># timer 5 will be created with a frequency of 100 Hz</span>
+<span class="n">tim</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">tchannel</span> <span class="o">=</span> <span class="n">tim</span><span class="o">.</span><span class="n">channel</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">Timer</span><span class="o">.</span><span class="n">PWM</span><span class="p">,</span> <span class="n">pin</span><span class="o">=</span><span class="n">pyb</span><span class="o">.</span><span class="n">Pin</span><span class="o">.</span><span class="n">board</span><span class="o">.</span><span class="n">X1</span><span class="p">,</span> <span class="n">pulse_width</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Brightness of the LED in PWM is controlled by controlling the pulse-width, that is the amount of time the LED is on every cycle. With a timer frequency of 100 Hz, each cycle takes 0.01 second, or 10 ms.</p>
+<p>To achieve the fading effect shown at the beginning of this tutorial, we want to set the pulse-width to a small value, then slowly increase the pulse-width to brighten the LED, and start over when we reach some maximum brightness:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># maximum and minimum pulse-width, which corresponds to maximum</span>
+<span class="c1"># and minimum brightness</span>
+<span class="n">max_width</span> <span class="o">=</span> <span class="mi">200000</span>
+<span class="n">min_width</span> <span class="o">=</span> <span class="mi">20000</span>
+
+<span class="c1"># how much to change the pulse-width by each step</span>
+<span class="n">wstep</span> <span class="o">=</span> <span class="mi">1500</span>
+<span class="n">cur_width</span> <span class="o">=</span> <span class="n">min_width</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+  <span class="n">tchannel</span><span class="o">.</span><span class="n">pulse_width</span><span class="p">(</span><span class="n">cur_width</span><span class="p">)</span>
+
+  <span class="c1"># this determines how often we change the pulse-width. It is</span>
+  <span class="c1"># analogous to frames-per-second</span>
+  <span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+  <span class="n">cur_width</span> <span class="o">+=</span> <span class="n">wstep</span>
+
+  <span class="k">if</span> <span class="n">cur_width</span> <span class="o">&gt;</span> <span class="n">max_width</span><span class="p">:</span>
+    <span class="n">cur_width</span> <span class="o">=</span> <span class="n">min_width</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="breathing-effect">
+<h2><span class="section-number">2.4. </span>Breathing Effect<a class="headerlink" href="#breathing-effect" title="Permalink to this headline">¶</a></h2>
+<p>If we want to have a breathing effect, where the LED fades from dim to bright then bright to dim, then we simply need to reverse the sign of <code class="docutils literal notranslate"><span class="pre">wstep</span></code> when we reach maximum brightness, and reverse it again at minimum brightness. To do this we modify the <code class="docutils literal notranslate"><span class="pre">while</span></code> loop to be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+  <span class="n">tchannel</span><span class="o">.</span><span class="n">pulse_width</span><span class="p">(</span><span class="n">cur_width</span><span class="p">)</span>
+
+  <span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+  <span class="n">cur_width</span> <span class="o">+=</span> <span class="n">wstep</span>
+
+  <span class="k">if</span> <span class="n">cur_width</span> <span class="o">&gt;</span> <span class="n">max_width</span><span class="p">:</span>
+    <span class="n">cur_width</span> <span class="o">=</span> <span class="n">max_width</span>
+    <span class="n">wstep</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="k">elif</span> <span class="n">cur_width</span> <span class="o">&lt;</span> <span class="n">min_width</span><span class="p">:</span>
+    <span class="n">cur_width</span> <span class="o">=</span> <span class="n">min_width</span>
+    <span class="n">wstep</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="advanced-exercise">
+<h2><span class="section-number">2.5. </span>Advanced Exercise<a class="headerlink" href="#advanced-exercise" title="Permalink to this headline">¶</a></h2>
+<p>You may have noticed that the LED brightness seems to fade slowly, but increases quickly. This is because our eyes interprets brightness logarithmically (<a class="reference external" href="http://www.telescope-optics.net/eye_intensity_response.htm">Weber’s Law</a>
+), while the LED’s brightness changes linearly, that is by the same amount each time. How do you solve this problem? (Hint: what is the opposite of the logarithmic function?)</p>
+</div>
+<div class="section" id="addendum">
+<h2><span class="section-number">2.6. </span>Addendum<a class="headerlink" href="#addendum" title="Permalink to this headline">¶</a></h2>
+<p>We could have also used the digital-to-analog converter (DAC) to achieve the same effect. The PWM method has the advantage that it drives the LED with the same current each time, but for different lengths of time. This allows better control over the brightness, because LEDs do not necessarily exhibit a linear relationship between the driving current and brightness.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2. Fading LEDs</a><ul>
+<li><a class="reference internal" href="#components">2.1. Components</a></li>
+<li><a class="reference internal" href="#connecting-things-up">2.2. Connecting Things Up</a></li>
+<li><a class="reference internal" href="#code">2.3. Code</a></li>
+<li><a class="reference internal" href="#breathing-effect">2.4. Breathing Effect</a></li>
+<li><a class="reference internal" href="#advanced-exercise">2.5. Advanced Exercise</a></li>
+<li><a class="reference internal" href="#addendum">2.6. Addendum</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="servo.html"
+                        title="previous chapter"><span class="section-number">1. </span>Controlling hobby servo motors</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lcd_skin.html"
+                        title="next chapter"><span class="section-number">3. </span>The LCD and touch-sensor skin</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/pyboard/tutorial/fading_led.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lcd_skin.html" title="3. The LCD and touch-sensor skin"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="servo.html" title="1. Controlling hobby servo motors"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../quickref.html" >Quick reference for the pyboard</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >MicroPython tutorial for the pyboard</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

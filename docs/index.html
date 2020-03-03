@@ -1,0 +1,1282 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>MicroPython documentation and references &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MicroPython libraries" href="library/index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="library/index.html" title="MicroPython libraries"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Sphinx-Themes template 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="micropython-documentation-and-references">
+<h1>MicroPython documentation and references<a class="headerlink" href="#micropython-documentation-and-references" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="library/index.html">MicroPython libraries</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="library/index.html#python-standard-libraries-and-micro-libraries">Python standard libraries and micro-libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/builtins.html">Builtin functions and exceptions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/builtins.html#functions-and-types">Functions and types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/builtins.html#exceptions">Exceptions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> – mathematical functions for complex numbers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/cmath.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/cmath.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> – control the garbage collector</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/gc.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> – mathematical functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/math.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/math.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> – system specific functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/sys.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/sys.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uarray.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uarray</span></code> – arrays of numeric data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uarray.html#classes">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/ubinascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ubinascii</span></code> – binary/ASCII conversions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/ubinascii.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/ucollections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ucollections</span></code> – collection and container types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/ucollections.html#classes">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uerrno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uerrno</span></code> – system error codes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uerrno.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uhashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uhashlib</span></code> – hashing algorithms</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uhashlib.html#constructors">Constructors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uhashlib.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uheapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uheapq</span></code> – heap queue algorithm</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uheapq.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uio</span></code> – input/output streams</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uio.html#conceptual-hierarchy">Conceptual hierarchy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uio.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uio.html#classes">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/ujson.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ujson</span></code> – JSON encoding and decoding</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/ujson.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uos.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uos</span></code> – basic “operating system” services</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uos.html#general-functions">General functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uos.html#filesystem-access">Filesystem access</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uos.html#terminal-redirection-and-duplication">Terminal redirection and duplication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uos.html#filesystem-mounting">Filesystem mounting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uos.html#block-devices">Block devices</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="library/uos.html#simple-and-extended-interface">Simple and extended interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/ure.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ure</span></code> – simple regular expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/ure.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ure.html#regex-objects">Regex objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ure.html#match-objects">Match objects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uselect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uselect</span></code> – wait for events on a set of streams</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uselect.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uselect.html#class-poll">class <code class="docutils literal notranslate"><span class="pre">Poll</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="library/uselect.html#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/usocket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">usocket</span></code> – socket module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/usocket.html#socket-address-format-s">Socket address format(s)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/usocket.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/usocket.html#constants">Constants</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="library/usocket.html#class-socket">class socket</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="library/usocket.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/ussl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ussl</span></code> – SSL/TLS module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/ussl.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ussl.html#exceptions">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ussl.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/ustruct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ustruct</span></code> – pack and unpack primitive data types</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/ustruct.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/utime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utime</span></code> – time related functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/utime.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uzlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uzlib</span></code> – zlib decompression</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uzlib.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> – multithreading support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="library/index.html#micropython-specific-libraries">MicroPython-specific libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/btree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">btree</span></code> – simple BTree database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/btree.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/btree.html#methods">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/btree.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/framebuf.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">framebuf</span></code> — frame buffer manipulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/framebuf.html#class-framebuffer">class FrameBuffer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/framebuf.html#constructors">Constructors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/framebuf.html#drawing-primitive-shapes">Drawing primitive shapes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/framebuf.html#drawing-text">Drawing text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/framebuf.html#other-methods">Other methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/framebuf.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/machine.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code> — functions related to the hardware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.html#reset-related-functions">Reset related functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.html#interrupt-related-functions">Interrupt related functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.html#power-related-functions">Power related functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.html#miscellaneous-functions">Miscellaneous functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.html#constants">Constants</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.html#classes">Classes</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.Pin.html">class Pin – control I/O pins</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.Pin.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.Pin.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.Pin.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.Signal.html">class Signal – control and sense external I/O devices</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.Signal.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.Signal.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.ADC.html">class ADC – analog to digital conversion</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.ADC.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.ADC.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.UART.html">class UART – duplex serial communication bus</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.UART.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.UART.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.UART.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.SPI.html">class SPI – a Serial Peripheral Interface bus protocol (master side)</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.SPI.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.SPI.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.SPI.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.I2C.html">class I2C – a two-wire serial protocol</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.I2C.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.I2C.html#general-methods">General Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.I2C.html#primitive-i2c-operations">Primitive I2C operations</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.I2C.html#standard-bus-operations">Standard bus operations</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.I2C.html#memory-operations">Memory operations</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.RTC.html">class RTC – real time clock</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.RTC.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.RTC.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.RTC.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.Timer.html">class Timer – control hardware timers</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.Timer.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.Timer.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.Timer.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.WDT.html">class WDT – watchdog timer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.WDT.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.WDT.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.SD.html">class SD – secure digital memory card (cc3200 port only)</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.SD.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.SD.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/machine.SDCard.html">class SDCard – secure digital memory card</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/machine.SDCard.html#implementation-specific-details">Implementation-specific details</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="library/machine.SDCard.html#pyboard">PyBoard</a></li>
+<li class="toctree-l7"><a class="reference internal" href="library/machine.SDCard.html#esp32">ESP32</a></li>
+<li class="toctree-l7"><a class="reference internal" href="library/machine.SDCard.html#cc3200">cc3200</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/micropython.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">micropython</span></code> – access and control MicroPython internals</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/micropython.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/network.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">network</span></code> — network configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/network.html#common-network-adapter-interface">Common network adapter interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/network.html#specific-network-class-implementations">Specific network class implementations</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="library/network.WLAN.html">class WLAN – control built-in WiFi interfaces</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/network.WLAN.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/network.WLAN.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/network.WLANWiPy.html">class WLANWiPy – WiPy specific WiFi control</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/network.WLANWiPy.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/network.WLANWiPy.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/network.WLANWiPy.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/network.CC3K.html">class CC3K – control CC3000 WiFi modules</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/network.CC3K.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/network.CC3K.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/network.CC3K.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/network.WIZNET5K.html">class WIZNET5K – control WIZnet5x00 Ethernet modules</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/network.WIZNET5K.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/network.WIZNET5K.html#methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="library/network.html#network-functions">Network functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/ubluetooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ubluetooth</span></code> — low-level Bluetooth</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#class-ble">class BLE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#constructor">Constructor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#event-handling">Event Handling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#broadcaster-role-advertiser">Broadcaster Role (Advertiser)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#observer-role-scanner">Observer Role (Scanner)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#peripheral-role-gatt-server">Peripheral Role (GATT Server)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#central-role-gatt-client">Central Role (GATT Client)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#class-uuid">class UUID</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#id1">Constructor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/ubluetooth.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/ucryptolib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ucryptolib</span></code> – cryptographic ciphers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/ucryptolib.html#classes">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/uctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uctypes</span></code> – access binary data in a structured way</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/uctypes.html#defining-structure-layout">Defining structure layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uctypes.html#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uctypes.html#structure-descriptors-and-instantiating-structure-objects">Structure descriptors and instantiating structure objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uctypes.html#structure-objects">Structure objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/uctypes.html#limitations">Limitations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="library/index.html#port-specific-libraries">Port-specific libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library/index.html#libraries-specific-to-the-pyboard">Libraries specific to the pyboard</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/pyb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyb</span></code> — functions related to the board</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/pyb.html#time-related-functions">Time related functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/pyb.html#reset-related-functions">Reset related functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/pyb.html#interrupt-related-functions">Interrupt related functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/pyb.html#power-related-functions">Power related functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/pyb.html#miscellaneous-functions">Miscellaneous functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/pyb.html#classes">Classes</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.Accel.html">class Accel – accelerometer control</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Accel.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Accel.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Accel.html#hardware-note">Hardware Note</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.ADC.html">class ADC – analog to digital conversion</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.ADC.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.ADC.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.ADC.html#the-adcall-object">The ADCAll Object</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.CAN.html">class CAN – controller area network communication bus</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.CAN.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.CAN.html#class-methods">Class Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.CAN.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.CAN.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.DAC.html">class DAC – digital to analog conversion</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.DAC.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.DAC.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.ExtInt.html">class ExtInt – configure I/O pins to interrupt on external events</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.ExtInt.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.ExtInt.html#class-methods">Class methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.ExtInt.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.ExtInt.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.Flash.html">class Flash – access to built-in flash storage</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Flash.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Flash.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Flash.html#hardware-note">Hardware Note</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.I2C.html">class I2C – a two-wire serial protocol</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.I2C.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.I2C.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.I2C.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.LCD.html">class LCD – LCD control for the LCD touch-sensor pyskin</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.LCD.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.LCD.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.LED.html">class LED – LED object</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.LED.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.LED.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.Pin.html">class Pin – control I/O pins</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Pin.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Pin.html#class-methods">Class methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Pin.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Pin.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.Pin.html#class-pinaf-pin-alternate-functions">class PinAF – Pin Alternate Functions</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Pin.html#id1">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.RTC.html">class RTC – real time clock</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.RTC.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.RTC.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.Servo.html">class Servo – 3-wire hobby servo driver</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Servo.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Servo.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.SPI.html">class SPI – a master-driven serial protocol</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.SPI.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.SPI.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.SPI.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.Switch.html">class Switch – switch object</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Switch.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Switch.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.Timer.html">class Timer – control internal timers</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Timer.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Timer.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.Timer.html#class-timerchannel-setup-a-channel-for-a-timer">class TimerChannel — setup a channel for a timer</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.Timer.html#id1">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.UART.html">class UART – duplex serial communication bus</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.UART.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.UART.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.UART.html#constants">Constants</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.UART.html#flow-control">Flow Control</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="library/pyb.UART.html#cts-target-controls-pyboard-transmitter">CTS: target controls Pyboard transmitter</a></li>
+<li class="toctree-l7"><a class="reference internal" href="library/pyb.UART.html#rts-pyboard-controls-target-s-transmitter">RTS: Pyboard controls target’s transmitter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.USB_HID.html">class USB_HID – USB Human Interface Device (HID)</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.USB_HID.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.USB_HID.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="library/pyb.USB_VCP.html">class USB_VCP – USB virtual comm port</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.USB_VCP.html#constructors">Constructors</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.USB_VCP.html#methods">Methods</a></li>
+<li class="toctree-l6"><a class="reference internal" href="library/pyb.USB_VCP.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/lcd160cr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lcd160cr</span></code> — control of LCD160CR display</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#class-lcd160cr">class LCD160CR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#constructors">Constructors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#static-methods">Static methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#instance-members">Instance members</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#setup-commands">Setup commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#pixel-access-methods">Pixel access methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#drawing-text">Drawing text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#drawing-primitive-shapes">Drawing primitive shapes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#touch-screen-methods">Touch screen methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#advanced-commands">Advanced commands</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/lcd160cr.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="library/index.html#libraries-specific-to-the-wipy">Libraries specific to the WiPy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/wipy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wipy</span></code> – WiPy specific features</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/wipy.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/machine.ADCWiPy.html">class ADCWiPy – analog to digital conversion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.ADCWiPy.html#constructors">Constructors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.ADCWiPy.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/machine.ADCWiPy.html#class-adcchannel-read-analog-values-from-internal-or-external-sources">class ADCChannel — read analog values from internal or external sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library/machine.TimerWiPy.html">class TimerWiPy – control hardware timers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.TimerWiPy.html#constructors">Constructors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.TimerWiPy.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/machine.TimerWiPy.html#class-timerchannel-setup-a-channel-for-a-timer">class TimerChannel — setup a channel for a timer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.TimerWiPy.html#id1">Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/machine.TimerWiPy.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="library/index.html#libraries-specific-to-the-esp8266-and-esp32">Libraries specific to the ESP8266 and ESP32</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/esp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">esp</span></code> — functions related to the ESP8266 and ESP32</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/esp.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="library/esp32.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">esp32</span></code> — functionality specific to the ESP32</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="library/esp32.html#functions">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/esp32.html#flash-partitions">Flash partitions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="library/esp32.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="library/esp32.html#rmt">RMT</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/esp32.html#ultra-low-power-co-processor">Ultra-Low-Power co-processor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="library/esp32.html#id1">Constants</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference/index.html">MicroPython language and implementation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/glossary.html">Glossary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/repl.html">The MicroPython Interactive Interpreter Mode (aka REPL)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/repl.html#auto-indent">Auto-indent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/repl.html#auto-completion">Auto-completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/repl.html#interrupting-a-running-program">Interrupting a running program</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/repl.html#paste-mode">Paste mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/repl.html#soft-reset">Soft reset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/repl.html#the-special-variable-underscore">The special variable _ (underscore)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/repl.html#raw-mode">Raw mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/mpyfiles.html">MicroPython .mpy files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/mpyfiles.html#versioning-and-compatibility-of-mpy-files">Versioning and compatibility of .mpy files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/mpyfiles.html#binary-encoding-of-mpy-files">Binary encoding of .mpy files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/mpyfiles.html#the-header">The header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/mpyfiles.html#raw-code-elements">Raw code elements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/isr_rules.html">Writing interrupt handlers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/isr_rules.html#tips-and-recommended-practices">Tips and recommended practices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/isr_rules.html#micropython-issues">MicroPython issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#the-emergency-exception-buffer">The emergency exception buffer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#simplicity">Simplicity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#communication-between-an-isr-and-the-main-program">Communication between an ISR and the main program</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#the-use-of-object-methods-as-callbacks">The use of object methods as callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#creation-of-python-objects">Creation of Python objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#use-of-python-objects">Use of Python objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#overcoming-the-float-limitation">Overcoming the float limitation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#using-micropython-schedule">Using micropython.schedule</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/isr_rules.html#exceptions">Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/isr_rules.html#general-issues">General issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#interrupt-handler-design">Interrupt handler design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#reentrancy">Reentrancy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#critical-sections">Critical sections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/isr_rules.html#interrupts-and-the-repl">Interrupts and the REPL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/speed_python.html">Maximising MicroPython speed</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/speed_python.html#designing-for-speed">Designing for speed</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/speed_python.html#algorithms">Algorithms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/speed_python.html#ram-allocation">RAM allocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/speed_python.html#buffers">Buffers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/speed_python.html#floating-point">Floating point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/speed_python.html#arrays">Arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/speed_python.html#identifying-the-slowest-section-of-code">Identifying the slowest section of code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/speed_python.html#micropython-code-improvements">MicroPython code improvements</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/speed_python.html#the-const-declaration">The const() declaration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/speed_python.html#caching-object-references">Caching object references</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/speed_python.html#controlling-garbage-collection">Controlling garbage collection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/speed_python.html#the-native-code-emitter">The Native code emitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/speed_python.html#the-viper-code-emitter">The Viper code emitter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/speed_python.html#accessing-hardware-directly">Accessing hardware directly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/constrained.html">MicroPython on microcontrollers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/constrained.html#flash-memory">Flash memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/constrained.html#ram">RAM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/constrained.html#compilation-phase">Compilation phase</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/constrained.html#execution-phase">Execution phase</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/constrained.html#the-heap">The heap</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/constrained.html#fragmentation">Fragmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/constrained.html#reporting">Reporting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/constrained.html#control-of-garbage-collection">Control of garbage collection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/constrained.html#string-operations">String operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/constrained.html#postscript">Postscript</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/constrained.html#footnote-gc-collect-return-value">Footnote: gc.collect() return value</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/packages.html">Distribution packages, package management, and deploying applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/packages.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/packages.html#distribution-packages">Distribution packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/packages.html#upip-package-manager"><code class="docutils literal notranslate"><span class="pre">upip</span></code> package manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/packages.html#cross-installing-packages">Cross-installing packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/packages.html#cross-installing-packages-with-freezing">Cross-installing packages with freezing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/packages.html#creating-distribution-packages">Creating distribution packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/packages.html#application-resources">Application resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/packages.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/asm_thumb2_index.html">Inline assembler for Thumb2 architectures</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/asm_thumb2_index.html#document-conventions">Document conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/asm_thumb2_index.html#instruction-categories">Instruction categories</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_mov.html">1. Register move instructions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_mov.html#document-conventions">1.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_mov.html#register-moves">1.2. Register moves</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_ldr.html">2. Load register from memory</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_ldr.html#document-conventions">2.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_ldr.html#register-load">2.2. Register Load</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_str.html">3. Store register to memory</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_str.html#document-conventions">3.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_str.html#register-store">3.2. Register Store</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_logical_bit.html">4. Logical &amp; bitwise instructions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_logical_bit.html#document-conventions">4.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_logical_bit.html#logical-instructions">4.2. Logical instructions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_logical_bit.html#shift-and-rotation-instructions">4.3. Shift and rotation instructions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_logical_bit.html#special-instructions">4.4. Special instructions</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_arith.html">5. Arithmetic instructions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_arith.html#document-conventions">5.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_arith.html#addition">5.2. Addition</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_arith.html#subtraction">5.3. Subtraction</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_arith.html#negation">5.4. Negation</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_arith.html#multiplication-and-division">5.5. Multiplication and division</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_compare.html">6. Comparison instructions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_compare.html#document-conventions">6.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_compare.html#the-application-program-status-register-apsr">6.2. The Application Program Status Register (APSR)</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_compare.html#apsr-bits">6.3. APSR Bits</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_compare.html#id1">6.4. Comparison instructions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_compare.html#conditional-execution">6.5. Conditional execution</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_label_branch.html">7. Branch instructions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_label_branch.html#document-conventions">7.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_label_branch.html#branch-to-label">7.2. Branch to label</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_label_branch.html#long-branches">7.3. Long branches</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_label_branch.html#subroutines-functions">7.4. Subroutines (functions)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_stack.html">8. Stack push and pop</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_stack.html#document-conventions">8.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_stack.html#stack-operations">8.2. Stack operations</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_misc.html">9. Miscellaneous instructions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_float.html">10. Floating point instructions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_float.html#document-conventions">10.1. Document conventions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_float.html#arithmetic">10.2. Arithmetic</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_float.html#move-between-arm-core-and-fpu-registers">10.3. Move between ARM core and FPU registers</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_float.html#move-between-fpu-register-and-memory">10.4. Move between FPU register and memory</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_float.html#data-comparison">10.5. Data comparison</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_float.html#convert-between-integer-and-float">10.6. Convert between integer and float</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_directives.html">11. Assembler directives</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_directives.html#labels">11.1. Labels</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_directives.html#defining-inline-data">11.2. Defining inline data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/asm_thumb2_index.html#usage-examples">Usage examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html">1. Hints and tips</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html#code-branches-and-subroutines">1.1. Code branches and subroutines</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html#argument-passing-and-return">1.2. Argument passing and return</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html#multiple-arguments">1.2.1. Multiple arguments</a></li>
+<li class="toctree-l6"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html#non-integer-data-types">1.2.2. Non-integer data types</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html#named-constants">1.3. Named constants</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html#assembler-code-as-class-methods">1.4. Assembler code as class methods</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html#use-of-unsupported-instructions">1.5. Use of unsupported instructions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/asm_thumb2_hints_tips.html#overcoming-micropython-s-integer-restriction">1.6. Overcoming MicroPython’s integer restriction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/asm_thumb2_index.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/filesystem.html">Working with filesystems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/filesystem.html#vfs">VFS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/filesystem.html#block-devices">Block devices</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/filesystem.html#built-in-block-devices">Built-in block devices</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="reference/filesystem.html#stm32-pyboard">STM32 / Pyboard</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/filesystem.html#esp8266">ESP8266</a></li>
+<li class="toctree-l5"><a class="reference internal" href="reference/filesystem.html#esp32">ESP32</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="reference/filesystem.html#custom-block-devices">Custom block devices</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference/filesystem.html#filesystems">Filesystems</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference/filesystem.html#fat">FAT</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/filesystem.html#littlefs">Littlefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/filesystem.html#hybrid-stm32">Hybrid (STM32)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference/filesystem.html#hybrid-esp32">Hybrid (ESP32)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pyboard.py.html">The pyboard.py tool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/pyboard.py.html#running-a-command-on-the-device">Running a command on the device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/pyboard.py.html#running-a-script-on-the-device">Running a script on the device</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/pyboard.py.html#filesystem-access">Filesystem access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference/pyboard.py.html#using-the-pyboard-library">Using the pyboard library</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="genrst/index.html">MicroPython differences from CPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="genrst/syntax.html">Syntax</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="genrst/syntax.html#spaces">Spaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/syntax.html#upy-requires-spaces-between-literal-numbers-and-keywords-cpy-doesn-t">uPy requires spaces between literal numbers and keywords, CPy doesn’t</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/syntax.html#unicode">Unicode</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/syntax.html#unicode-name-escapes-are-not-implemented">Unicode name escapes are not implemented</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="genrst/core_language.html">Core language</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="genrst/core_language.html#classes">Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#special-method-del-not-implemented-for-user-defined-classes">Special method __del__ not implemented for user-defined classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#method-resolution-order-mro-is-not-compliant-with-cpython">Method Resolution Order (MRO) is not compliant with CPython</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#when-inheriting-from-multiple-classes-super-only-calls-one-class">When inheriting from multiple classes super() only calls one class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#calling-super-getter-property-in-subclass-will-return-a-property-object-not-the-value">Calling super() getter property in subclass will return a property object, not the value</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/core_language.html#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#error-messages-for-methods-may-display-unexpected-argument-counts">Error messages for methods may display unexpected argument counts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#user-defined-attributes-for-functions-are-not-supported">User-defined attributes for functions are not supported</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/core_language.html#generator">Generator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#context-manager-exit-not-called-in-a-generator-which-does-not-run-to-completion">Context manager __exit__() not called in a generator which does not run to completion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/core_language.html#runtime">Runtime</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#local-variables-aren-t-included-in-locals-result">Local variables aren’t included in locals() result</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#code-running-in-eval-function-doesn-t-have-access-to-local-variables">Code running in eval() function doesn’t have access to local variables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/core_language.html#import">import</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#path-attribute-of-a-package-has-a-different-type-single-string-instead-of-list-of-strings-in-micropython">__path__ attribute of a package has a different type (single string instead of list of strings) in MicroPython</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#failed-to-load-modules-are-still-registered-as-loaded">Failed to load modules are still registered as loaded</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/core_language.html#micropython-does-t-support-namespace-packages-split-across-filesystem">MicroPython does’t support namespace packages split across filesystem.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="genrst/builtin_types.html">Builtin types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#exception">Exception</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#exception-chaining-not-implemented">Exception chaining not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#user-defined-attributes-for-builtin-exceptions-are-not-supported">User-defined attributes for builtin exceptions are not supported</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#exception-in-while-loop-condition-may-have-unexpected-line-number">Exception in while loop condition may have unexpected line number</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#exception-init-method-does-not-exist">Exception.__init__ method does not exist.</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#bytearray">bytearray</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#array-slice-assignment-with-unsupported-rhs">Array slice assignment with unsupported RHS</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#bytes">bytes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#bytes-objects-support-format-method">bytes objects support .format() method</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#bytes-with-keywords-not-implemented">bytes() with keywords not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#bytes-subscription-with-step-1-not-implemented">Bytes subscription with step != 1 not implemented</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#dict">dict</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#dictionary-keys-view-does-not-behave-as-a-set">Dictionary keys view does not behave as a set.</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#float">float</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#upy-and-cpython-outputs-formats-may-differ">uPy and CPython outputs formats may differ</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#int">int</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#no-int-conversion-for-int-derived-types-available">No int conversion for int-derived types available</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#list">list</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#list-delete-with-step-1-not-implemented">List delete with step != 1 not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#list-slice-store-with-non-iterable-on-rhs-is-not-implemented">List slice-store with non-iterable on RHS is not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#list-store-with-step-1-not-implemented">List store with step != 1 not implemented</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#str">str</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#start-end-indices-such-as-str-endswith-s-start-not-implemented">Start/end indices such as str.endswith(s, start) not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#attributes-subscr-not-implemented">Attributes/subscr not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#str-with-keywords-not-implemented">str(…) with keywords not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#str-ljust-and-str-rjust-not-implemented">str.ljust() and str.rjust() not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#none-as-first-argument-for-rsplit-such-as-str-rsplit-none-n-not-implemented">None as first argument for rsplit such as str.rsplit(None, n) not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#subscript-with-step-1-is-not-yet-implemented">Subscript with step != 1 is not yet implemented</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/builtin_types.html#tuple">tuple</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/builtin_types.html#tuple-load-with-step-1-not-implemented">Tuple load with step != 1 not implemented</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="genrst/modules.html">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="genrst/modules.html#array">array</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#looking-for-integer-not-implemented">Looking for integer not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#array-deletion-not-implemented">Array deletion not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#subscript-with-step-1-is-not-yet-implemented">Subscript with step != 1 is not yet implemented</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/modules.html#builtins">builtins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#second-argument-to-next-is-not-implemented">Second argument to next() is not implemented</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/modules.html#deque">deque</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#deque-not-implemented">Deque not implemented</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/modules.html#json">json</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#json-module-does-not-throw-exception-when-object-is-not-serialisable">JSON module does not throw exception when object is not serialisable</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/modules.html#os">os</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#environ-attribute-is-not-implemented"><code class="docutils literal notranslate"><span class="pre">environ</span></code> attribute is not implemented</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#getenv-returns-actual-value-instead-of-cached-value"><code class="docutils literal notranslate"><span class="pre">getenv</span></code> returns actual value instead of cached value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#getenv-only-allows-one-argument"><code class="docutils literal notranslate"><span class="pre">getenv</span></code> only allows one argument</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/modules.html#struct">struct</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#struct-pack-with-too-few-args-not-checked-by-upy">Struct pack with too few args, not checked by uPy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#struct-pack-with-too-many-args-not-checked-by-upy">Struct pack with too many args, not checked by uPy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="genrst/modules.html#sys">sys</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genrst/modules.html#overriding-sys-stdin-sys-stdout-and-sys-stderr-not-possible">Overriding sys.stdin, sys.stdout and sys.stderr not possible</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="develop/index.html">Developing and building MicroPython</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="develop/cmodules.html">MicroPython external C modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="develop/cmodules.html#structure-of-an-external-c-module">Structure of an external C module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/cmodules.html#basic-example">Basic example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/cmodules.html#compiling-the-cmodule-into-micropython">Compiling the cmodule into MicroPython</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/cmodules.html#module-usage-in-micropython">Module usage in MicroPython</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="develop/qstr.html">MicroPython string interning</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="develop/qstr.html#compile-time-qstr-generation">Compile-time QSTR generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/qstr.html#run-time-qstr-generation">Run-time QSTR generation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="develop/natmod.html">Native machine code in .mpy files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="develop/natmod.html#supported-features-and-limitations">Supported features and limitations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/natmod.html#defining-a-native-module">Defining a native module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/natmod.html#minimal-example">Minimal example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/natmod.html#compiling-the-module">Compiling the module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/natmod.html#module-usage-in-micropython">Module usage in MicroPython</a></li>
+<li class="toctree-l3"><a class="reference internal" href="develop/natmod.html#further-examples">Further examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">MicroPython license information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyboard/quickref.html">Quick reference for the pyboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/general.html">General information about the pyboard</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/general.html#local-filesystem-and-sd-card">Local filesystem and SD card</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/general.html#boot-modes">Boot modes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/general.html#errors-flashing-leds">Errors: flashing LEDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/general.html#guide-for-using-the-pyboard-with-windows">Guide for using the pyboard with Windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/general.html#the-pyboard-hardware">The pyboard hardware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/general.html#datasheets-for-the-components-on-the-pyboard">Datasheets for the components on the pyboard</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/general.html#datasheets-for-other-components">Datasheets for other components</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/tutorial/index.html">MicroPython tutorial for the pyboard</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/intro.html">1. Introduction to the pyboard</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/intro.html#caring-for-your-pyboard">1.1. Caring for your pyboard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/intro.html#layout-of-the-pyboard">1.2. Layout of the pyboard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/intro.html#plugging-in-and-powering-on">1.3. Plugging in and powering on</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/intro.html#powering-by-an-external-power-source">1.4. Powering by an external power source</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/script.html">2. Running your first script</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/script.html#connecting-your-pyboard">2.1. Connecting your pyboard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/script.html#opening-the-pyboard-usb-drive">2.2. Opening the pyboard USB drive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/script.html#editing-main-py">2.3. Editing <code class="docutils literal notranslate"><span class="pre">main.py</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/script.html#resetting-the-pyboard">2.4. Resetting the pyboard</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/repl.html">3. Getting a MicroPython REPL prompt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/repl.html#windows">3.1. Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/repl.html#mac-os-x">3.2. Mac OS X</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/repl.html#linux">3.3. Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/repl.html#using-the-repl-prompt">3.4. Using the REPL prompt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/repl.html#resetting-the-board">3.5. Resetting the board</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/leds.html">4. Turning on LEDs and basic Python concepts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/leds.html#a-disco-on-your-pyboard">4.1. A Disco on your pyboard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/leds.html#the-special-leds">4.2. The Special LEDs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/switch.html">5. Switches, callbacks and interrupts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/switch.html#switch-callbacks">5.1. Switch callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/switch.html#technical-details-of-interrupts">5.2. Technical details of interrupts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/switch.html#further-reading">5.3. Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/accel.html">6. The accelerometer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/accel.html#using-the-accelerometer">6.1. Using the accelerometer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/accel.html#making-a-spirit-level">6.2. Making a spirit level</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/reset.html">7. Safe mode and factory reset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/reset.html#safe-mode">7.1. Safe mode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/reset.html#factory-reset-the-filesystem">7.2. Factory reset the filesystem</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/usb_mouse.html">8. Making the pyboard act as a USB mouse</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/usb_mouse.html#sending-mouse-events-by-hand">8.1. Sending mouse events by hand</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/usb_mouse.html#making-a-mouse-with-the-accelerometer">8.2. Making a mouse with the accelerometer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/usb_mouse.html#restoring-your-pyboard-to-normal">8.3. Restoring your pyboard to normal</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/timer.html">9. The Timers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/timer.html#timer-counter">9.1. Timer counter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/timer.html#timer-callbacks">9.2. Timer callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/timer.html#making-a-microsecond-counter">9.3. Making a microsecond counter</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/assembler.html">10. Inline assembler</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/assembler.html#returning-a-value">10.1. Returning a value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/assembler.html#accessing-peripherals">10.2. Accessing peripherals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/assembler.html#accepting-arguments">10.3. Accepting arguments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/assembler.html#loops">10.4. Loops</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/assembler.html#further-reading">10.5. Further reading</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/power_ctrl.html">11. Power control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/index.html#tutorials-requiring-extra-components">Tutorials requiring extra components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/servo.html">1. Controlling hobby servo motors</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/servo.html#creating-a-servo-object">1.1. Creating a Servo object</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/servo.html#continuous-rotation-servos">1.2. Continuous rotation servos</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/servo.html#calibration">1.3. Calibration</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/fading_led.html">2. Fading LEDs</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/fading_led.html#components">2.1. Components</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/fading_led.html#connecting-things-up">2.2. Connecting Things Up</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/fading_led.html#code">2.3. Code</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/fading_led.html#breathing-effect">2.4. Breathing Effect</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/fading_led.html#advanced-exercise">2.5. Advanced Exercise</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/fading_led.html#addendum">2.6. Addendum</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/lcd_skin.html">3. The LCD and touch-sensor skin</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/lcd_skin.html#using-the-lcd">3.1. Using the LCD</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/lcd_skin.html#using-the-touch-sensor">3.2. Using the touch sensor</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/amp_skin.html">4. The AMP audio skin</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/amp_skin.html#example-code">4.1. Example code</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/lcd160cr_skin.html">5. The LCD160CR skin</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/lcd160cr_skin.html#plugging-in-the-display">5.1. Plugging in the display</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/lcd160cr_skin.html#getting-the-driver">5.2. Getting the driver</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/lcd160cr_skin.html#testing-the-display">5.3. Testing the display</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/lcd160cr_skin.html#drawing-some-graphics">5.4. Drawing some graphics</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/lcd160cr_skin.html#using-the-touch-sensor">5.5. Using the touch sensor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="pyboard/tutorial/lcd160cr_skin.html#directing-the-micropython-output-to-the-display">5.6. Directing the MicroPython output to the display</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyboard/tutorial/index.html#tips-tricks-and-useful-things-to-know">Tips, tricks and useful things to know</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/debounce.html">1. Debouncing a pin input</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyboard/tutorial/pass_through.html">2. Making a UART - USB pass through</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#general-board-control">General board control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#delay-and-timing">Delay and timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#internal-leds">Internal LEDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#internal-switch">Internal switch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#pins-and-gpio">Pins and GPIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#servo-control">Servo control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#external-interrupts">External interrupts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#timers">Timers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#rtc-real-time-clock">RTC (real time clock)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#pwm-pulse-width-modulation">PWM (pulse width modulation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#adc-analog-to-digital-conversion">ADC (analog to digital conversion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#dac-digital-to-analog-conversion">DAC (digital to analog conversion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#uart-serial-bus">UART (serial bus)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#spi-bus">SPI bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#i2c-bus">I2C bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#can-bus-controller-area-network">CAN bus (controller area network)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyboard/quickref.html#internal-accelerometer">Internal accelerometer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="esp8266/quickref.html">Quick reference for the ESP8266</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/general.html">General information about the ESP8266 port</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/general.html#multitude-of-boards">Multitude of boards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/general.html#technical-specifications-and-soc-datasheets">Technical specifications and SoC datasheets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/general.html#scarcity-of-runtime-resources">Scarcity of runtime resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/general.html#boot-process">Boot process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/general.html#known-issues">Known Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/general.html#real-time-clock">Real-time clock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/general.html#sockets-and-wifi-buffers-overflow">Sockets and WiFi buffers overflow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/general.html#ssl-tls-limitations">SSL/TLS limitations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/tutorial/index.html">MicroPython tutorial for ESP8266</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/intro.html">1. Getting started with MicroPython on the ESP8266</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/intro.html#requirements">1.1. Requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/intro.html#powering-the-board">1.2. Powering the board</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/intro.html#getting-the-firmware">1.3. Getting the firmware</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/intro.html#deploying-the-firmware">1.4. Deploying the firmware</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/intro.html#serial-prompt">1.5. Serial prompt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/intro.html#wifi">1.6. WiFi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/intro.html#troubleshooting-installation-problems">1.7. Troubleshooting installation problems</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/repl.html">2. Getting a MicroPython REPL prompt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/repl.html#repl-over-the-serial-port">2.1. REPL over the serial port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/repl.html#webrepl-a-prompt-over-wifi">2.2. WebREPL - a prompt over WiFi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/repl.html#using-the-repl">2.3. Using the REPL</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="esp8266/tutorial/repl.html#line-editing">2.3.1. Line editing</a></li>
+<li class="toctree-l5"><a class="reference internal" href="esp8266/tutorial/repl.html#input-history">2.3.2. Input history</a></li>
+<li class="toctree-l5"><a class="reference internal" href="esp8266/tutorial/repl.html#tab-completion">2.3.3. Tab completion</a></li>
+<li class="toctree-l5"><a class="reference internal" href="esp8266/tutorial/repl.html#line-continuation-and-auto-indent">2.3.4. Line continuation and auto-indent</a></li>
+<li class="toctree-l5"><a class="reference internal" href="esp8266/tutorial/repl.html#paste-mode">2.3.5. Paste mode</a></li>
+<li class="toctree-l5"><a class="reference internal" href="esp8266/tutorial/repl.html#other-control-commands">2.3.6. Other control commands</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/filesystem.html">3. The internal filesystem</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/filesystem.html#creating-and-reading-files">3.1. Creating and reading files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/filesystem.html#listing-file-and-more">3.2. Listing file and more</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/filesystem.html#start-up-scripts">3.3. Start up scripts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/filesystem.html#accessing-the-filesystem-via-webrepl">3.4. Accessing the filesystem via WebREPL</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/network_basics.html">4. Network basics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/network_basics.html#configuration-of-the-wifi">4.1. Configuration of the WiFi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/network_basics.html#sockets">4.2. Sockets</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/network_tcp.html">5. Network - TCP sockets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/network_tcp.html#star-wars-asciimation">5.1. Star Wars Asciimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/network_tcp.html#http-get-request">5.2. HTTP GET request</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/network_tcp.html#simple-http-server">5.3. Simple HTTP server</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/pins.html">6. GPIO Pins</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/pins.html#external-interrupts">6.1. External interrupts</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/pwm.html">7. Pulse Width Modulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/pwm.html#fading-an-led">7.1. Fading an LED</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/pwm.html#control-a-hobby-servo">7.2. Control a hobby servo</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/adc.html">8. Analog to Digital Conversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/powerctrl.html">9. Power control</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/powerctrl.html#changing-the-cpu-frequency">9.1. Changing the CPU frequency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="esp8266/tutorial/powerctrl.html#deep-sleep-mode">9.2. Deep-sleep mode</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/onewire.html">10. Controlling 1-wire devices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/neopixel.html">11. Controlling NeoPixels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/apa102.html">12. Controlling APA102 LEDs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/dht.html">13. Temperature and Humidity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp8266/tutorial/nextsteps.html">14. Next steps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#installing-micropython">Installing MicroPython</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#general-board-control">General board control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#networking">Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#delay-and-timing">Delay and timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#timers">Timers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#pins-and-gpio">Pins and GPIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#pwm-pulse-width-modulation">PWM (pulse width modulation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#adc-analog-to-digital-conversion">ADC (analog to digital conversion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#software-spi-bus">Software SPI bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#hardware-spi-bus">Hardware SPI bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#i2c-bus">I2C bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#real-time-clock-rtc">Real time clock (RTC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#deep-sleep-mode">Deep-sleep mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#onewire-driver">OneWire driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#neopixel-driver">NeoPixel driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#apa102-driver">APA102 driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#dht-driver">DHT driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp8266/quickref.html#webrepl-web-browser-interactive-prompt">WebREPL (web browser interactive prompt)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="esp32/quickref.html">Quick reference for the ESP32</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="esp32/general.html">General information about the ESP32 port</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="esp32/general.html#multitude-of-boards">Multitude of boards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp32/general.html#technical-specifications-and-soc-datasheets">Technical specifications and SoC datasheets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/tutorial/intro.html">Getting started with MicroPython on the ESP32</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="esp32/tutorial/intro.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp32/tutorial/intro.html#powering-the-board">Powering the board</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp32/tutorial/intro.html#getting-the-firmware">Getting the firmware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp32/tutorial/intro.html#deploying-the-firmware">Deploying the firmware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp32/tutorial/intro.html#serial-prompt">Serial prompt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="esp32/tutorial/intro.html#troubleshooting-installation-problems">Troubleshooting installation problems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#installing-micropython">Installing MicroPython</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#general-board-control">General board control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#networking">Networking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#delay-and-timing">Delay and timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#timers">Timers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#pins-and-gpio">Pins and GPIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#pwm-pulse-width-modulation">PWM (pulse width modulation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#adc-analog-to-digital-conversion">ADC (analog to digital conversion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#software-spi-bus">Software SPI bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#hardware-spi-bus">Hardware SPI bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#i2c-bus">I2C bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#real-time-clock-rtc">Real time clock (RTC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#deep-sleep-mode">Deep-sleep mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#rmt">RMT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#onewire-driver">OneWire driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#neopixel-driver">NeoPixel driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#capacitive-touch">Capacitive touch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#dht-driver">DHT driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32/quickref.html#webrepl-web-browser-interactive-prompt">WebREPL (web browser interactive prompt)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wipy/quickref.html">Quick reference for the WiPy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wipy/general.html">General information about the WiPy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#no-floating-point-support">No floating point support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#before-applying-power">Before applying power</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#wlan-default-behaviour">WLAN default behaviour</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#telnet-repl">Telnet REPL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#local-file-system-and-ftp-access">Local file system and FTP access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#filezilla-settings">FileZilla settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#upgrading-the-firmware-over-the-air">Upgrading the firmware Over The Air</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#boot-modes-and-safe-boot">Boot modes and safe boot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#the-heartbeat-led">The heartbeat LED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#details-on-sleep-modes">Details on sleep modes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#additional-details-for-machine-pin">Additional details for machine.Pin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#additional-details-for-machine-i2c">Additional details for machine.I2C</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/general.html#known-issues">Known issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wipy/general.html#incompatible-way-to-create-ssl-sockets">Incompatible way to create SSL sockets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/general.html#incompatibilities-in-uhashlib-module">Incompatibilities in uhashlib module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/general.html#unrelated-function-in-machine-module">Unrelated function in machine module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/general.html#adhoc-way-to-control-telnet-ftp-server-via-network-module">Adhoc way to control telnet/FTP server via network module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/general.html#adhoc-vfs-like-support">Adhoc VFS-like support</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/tutorial/index.html">WiPy tutorials and examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wipy/tutorial/intro.html">1. Introduction to the WiPy</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/intro.html#caring-for-your-wipy-and-expansion-board">1.1. Caring for your WiPy and expansion board</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/intro.html#plugging-into-the-expansion-board-and-powering-on">1.2. Plugging into the expansion board and powering on</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/intro.html#expansion-board-hardware-guide">1.3. Expansion board hardware guide</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/intro.html#powering-by-an-external-power-source">1.4. Powering by an external power source</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/intro.html#performing-firmware-upgrades">1.5. Performing firmware upgrades</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/tutorial/repl.html">2. Getting a MicroPython REPL prompt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/repl.html#windows">2.1. Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/repl.html#mac-os-x">2.2. Mac OS X</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/repl.html#linux">2.3. Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/repl.html#using-the-repl-prompt">2.4. Using the REPL prompt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/repl.html#resetting-the-board">2.5. Resetting the board</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/tutorial/blynk.html">3. Getting started with Blynk and the WiPy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/tutorial/wlan.html">4. WLAN step by step</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/wlan.html#connecting-to-your-home-router">4.1. Connecting to your home router</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/wlan.html#assigning-a-static-ip-address-when-booting">4.2. Assigning a static IP address when booting</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/tutorial/timer.html">5. Hardware timers</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/timer.html#additional-constants-for-timer-class">5.1. Additional constants for Timer class</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wipy/tutorial/reset.html">6. Reset and boot modes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/reset.html#safe-boot">6.1. Safe boot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wipy/tutorial/reset.html#factory-reset-the-filesystem">6.2. Factory reset the filesystem</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#general-board-control-including-sleep-modes">General board control (including sleep modes)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#pins-and-gpio">Pins and GPIO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#timers">Timers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#pwm-pulse-width-modulation">PWM (pulse width modulation)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#adc-analog-to-digital-conversion">ADC (analog to digital conversion)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#uart-serial-bus">UART (serial bus)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#spi-bus">SPI bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#i2c-bus">I2C bus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#watchdog-timer-wdt">Watchdog timer (WDT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#real-time-clock-rtc">Real time clock (RTC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#sd-card">SD card</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#wlan-wifi">WLAN (WiFi)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#telnet-and-ftp-server">Telnet and FTP server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wipy/quickref.html#heart-beat-led">Heart beat LED</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unix/quickref.html">Quick reference for the UNIX and Windows ports</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unix/quickref.html#command-line-options">Command line options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unix/quickref.html#environment-variables">Environment variables</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="library/index.html"
+                        title="next chapter">MicroPython libraries</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="library/index.html" title="MicroPython libraries"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Sphinx-Themes template 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

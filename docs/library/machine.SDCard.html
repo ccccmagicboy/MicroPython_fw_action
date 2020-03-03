@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>class SDCard – secure digital memory card &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="micropython – access and control MicroPython internals" href="micropython.html" />
+    <link rel="prev" title="class SD – secure digital memory card (cc3200 port only)" href="machine.SD.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="micropython.html" title="micropython – access and control MicroPython internals"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="machine.SD.html" title="class SD – secure digital memory card (cc3200 port only)"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="machine.html" accesskey="U"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code> — functions related to the hardware</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="class-sdcard-secure-digital-memory-card">
+<span id="machine-sdcard"></span><h1>class SDCard – secure digital memory card<a class="headerlink" href="#class-sdcard-secure-digital-memory-card" title="Permalink to this headline">¶</a></h1>
+<p>SD cards are one of the most common small form factor removable storage media.
+SD cards come in a variety of sizes and physical form factors. MMC cards are
+similar removable storage devices while eMMC devices are electrically similar
+storage devices designed to be embedded into other systems. All three form
+share a common protocol for communication with their host system and high-level
+support looks the same for them all. As such in MicroPython they are implemented
+in a single class called <a class="reference internal" href="#machine.SDCard" title="machine.SDCard"><code class="xref py py-class docutils literal notranslate"><span class="pre">machine.SDCard</span></code></a> .</p>
+<p>Both SD and MMC interfaces support being accessed with a variety of bus widths.
+When being accessed with a 1-bit wide interface they can be accessed using the
+SPI protocol. Different MicroPython hardware platforms support different widths
+and pin configurations but for most platforms there is a standard configuration
+for any given hardware. In general constructing an <code class="docutils literal notranslate"><span class="pre">SDCard</span></code> object with without
+passing any parameters will initialise the interface to the default card slot
+for the current hardware. The arguments listed below represent the common
+arguments that might need to be set in order to use either a non-standard slot
+or a non-standard pin assignment. The exact subset of arguments supported will
+vary from platform to platform.</p>
+<dl class="class">
+<dt id="machine.SDCard">
+<em class="property">class </em><code class="sig-prename descclassname">machine.</code><code class="sig-name descname">SDCard</code><span class="sig-paren">(</span><em class="sig-param">slot=1</em>, <em class="sig-param">width=1</em>, <em class="sig-param">cd=None</em>, <em class="sig-param">wp=None</em>, <em class="sig-param">sck=None</em>, <em class="sig-param">miso=None</em>, <em class="sig-param">mosi=None</em>, <em class="sig-param">cs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.SDCard" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides access to SD or MMC storage cards using either
+a dedicated SD/MMC interface hardware or through an SPI channel.
+The class implements the block protocol defined by <a class="reference internal" href="uos.html#uos.AbstractBlockDev" title="uos.AbstractBlockDev"><code class="xref py py-class docutils literal notranslate"><span class="pre">uos.AbstractBlockDev</span></code></a>.
+This allows the mounting of an SD card to be as simple as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">uos</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="n">machine</span><span class="o">.</span><span class="n">SDCard</span><span class="p">(),</span> <span class="s2">&quot;/sd&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The constructor takes the following parameters:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>slot</em> selects which of the available interfaces to use. Leaving this
+unset will select the default interface.</p></li>
+<li><p><em>width</em> selects the bus width for the SD/MMC interface.</p></li>
+<li><p><em>cd</em> can be used to specify a card-detect pin.</p></li>
+<li><p><em>wp</em> can be used to specify a write-protect pin.</p></li>
+<li><p><em>sck</em> can be used to specify an SPI clock pin.</p></li>
+<li><p><em>miso</em> can be used to specify an SPI miso pin.</p></li>
+<li><p><em>mosi</em> can be used to specify an SPI mosi pin.</p></li>
+<li><p><em>cs</em> can be used to specify an SPI chip select pin.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<div class="section" id="implementation-specific-details">
+<h2>Implementation-specific details<a class="headerlink" href="#implementation-specific-details" title="Permalink to this headline">¶</a></h2>
+<p>Different implementations of the <code class="docutils literal notranslate"><span class="pre">SDCard</span></code> class on different hardware support
+varying subsets of the options above.</p>
+<div class="section" id="pyboard">
+<h3>PyBoard<a class="headerlink" href="#pyboard" title="Permalink to this headline">¶</a></h3>
+<p>The standard PyBoard has just one slot. No arguments are necessary or supported.</p>
+</div>
+<div class="section" id="esp32">
+<h3>ESP32<a class="headerlink" href="#esp32" title="Permalink to this headline">¶</a></h3>
+<p>The ESP32 provides two channels of SD/MMC hardware and also supports
+access to SD Cards through either of the two SPI ports that are
+generally available to the user. As a result the <em>slot</em> argument can
+take a value between 0 and 3, inclusive. Slots 0 and 1 use the
+built-in SD/MMC hardware while slots 2 and 3 use the SPI ports. Slot 0
+supports 1, 4 or 8-bit wide access while slot 1 supports 1 or 4-bit
+access; the SPI slots only support 1-bit access.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Slot 0 is used to communicate with on-board flash memory
+on most ESP32 modules and so will be unavailable to the
+user.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most ESP32 modules that provide an SD card slot using the
+dedicated hardware only wire up 1 data pin, so the default
+value for <em>width</em> is 1.</p>
+</div>
+</div></blockquote>
+<p>The pins used by the dedicated SD/MMC hardware are fixed. The pins
+used by the SPI hardware can be reassigned.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If any of the SPI signals are remapped then all of the SPI
+signals will pass through a GPIO multiplexer unit which
+can limit the performance of high frequency signals. Since
+the normal operating speed for SD cards is 40MHz this can
+cause problems on some cards.</p>
+</div>
+</div></blockquote>
+<p>The default (and preferred) pin assignment are as follows:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Slot</p></th>
+<th class="head"><p>0</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+</tr>
+<tr class="row-even"><th class="head"><p>Signal</p></th>
+<th class="head"><p>Pin</p></th>
+<th class="head"><p>Pin</p></th>
+<th class="head"><p>Pin</p></th>
+<th class="head"><p>Pin</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-odd"><td><p>sck</p></td>
+<td><p>6</p></td>
+<td><p>14</p></td>
+<td><p>18</p></td>
+<td><p>14</p></td>
+</tr>
+<tr class="row-even"><td><p>cmd</p></td>
+<td><p>11</p></td>
+<td><p>15</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>cs</p></td>
+<td></td>
+<td></td>
+<td><p>5</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-even"><td><p>miso</p></td>
+<td></td>
+<td></td>
+<td><p>19</p></td>
+<td><p>12</p></td>
+</tr>
+<tr class="row-odd"><td><p>mosi</p></td>
+<td></td>
+<td></td>
+<td><p>23</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-even"><td><p>D0</p></td>
+<td><p>7</p></td>
+<td><p>2</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>D1</p></td>
+<td><p>8</p></td>
+<td><p>4</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>D2</p></td>
+<td><p>9</p></td>
+<td><p>12</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>D3</p></td>
+<td><p>10</p></td>
+<td><p>13</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>D4</p></td>
+<td><p>16</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>D5</p></td>
+<td><p>17</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>D6</p></td>
+<td><p>5</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>D7</p></td>
+<td><p>18</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="cc3200">
+<h3>cc3200<a class="headerlink" href="#cc3200" title="Permalink to this headline">¶</a></h3>
+<p>You can set the pins used for SPI access by passing a tuple as the
+<em>pins</em> argument.</p>
+<p><em>Note:</em> The current cc3200 SD card implementation names the this class
+<a class="reference internal" href="machine.SD.html#machine.SD" title="machine.SD"><code class="xref py py-class docutils literal notranslate"><span class="pre">machine.SD</span></code></a> rather than <a class="reference internal" href="#machine.SDCard" title="machine.SDCard"><code class="xref py py-class docutils literal notranslate"><span class="pre">machine.SDCard</span></code></a> .</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">class SDCard – secure digital memory card</a><ul>
+<li><a class="reference internal" href="#implementation-specific-details">Implementation-specific details</a><ul>
+<li><a class="reference internal" href="#pyboard">PyBoard</a></li>
+<li><a class="reference internal" href="#esp32">ESP32</a></li>
+<li><a class="reference internal" href="#cc3200">cc3200</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="machine.SD.html"
+                        title="previous chapter">class SD – secure digital memory card (cc3200 port only)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="micropython.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">micropython</span></code> – access and control MicroPython internals</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/machine.SDCard.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="micropython.html" title="micropython – access and control MicroPython internals"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="machine.SD.html" title="class SD – secure digital memory card (cc3200 port only)"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="machine.html" ><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code> — functions related to the hardware</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

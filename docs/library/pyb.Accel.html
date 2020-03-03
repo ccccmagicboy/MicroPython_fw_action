@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>class Accel – accelerometer control &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="class ADC – analog to digital conversion" href="pyb.ADC.html" />
+    <link rel="prev" title="pyb — functions related to the board" href="pyb.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyb.ADC.html" title="class ADC – analog to digital conversion"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyb.html" title="pyb — functions related to the board"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="pyb.html" accesskey="U"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyb</span></code> — functions related to the board</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="class-accel-accelerometer-control">
+<span id="pyb-accel"></span><h1>class Accel – accelerometer control<a class="headerlink" href="#class-accel-accelerometer-control" title="Permalink to this headline">¶</a></h1>
+<p>Accel is an object that controls the accelerometer.  Example usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">accel</span> <span class="o">=</span> <span class="n">pyb</span><span class="o">.</span><span class="n">Accel</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">accel</span><span class="o">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">accel</span><span class="o">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">accel</span><span class="o">.</span><span class="n">z</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Raw values are between -32 and 31.</p>
+<div class="section" id="constructors">
+<h2>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyb.pyb.Accel">
+<em class="property">class </em><code class="sig-prename descclassname">pyb.</code><code class="sig-name descname">Accel</code><a class="headerlink" href="#pyb.pyb.Accel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return an accelerometer object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="pyb.Accel.filtered_xyz">
+<code class="sig-prename descclassname">Accel.</code><code class="sig-name descname">filtered_xyz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyb.Accel.filtered_xyz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a 3-tuple of filtered x, y and z values.</p>
+<p>Implementation note: this method is currently implemented as taking the
+sum of 4 samples, sampled from the 3 previous calls to this function along
+with the sample from the current call.  Returned values are therefore 4
+times the size of what they would be from the raw x(), y() and z() calls.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyb.Accel.tilt">
+<code class="sig-prename descclassname">Accel.</code><code class="sig-name descname">tilt</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyb.Accel.tilt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tilt register.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyb.Accel.x">
+<code class="sig-prename descclassname">Accel.</code><code class="sig-name descname">x</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyb.Accel.x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the x-axis value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyb.Accel.y">
+<code class="sig-prename descclassname">Accel.</code><code class="sig-name descname">y</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyb.Accel.y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the y-axis value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyb.Accel.z">
+<code class="sig-prename descclassname">Accel.</code><code class="sig-name descname">z</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyb.Accel.z" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the z-axis value.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="hardware-note">
+<h2>Hardware Note<a class="headerlink" href="#hardware-note" title="Permalink to this headline">¶</a></h2>
+<p>The accelerometer uses I2C bus 1 to communicate with the processor. Consequently
+when readings are being taken pins X9 and X10 should be unused (other than for
+I2C). Other devices using those pins, and which therefore cannot be used
+concurrently, are UART 1 and Timer 4 channels 1 and 2.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">class Accel – accelerometer control</a><ul>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+<li><a class="reference internal" href="#hardware-note">Hardware Note</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyb.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyb</span></code> — functions related to the board</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyb.ADC.html"
+                        title="next chapter">class ADC – analog to digital conversion</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/pyb.Accel.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pyb.ADC.html" title="class ADC – analog to digital conversion"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyb.html" title="pyb — functions related to the board"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="pyb.html" ><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyb</span></code> — functions related to the board</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

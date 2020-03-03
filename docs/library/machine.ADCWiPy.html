@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>class ADCWiPy – analog to digital conversion &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="class TimerWiPy – control hardware timers" href="machine.TimerWiPy.html" />
+    <link rel="prev" title="wipy – WiPy specific features" href="wipy.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="machine.TimerWiPy.html" title="class TimerWiPy – control hardware timers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="wipy.html" title="wipy – WiPy specific features"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="class-adcwipy-analog-to-digital-conversion">
+<span id="machine-adcwipy"></span><h1>class ADCWiPy – analog to digital conversion<a class="headerlink" href="#class-adcwipy-analog-to-digital-conversion" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class is a non-standard ADC implementation for the WiPy.
+It is available simply as <code class="docutils literal notranslate"><span class="pre">machine.ADC</span></code> on the WiPy but is named in the
+documentation below as <code class="docutils literal notranslate"><span class="pre">machine.ADCWiPy</span></code> to distinguish it from the
+more general <a class="reference internal" href="machine.ADC.html#machine-adc"><span class="std std-ref">machine.ADC</span></a> class.</p>
+</div>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
+
+<span class="n">adc</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">ADC</span><span class="p">()</span>             <span class="c1"># create an ADC object</span>
+<span class="n">apin</span> <span class="o">=</span> <span class="n">adc</span><span class="o">.</span><span class="n">channel</span><span class="p">(</span><span class="n">pin</span><span class="o">=</span><span class="s1">&#39;GP3&#39;</span><span class="p">)</span>   <span class="c1"># create an analog pin on GP3</span>
+<span class="n">val</span> <span class="o">=</span> <span class="n">apin</span><span class="p">()</span>                    <span class="c1"># read an analog value</span>
+</pre></div>
+</div>
+<div class="section" id="constructors">
+<h2>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="machine.ADCWiPy">
+<em class="property">class </em><code class="sig-prename descclassname">machine.</code><code class="sig-name descname">ADCWiPy</code><span class="sig-paren">(</span><em class="sig-param">id=0</em>, <em class="sig-param">*</em>, <em class="sig-param">bits=12</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.ADCWiPy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an ADC object associated with the given pin.
+This allows you to then read analog values on that pin.
+For more info check the <a class="reference external" href="https://raw.githubusercontent.com/wipy/wipy/master/docs/PinOUT.png">pinout and alternate functions
+table.</a></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>ADC pin input range is 0-1.4V (being 1.8V the absolute maximum that it
+can withstand). When GP2, GP3, GP4 or GP5 are remapped to the
+ADC block, 1.8 V is the maximum. If these pins are used in digital mode,
+then the maximum allowed input is 3.6V.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<dl class="method">
+<dt id="machine.ADCWiPy.channel">
+<code class="sig-prename descclassname">ADCWiPy.</code><code class="sig-name descname">channel</code><span class="sig-paren">(</span><em class="sig-param">id</em>, <em class="sig-param">*</em>, <em class="sig-param">pin</em><span class="sig-paren">)</span><a class="headerlink" href="#machine.ADCWiPy.channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an analog pin. If only channel ID is given, the correct pin will
+be selected. Alternatively, only the pin can be passed and the correct
+channel will be selected. Examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># all of these are equivalent and enable ADC channel 1 on GP3</span>
+<span class="n">apin</span> <span class="o">=</span> <span class="n">adc</span><span class="o">.</span><span class="n">channel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">apin</span> <span class="o">=</span> <span class="n">adc</span><span class="o">.</span><span class="n">channel</span><span class="p">(</span><span class="n">pin</span><span class="o">=</span><span class="s1">&#39;GP3&#39;</span><span class="p">)</span>
+<span class="n">apin</span> <span class="o">=</span> <span class="n">adc</span><span class="o">.</span><span class="n">channel</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pin</span><span class="o">=</span><span class="s1">&#39;GP3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.ADCWiPy.init">
+<code class="sig-prename descclassname">ADCWiPy.</code><code class="sig-name descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.ADCWiPy.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the ADC block.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.ADCWiPy.deinit">
+<code class="sig-prename descclassname">ADCWiPy.</code><code class="sig-name descname">deinit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.ADCWiPy.deinit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable the ADC block.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="class-adcchannel-read-analog-values-from-internal-or-external-sources">
+<h1>class ADCChannel — read analog values from internal or external sources<a class="headerlink" href="#class-adcchannel-read-analog-values-from-internal-or-external-sources" title="Permalink to this headline">¶</a></h1>
+<p>ADC channels can be connected to internal points of the MCU or to GPIO pins.
+ADC channels are created using the ADC.channel method.</p>
+<dl class="method">
+<dt id="machine.adcchannel">
+<code class="sig-prename descclassname">machine.</code><code class="sig-name descname">adcchannel</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.adcchannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fast method to read the channel value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.adcchannel.value">
+<code class="sig-prename descclassname">adcchannel.</code><code class="sig-name descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.adcchannel.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the channel value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.adcchannel.init">
+<code class="sig-prename descclassname">adcchannel.</code><code class="sig-name descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.adcchannel.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Re-init (and effectively enable) the ADC channel.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="machine.adcchannel.deinit">
+<code class="sig-prename descclassname">adcchannel.</code><code class="sig-name descname">deinit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#machine.adcchannel.deinit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable the ADC channel.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">class ADCWiPy – analog to digital conversion</a><ul>
+<li><a class="reference internal" href="#constructors">Constructors</a></li>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#class-adcchannel-read-analog-values-from-internal-or-external-sources">class ADCChannel — read analog values from internal or external sources</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="wipy.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wipy</span></code> – WiPy specific features</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="machine.TimerWiPy.html"
+                        title="next chapter">class TimerWiPy – control hardware timers</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/machine.ADCWiPy.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="machine.TimerWiPy.html" title="class TimerWiPy – control hardware timers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="wipy.html" title="wipy – WiPy specific features"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >MicroPython libraries</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>

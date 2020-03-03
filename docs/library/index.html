@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>MicroPython libraries &#8212; Sphinx-Themes template 1 documentation</title>
+    <link rel="stylesheet" href="../_static/groundwork.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Builtin functions and exceptions" href="builtins.html" />
+    <link rel="prev" title="MicroPython documentation and references" href="../index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="builtins.html" title="Builtin functions and exceptions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="MicroPython documentation and references"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="micropython-libraries">
+<span id="micropython-lib"></span><h1>MicroPython libraries<a class="headerlink" href="#micropython-libraries" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Important summary of this section</p>
+<ul class="simple">
+<li><p>MicroPython implements a subset of Python functionality for each module.</p></li>
+<li><p>To ease extensibility, MicroPython versions of standard Python modules
+usually have <code class="docutils literal notranslate"><span class="pre">u</span></code> (“micro”) prefix.</p></li>
+<li><p>Any particular MicroPython variant or port may miss any feature/function
+described in this general documentation (due to resource constraints or
+other limitations).</p></li>
+</ul>
+</div>
+<p>This chapter describes modules (function and class libraries) which are built
+into MicroPython. There are a few categories of such modules:</p>
+<ul class="simple">
+<li><p>Modules which implement a subset of standard Python functionality and are not
+intended to be extended by the user.</p></li>
+<li><p>Modules which implement a subset of Python functionality, with a provision
+for extension by the user (via Python code).</p></li>
+<li><p>Modules which implement MicroPython extensions to the Python standard libraries.</p></li>
+<li><p>Modules specific to a particular <cite>MicroPython port</cite> and thus not portable.</p></li>
+</ul>
+<p>Note about the availability of the modules and their contents: This documentation
+in general aspires to describe all modules and functions/classes which are
+implemented in MicroPython project. However, MicroPython is highly configurable, and
+each port to a particular board/embedded system makes available only a subset
+of MicroPython libraries. For officially supported ports, there is an effort
+to either filter out non-applicable items, or mark individual descriptions
+with “Availability:” clauses describing which ports provide a given feature.</p>
+<p>With that in mind, please still be warned that some functions/classes
+in a module (or even the entire module) described in this documentation <strong>may be
+unavailable</strong> in a particular build of MicroPython on a particular system. The
+best place to find general information of the availability/non-availability
+of a particular feature is the “General Information” section which contains
+information pertaining to a specific <cite>MicroPython port</cite>.</p>
+<p>On some ports you are able to discover the available, built-in libraries that
+can be imported by entering the following at the REPL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="s1">&#39;modules&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Beyond the built-in libraries described in this documentation, many more
+modules from the Python standard library, as well as further MicroPython
+extensions to it, can be found in <cite>micropython-lib</cite>.</p>
+<div class="section" id="python-standard-libraries-and-micro-libraries">
+<h2>Python standard libraries and micro-libraries<a class="headerlink" href="#python-standard-libraries-and-micro-libraries" title="Permalink to this headline">¶</a></h2>
+<p>The following standard Python libraries have been “micro-ified” to fit in with
+the philosophy of MicroPython.  They provide the core functionality of that
+module and are intended to be a drop-in replacement for the standard Python
+library.  Some modules below use a standard Python name, but prefixed with “u”,
+e.g. <code class="docutils literal notranslate"><span class="pre">ujson</span></code> instead of <code class="docutils literal notranslate"><span class="pre">json</span></code>. This is to signify that such a module is
+micro-library, i.e. implements only a subset of CPython module functionality.
+By naming them differently, a user has a choice to write a Python-level module
+to extend functionality for better compatibility with CPython (indeed, this is
+what done by the <cite>micropython-lib</cite> project mentioned above).</p>
+<p>On some embedded platforms, where it may be cumbersome to add Python-level
+wrapper modules to achieve naming compatibility with CPython, micro-modules
+are available both by their u-name, and also by their non-u-name.  The
+non-u-name can be overridden by a file of that name in your library path (<code class="docutils literal notranslate"><span class="pre">sys.path</span></code>).
+For example, <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">json</span></code> will first search for a file <code class="docutils literal notranslate"><span class="pre">json.py</span></code> (or package
+directory <code class="docutils literal notranslate"><span class="pre">json</span></code>) and load that module if it is found.  If nothing is found,
+it will fallback to loading the built-in <code class="docutils literal notranslate"><span class="pre">ujson</span></code> module.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="builtins.html">Builtin functions and exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> – mathematical functions for complex numbers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> – control the garbage collector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> – mathematical functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> – system specific functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uarray.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uarray</span></code> – arrays of numeric data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubinascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ubinascii</span></code> – binary/ASCII conversions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ucollections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ucollections</span></code> – collection and container types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uerrno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uerrno</span></code> – system error codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uhashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uhashlib</span></code> – hashing algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uheapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uheapq</span></code> – heap queue algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uio</span></code> – input/output streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ujson.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ujson</span></code> – JSON encoding and decoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uos.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uos</span></code> – basic “operating system” services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ure.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ure</span></code> – simple regular expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uselect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uselect</span></code> – wait for events on a set of streams</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usocket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">usocket</span></code> – socket module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ussl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ussl</span></code> – SSL/TLS module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ustruct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ustruct</span></code> – pack and unpack primitive data types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">utime</span></code> – time related functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uzlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uzlib</span></code> – zlib decompression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> – multithreading support</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="micropython-specific-libraries">
+<h2>MicroPython-specific libraries<a class="headerlink" href="#micropython-specific-libraries" title="Permalink to this headline">¶</a></h2>
+<p>Functionality specific to the MicroPython implementation is available in
+the following libraries.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="btree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">btree</span></code> – simple BTree database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="framebuf.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">framebuf</span></code> — frame buffer manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code> — functions related to the hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="micropython.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">micropython</span></code> – access and control MicroPython internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">network</span></code> — network configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubluetooth.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ubluetooth</span></code> — low-level Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ucryptolib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ucryptolib</span></code> – cryptographic ciphers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uctypes</span></code> – access binary data in a structured way</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="port-specific-libraries">
+<h2>Port-specific libraries<a class="headerlink" href="#port-specific-libraries" title="Permalink to this headline">¶</a></h2>
+<p>In some cases the following port/board-specific libraries have functions or
+classes similar to those in the <a class="reference internal" href="machine.html#module-machine" title="machine: functions related to the hardware"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code></a> library.  Where this occurs, the
+entry in the port specific library exposes hardware functionality unique to
+that platform.</p>
+<p>To write portable code use functions and classes from the <a class="reference internal" href="machine.html#module-machine" title="machine: functions related to the hardware"><code class="xref py py-mod docutils literal notranslate"><span class="pre">machine</span></code></a> module.
+To access platform-specific hardware use the appropriate library, e.g.
+<a class="reference internal" href="pyb.html#module-pyb" title="pyb: functions related to the board"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyb</span></code></a> in the case of the Pyboard.</p>
+</div>
+<div class="section" id="libraries-specific-to-the-pyboard">
+<h2>Libraries specific to the pyboard<a class="headerlink" href="#libraries-specific-to-the-pyboard" title="Permalink to this headline">¶</a></h2>
+<p>The following libraries are specific to the pyboard.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyb</span></code> — functions related to the board</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyb.html#time-related-functions">Time related functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyb.html#reset-related-functions">Reset related functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyb.html#interrupt-related-functions">Interrupt related functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyb.html#power-related-functions">Power related functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyb.html#miscellaneous-functions">Miscellaneous functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyb.html#classes">Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lcd160cr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lcd160cr</span></code> — control of LCD160CR display</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#class-lcd160cr">class LCD160CR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#constructors">Constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#static-methods">Static methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#instance-members">Instance members</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#setup-commands">Setup commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#pixel-access-methods">Pixel access methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#drawing-text">Drawing text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#drawing-primitive-shapes">Drawing primitive shapes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#touch-screen-methods">Touch screen methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#advanced-commands">Advanced commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lcd160cr.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="libraries-specific-to-the-wipy">
+<h2>Libraries specific to the WiPy<a class="headerlink" href="#libraries-specific-to-the-wipy" title="Permalink to this headline">¶</a></h2>
+<p>The following libraries and classes are specific to the WiPy.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="wipy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wipy</span></code> – WiPy specific features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wipy.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="machine.ADCWiPy.html">class ADCWiPy – analog to digital conversion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="machine.ADCWiPy.html#constructors">Constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine.ADCWiPy.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="machine.ADCWiPy.html#class-adcchannel-read-analog-values-from-internal-or-external-sources">class ADCChannel — read analog values from internal or external sources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="machine.TimerWiPy.html">class TimerWiPy – control hardware timers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="machine.TimerWiPy.html#constructors">Constructors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine.TimerWiPy.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="machine.TimerWiPy.html#class-timerchannel-setup-a-channel-for-a-timer">class TimerChannel — setup a channel for a timer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="machine.TimerWiPy.html#id1">Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="machine.TimerWiPy.html#constants">Constants</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="libraries-specific-to-the-esp8266-and-esp32">
+<h2>Libraries specific to the ESP8266 and ESP32<a class="headerlink" href="#libraries-specific-to-the-esp8266-and-esp32" title="Permalink to this headline">¶</a></h2>
+<p>The following libraries are specific to the ESP8266 and ESP32.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="esp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">esp</span></code> — functions related to the ESP8266 and ESP32</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="esp.html#functions">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="esp32.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">esp32</span></code> — functionality specific to the ESP32</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="esp32.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32.html#flash-partitions">Flash partitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32.html#rmt">RMT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32.html#ultra-low-power-co-processor">Ultra-Low-Power co-processor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="esp32.html#id1">Constants</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MicroPython libraries</a><ul>
+<li><a class="reference internal" href="#python-standard-libraries-and-micro-libraries">Python standard libraries and micro-libraries</a></li>
+<li><a class="reference internal" href="#micropython-specific-libraries">MicroPython-specific libraries</a></li>
+<li><a class="reference internal" href="#port-specific-libraries">Port-specific libraries</a></li>
+<li><a class="reference internal" href="#libraries-specific-to-the-pyboard">Libraries specific to the pyboard</a></li>
+<li><a class="reference internal" href="#libraries-specific-to-the-wipy">Libraries specific to the WiPy</a></li>
+<li><a class="reference internal" href="#libraries-specific-to-the-esp8266-and-esp32">Libraries specific to the ESP8266 and ESP32</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">MicroPython documentation and references</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="builtins.html"
+                        title="next chapter">Builtin functions and exceptions</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/library/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="builtins.html" title="Builtin functions and exceptions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="MicroPython documentation and references"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Sphinx-Themes template 1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, sphinx-themes.org.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.
+    </div>
+  </body>
+</html>
