@@ -41,8 +41,8 @@ env:
   TZ: Asia/Shanghai
   ADD_CUSTOM_BOARD: true  
   CUSTOM_FACTORY_RESET: true  
-  CUSTOM_MPCONFIGPORT: false
-  ADD_MPY_FROZEN_MODULES: false
+  CUSTOM_MPCONFIGPORT: true
+  ADD_MPY_FROZEN_MODULES: true
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
   ADD_PR: true
@@ -108,7 +108,7 @@ jobs:
       run: |
         git clone --recursive $REPO_URL -b $REPO_BRANCH my_micropython
        
-    - name: Checkout
+    - name: Checkout for tag
       working-directory: ./my_micropython
       if: env.USB_DETACHED_HEAD == 'true'
       run: |
@@ -120,13 +120,21 @@ jobs:
       run: |
         echo "0000"           
 
-    - name: Clone the ulab external c modules
+    - name: Clone the ulab external c modules - https://github.com/v923z/micropython-ulab
       working-directory: ./c_modules
       run: |
         git clone https://github.com/v923z/micropython-ulab.git ulab
         mkdir -p ./ESP32/ulab
         cp -R ./ulab/code/. ./ESP32/ulab
         ls -al ./ESP32/ulab        
+        
+    - name: Clone the ST7789 external c modules - https://github.com/devbis/st7789_mpy
+      working-directory: ./c_modules
+      run: |
+        git clone git clone https://github.com/devbis/st7789_mpy.git
+        mkdir -p ./ESP32/st7789
+        cp -R ./st7789_mpy/st7789/. ./ESP32/st7789
+        ls -al ./ESP32/st7789                
         
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
@@ -151,6 +159,7 @@ jobs:
       if: env.CUSTOM_MPCONFIGPORT == 'true'
       working-directory: ./my_micropython/ports/esp32/
       run: |
+        echo "#define MODULE_ST7789_ENABLED (1)" >> mpconfigport.h
         echo "#define MODULE_ULAB_ENABLED (1)" >> mpconfigport.h
         echo "#define MODULE_EXAMPLE_ENABLED (1)" >> mpconfigport.h
         echo "#define MODULE_HELLO_ENABLED (1)" >> mpconfigport.h        
@@ -299,11 +308,11 @@ jobs:
         name: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
-    - name: Upload the zip file
-      uses: actions/upload-artifact@master
-      with:
-        name: machine_sdcard
-        path: my_micropython/ports/esp32/machine_sdcard.c   
+    # - name: Upload the zip file
+      # uses: actions/upload-artifact@master
+      # with:
+        # name: machine_sdcard
+        # path: my_micropython/ports/esp32/machine_sdcard.c   
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
