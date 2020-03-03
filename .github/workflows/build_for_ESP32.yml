@@ -152,6 +152,14 @@ jobs:
         cp -R ./micropython-modbus/. ./ESP32/Modbus
         ls -al ./ESP32/Modbus
         
+    - name: Clone the driver for the BME280 sensor py modules - https://github.com/robert-hh/BME280.git
+      working-directory: ./modules
+      run: |
+        git clone https://github.com/robert-hh/BME280.git
+        mkdir -p ./ESP32/BME280
+        cp -R ./BME280/. ./ESP32/BME280
+        ls -al ./ESP32/BME280
+        
     - name: Build the mpy-cross tool
       working-directory: ./my_micropython/mpy-cross
       run: |
@@ -187,6 +195,7 @@ jobs:
       run: |
         echo "freeze('\$(MPY_DIR)/../modules/ESP32')" >> manifest.py
         echo "freeze('\$(MPY_DIR)/../modules/Universal')" >> manifest.py
+        echo "freeze('\$(MPY_DIR)/drivers/display', 'ssd1306.py')" >> manifest.py
         
     - name: upip micropython modules from internet
       if: env.ADD_MPY_FROZEN_MODULES == 'true'
