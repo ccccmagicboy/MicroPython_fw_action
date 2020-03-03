@@ -204,7 +204,7 @@ jobs:
     # - name: Debug the action
       # uses: p3terx/debugger-action@master   
             
-    - name: Apply new PR - https://github.com/micropython/micropython/pull/5695
+    - name: Apply new PR - https://github.com/micropython/micropython/pull/5695 -about sdcard
       if: env.ADD_PR == 'true'
       working-directory: ./my_micropython
       continue-on-error: false
@@ -221,8 +221,28 @@ jobs:
         git status
         git describe --tags --always --dirty="-dev"
         git shortlog --no-merges master --not ${{ steps.commit_cccc.outputs.ver }}
+
+    # - name: Apply new PR - https://github.com/micropython/micropython/pull/5608 -about rs485
         
-    - name: Apply new PR - https://github.com/micropython/micropython/pull/4471
+    - name: Apply new PR - https://github.com/micropython/micropython/pull/5567 -about rs485    
+      if: env.ADD_PR == 'true'  
+      working-directory: ./my_micropython
+      continue-on-error: false
+      run: |
+        git checkout master
+        git fetch origin pull/5567/head:esp32-uart
+        git branch -a
+        git checkout esp32-uart 
+        export PICK=$(git rev-parse --short HEAD)
+        echo $PICK
+        git checkout master
+        git cherry-pick $PICK
+        git log -10 --all --decorate --oneline --graph
+        git status
+        git describe --tags --always --dirty="-dev"
+        git shortlog --no-merges master --not ${{ steps.commit_cccc.outputs.ver }}
+        
+    - name: Apply new PR - https://github.com/micropython/micropython/pull/4471 -about i2s
       if: env.ADD_PR == 'true'  
       working-directory: ./my_micropython
       continue-on-error: false
