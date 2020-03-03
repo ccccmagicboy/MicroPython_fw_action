@@ -204,6 +204,7 @@ jobs:
         ./micropython -m upip install -p ../esp32/modules micropython-pystone_lowmem     
         ./micropython -m upip install -p ../esp32/modules uiperf3
         ./micropython -m upip install -p ../esp32/modules micropython-urequests
+        ./micropython -m upip install -p ../esp32/modules micropython-umqtt.simple
 
     - name: Custom the inisetup file
       if: env.CUSTOM_FACTORY_RESET == 'true'
