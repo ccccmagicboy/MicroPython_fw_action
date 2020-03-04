@@ -1,6 +1,7 @@
-#driver for Sainsmart 1.8" TFT display ST7735
-#Translated by Guy Carver from the ST7735 sample code.
-#Modirfied for micropython-esp32 by boochow 
+#Added 1.44 inch 128x128 and 0.96 inch 80x160 SST7735 to the
+# original 1.8 inch drivers developed by Guy Carver
+# fixed the issue of different start Row and start col addresses of different OLED types
+# fixed the RGB special equence in 80x160 ST7735B
 
 import machine
 import time
@@ -20,7 +21,7 @@ from math import sqrt
 #C0 = 180 right rotation
 #A0 = 270 right rotation
 TFTRotations = [0x00, 0x60, 0xC0, 0xA0]
-TFTBGR = 0x08 #When set color is bgr else rgb.
+TFTBGR = 0x08 # for 1.8 and 1.44 inch display
 TFTRGB = 0x00
 
 #@micropython.native
@@ -33,10 +34,21 @@ def TFTColor( aR, aG, aB ) :
      This assumes rgb 565 layout and will be incorrect for bgr.'''
   return ((aR & 0xF8) << 8) | ((aG & 0xFC) << 3) | (aB >> 3)
 
-ScreenSize = (128, 160)
+#ScreenSize = (128, 160)
 
 class TFT(object) :
-  """Sainsmart TFT 7735 display driver."""
+  """ define different model of ST7735, circuit board color or types (tabcolor)."""
+  GREENTAB        = 0x0 # 128x160 , start col 2, start row 1, rgb
+  REDTAB          = 0x1 # 128x160 , start col 0, start row 0, rgb
+  BLACKTAB        = 0x2 # 128x160 , start col 0, start row 0, bgr
+  GREENTAB2       = 0x3 # 128x160 , start col 2, start row 1, bgr
+  GREENTAB3       = 0x4 # 128x160 , start col 2, start row 3, rgb
+  GREENTAB128x128 = 0x5 # 128x128 1.44 inches, bgr, start col 2
+                              #         if rotation = 0, or 1, start row 1
+                              #         if rotation = 2, or 3, start row 3
+  GREENTAB80x160  = 0x6 # 80x160 0.96 inch, start col 26, start row 1, bgr, inverted
+  REDTAB80x160    = 0x7 # 80x160 0.96 inch, start col 24, start row 0, rgb
+  BLUETAB         = 0xB # 128x160 , start col 2, start row 1, rgb
 
   NOP = 0x0
   SWRESET = 0x01
@@ -56,9 +68,6 @@ class TFT(object) :
   RASET = 0x2B
   RAMWR = 0x2C
   RAMRD = 0x2E
-
-  VSCRDEF = 0x33
-  VSCSAD = 0x37
 
   COLMOD = 0x3A
   MADCTL = 0x36
@@ -104,25 +113,36 @@ class TFT(object) :
     '''Create a 565 rgb TFTColor value'''
     return TFTColor(aR, aG, aB)
 
-  def __init__( self, spi, aDC, aReset, aCS) :
+  def __init__( self, spi, aDC, aReset, aCS=None) :
     """aLoc SPI pin location is either 1 for 'X' or 2 for 'Y'.
        aDC is the DC pin and aReset is the reset pin."""
-    self._size = ScreenSize
-    self._offset = bytearray([0,0])
+    self.tabcolor = 0 # default
+    self._size = (128,160)
+    self._offset = (0, 0)
     self.rotate = 0                    #Vertical with top toward pins.
     self._rgb = True                   #color order of rgb.
-    self.tfa = 0                       #top fixed area
-    self.bfa = 0                       #bottom fixed area
-    self.dc  = machine.Pin(aDC, machine.Pin.OUT, machine.Pin.PULL_DOWN)
-    self.reset = machine.Pin(aReset, machine.Pin.OUT, machine.Pin.PULL_DOWN)
-    self.cs = machine.Pin(aCS, machine.Pin.OUT, machine.Pin.PULL_DOWN)
+    self.dc  = machine.Pin(aDC, machine.Pin.OUT)
+    self.reset = machine.Pin(aReset, machine.Pin.OUT)
+    if aCS == None :
+        self.useCS = False
+    else :
+        self.useCS = True
+        self.csPin = machine.Pin(aCS, machine.Pin.OUT)
     self.cs(1)
     self.spi = spi
     self.colorData = bytearray(2)
     self.windowLocData = bytearray(4)
 
+
+  def cs (self, iologic) :
+      if self.useCS :
+          self.csPin(iologic)
+
   def size( self ) :
     return self._size
+
+  def offset ( self ) :
+    return self._offset
 
 #   @micropython.native
   def on( self, aTF = True ) :
@@ -147,11 +167,24 @@ class TFT(object) :
     if (0 <= aRot < 4):
       rotchange = self.rotate ^ aRot
       self.rotate = aRot
-      #If switching from vertical to horizontal swap x,y
-      # (indicated by bit 0 changing).
-      if (rotchange & 1):
-        self._size =(self._size[1], self._size[0])
-      self._setMADCTL()
+      # If switching from vertical to horizontal (indicated by bit 0 changing).
+      # swap screen size rows and columns and their start addresses offset
+
+    if (rotchange & 1):
+      self._size =(self._size[1], self._size[0])
+      self._offset=(self._offset[1], self._offset[0])
+
+    if self.tabcolor == self.GREENTAB128x128 :
+      # special handling of 128x128 with different offsets during rotations
+      if aRot == 0 :
+        self._offset=(2,1)
+      elif aRot == 1 :
+        self._offset=(1,2)
+      elif aRot == 2 :
+        self._offset=(2,3)
+      elif aRot == 3 :
+        self._offset=(3,2)
+    self._setMADCTL()
 
 #  @micropython.native
   def pixel( self, aPos, aColor ) :
@@ -211,16 +244,14 @@ class TFT(object) :
       charA = aFont["Data"][ci:ci + fontw]
       px = aPos[0]
       if aSizes[0] <= 1 and aSizes[1] <= 1 :
-        buf = bytearray(2 * fonth * fontw)
-        for q in range(fontw) :
-          c = charA[q]
+        for c in charA :
+          py = aPos[1]
           for r in range(fonth) :
             if c & 0x01 :
-              pos = 2 * (r * fontw + q)
-              buf[pos] = aColor >> 8
-              buf[pos + 1] = aColor & 0xff
+              self.pixel((px, py), aColor)
+            py += 1
             c >>= 1
-        self.image(aPos[0], aPos[1], aPos[0] + fontw - 1, aPos[1] + fonth - 1, buf)
+          px += 1
       else:
         for c in charA :
           py = aPos[1]
@@ -387,29 +418,6 @@ class TFT(object) :
     self._setwindowloc((x0, y0), (x1, y1))
     self._writedata(data)
 
-  def setvscroll(self, tfa, bfa) :
-    ''' set vertical scroll area '''
-    self._writecommand(TFT.VSCRDEF)
-    data2 = bytearray([0, tfa])
-    self._writedata(data2)
-    data2[1] = 162 - tfa - bfa
-    self._writedata(data2)
-    data2[1] = bfa
-    self._writedata(data2)
-    self.tfa = tfa
-    self.bfa = bfa
-
-  def vscroll(self, value) :
-    a = value + self.tfa
-    if (a + self.bfa > 162) :
-      a = 162 - self.bfa
-    self._vscrolladdr(a)
-
-  def _vscrolladdr(self, addr) :
-    self._writecommand(TFT.VSCSAD)
-    data2 = bytearray([addr >> 8, addr & 0xff])
-    self._writedata(data2)
-    
 #   @micropython.native
   def _setColor( self, aColor ) :
     self.colorData[0] = aColor >> 8
@@ -511,414 +519,224 @@ class TFT(object) :
     self.reset(1)
     time.sleep_us(500)
 
-  def initb( self ) :
-    '''Initialize blue tab version.'''
-    self._size = (ScreenSize[0] + 2, ScreenSize[1] + 1)
-    self._reset()
-    self._writecommand(TFT.SWRESET)              #Software reset.
-    time.sleep_us(50)
-    self._writecommand(TFT.SLPOUT)               #out of sleep mode.
-    time.sleep_us(500)
-
-    data1 = bytearray(1)
-    self._writecommand(TFT.COLMOD)               #Set color mode.
-    data1[0] = 0x05                             #16 bit color.
-    self._writedata(data1)
-    time.sleep_us(10)
-
-    data3 = bytearray([0x00, 0x06, 0x03])       #fastest refresh, 6 lines front, 3 lines back.
-    self._writecommand(TFT.FRMCTR1)              #Frame rate control.
-    self._writedata(data3)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.MADCTL)
-    data1[0] = 0x08                             #row address/col address, bottom to top refresh
-    self._writedata(data1)
-
-    data2 = bytearray(2)
-    self._writecommand(TFT.DISSET5)              #Display settings
-    data2[0] = 0x15                             #1 clock cycle nonoverlap, 2 cycle gate rise, 3 cycle oscil, equalize
-    data2[1] = 0x02                             #fix on VTL
-    self._writedata(data2)
-
-    self._writecommand(TFT.INVCTR)               #Display inversion control
-    data1[0] = 0x00                             #Line inversion.
-    self._writedata(data1)
-
-    self._writecommand(TFT.PWCTR1)               #Power control
-    data2[0] = 0x02   #GVDD = 4.7V
-    data2[1] = 0x70   #1.0uA
-    self._writedata(data2)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.PWCTR2)               #Power control
-    data1[0] = 0x05                             #VGH = 14.7V, VGL = -7.35V
-    self._writedata(data1)
-
-    self._writecommand(TFT.PWCTR3)           #Power control
-    data2[0] = 0x01   #Opamp current small
-    data2[1] = 0x02   #Boost frequency
-    self._writedata(data2)
-
-    self._writecommand(TFT.VMCTR1)               #Power control
-    data2[0] = 0x3C   #VCOMH = 4V
-    data2[1] = 0x38   #VCOML = -1.1V
-    self._writedata(data2)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.PWCTR6)               #Power control
-    data2[0] = 0x11
-    data2[1] = 0x15
-    self._writedata(data2)
-
-    #These different values don't seem to make a difference.
-#     dataGMCTRP = bytearray([0x0f, 0x1a, 0x0f, 0x18, 0x2f, 0x28, 0x20, 0x22, 0x1f,
-#                             0x1b, 0x23, 0x37, 0x00, 0x07, 0x02, 0x10])
-    dataGMCTRP = bytearray([0x02, 0x1c, 0x07, 0x12, 0x37, 0x32, 0x29, 0x2d, 0x29,
-                            0x25, 0x2b, 0x39, 0x00, 0x01, 0x03, 0x10])
-    self._writecommand(TFT.GMCTRP1)
-    self._writedata(dataGMCTRP)
-
-#     dataGMCTRN = bytearray([0x0f, 0x1b, 0x0f, 0x17, 0x33, 0x2c, 0x29, 0x2e, 0x30,
-#                             0x30, 0x39, 0x3f, 0x00, 0x07, 0x03, 0x10])
-    dataGMCTRN = bytearray([0x03, 0x1d, 0x07, 0x06, 0x2e, 0x2c, 0x29, 0x2d, 0x2e,
-                            0x2e, 0x37, 0x3f, 0x00, 0x00, 0x02, 0x10])
-    self._writecommand(TFT.GMCTRN1)
-    self._writedata(dataGMCTRN)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.CASET)                #Column address set.
-    self.windowLocData[0] = 0x00
-    self.windowLocData[1] = 2                   #Start at column 2
-    self.windowLocData[2] = 0x00
-    self.windowLocData[3] = self._size[0] - 1
-    self._writedata(self.windowLocData)
-
-    self._writecommand(TFT.RASET)                #Row address set.
-    self.windowLocData[1] = 1                   #Start at row 2.
-    self.windowLocData[3] = self._size[1] - 1
-    self._writedata(self.windowLocData)
-
-    self._writecommand(TFT.NORON)                #Normal display on.
-    time.sleep_us(10)
-
-    self._writecommand(TFT.RAMWR)
-    time.sleep_us(500)
-
-    self._writecommand(TFT.DISPON)
-    self.cs(1)
-    time.sleep_us(500)
-
-  def initr( self ) :
-    '''Initialize a red tab version.'''
-    self._reset()
-
-    self._writecommand(TFT.SWRESET)              #Software reset.
-    time.sleep_us(150)
-    self._writecommand(TFT.SLPOUT)               #out of sleep mode.
-    time.sleep_us(500)
-
-    data3 = bytearray([0x01, 0x2C, 0x2D])       #fastest refresh, 6 lines front, 3 lines back.
-    self._writecommand(TFT.FRMCTR1)              #Frame rate control.
-    self._writedata(data3)
-
-    self._writecommand(TFT.FRMCTR2)              #Frame rate control.
-    self._writedata(data3)
-
-    data6 = bytearray([0x01, 0x2c, 0x2d, 0x01, 0x2c, 0x2d])
-    self._writecommand(TFT.FRMCTR3)              #Frame rate control.
-    self._writedata(data6)
-    time.sleep_us(10)
-
-    data1 = bytearray(1)
-    self._writecommand(TFT.INVCTR)               #Display inversion control
-    data1[0] = 0x07                             #Line inversion.
-    self._writedata(data1)
-
-    self._writecommand(TFT.PWCTR1)               #Power control
-    data3[0] = 0xA2
-    data3[1] = 0x02
-    data3[2] = 0x84
-    self._writedata(data3)
-
-    self._writecommand(TFT.PWCTR2)               #Power control
-    data1[0] = 0xC5   #VGH = 14.7V, VGL = -7.35V
-    self._writedata(data1)
-
-    data2 = bytearray(2)
-    self._writecommand(TFT.PWCTR3)               #Power control
-    data2[0] = 0x0A   #Opamp current small
-    data2[1] = 0x00   #Boost frequency
-    self._writedata(data2)
-
-    self._writecommand(TFT.PWCTR4)               #Power control
-    data2[0] = 0x8A   #Opamp current small
-    data2[1] = 0x2A   #Boost frequency
-    self._writedata(data2)
-
-    self._writecommand(TFT.PWCTR5)               #Power control
-    data2[0] = 0x8A   #Opamp current small
-    data2[1] = 0xEE   #Boost frequency
-    self._writedata(data2)
-
-    self._writecommand(TFT.VMCTR1)               #Power control
-    data1[0] = 0x0E
-    self._writedata(data1)
-
-    self._writecommand(TFT.INVOFF)
-
-    self._writecommand(TFT.MADCTL)               #Power control
-    data1[0] = 0xC8
-    self._writedata(data1)
-
-    self._writecommand(TFT.COLMOD)
-    data1[0] = 0x05
-    self._writedata(data1)
-
-    self._writecommand(TFT.CASET)                #Column address set.
-    self.windowLocData[0] = 0x00
-    self.windowLocData[1] = 0x00
-    self.windowLocData[2] = 0x00
-    self.windowLocData[3] = self._size[0] - 1
-    self._writedata(self.windowLocData)
-
-    self._writecommand(TFT.RASET)                #Row address set.
-    self.windowLocData[3] = self._size[1] - 1
-    self._writedata(self.windowLocData)
-
-    dataGMCTRP = bytearray([0x0f, 0x1a, 0x0f, 0x18, 0x2f, 0x28, 0x20, 0x22, 0x1f,
-                            0x1b, 0x23, 0x37, 0x00, 0x07, 0x02, 0x10])
-    self._writecommand(TFT.GMCTRP1)
-    self._writedata(dataGMCTRP)
-
-    dataGMCTRN = bytearray([0x0f, 0x1b, 0x0f, 0x17, 0x33, 0x2c, 0x29, 0x2e, 0x30,
-                            0x30, 0x39, 0x3f, 0x00, 0x07, 0x03, 0x10])
-    self._writecommand(TFT.GMCTRN1)
-    self._writedata(dataGMCTRN)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.DISPON)
-    time.sleep_us(100)
-
-    self._writecommand(TFT.NORON)                #Normal display on.
-    time.sleep_us(10)
-
-    self.cs(1)
-    
-  def initb2( self ) :
-    '''Initialize another blue tab version.'''
-    self._size = (ScreenSize[0] + 2, ScreenSize[1] + 1)
-    self._offset[0] = 2
-    self._offset[1] = 1
-    self._reset()
-    self._writecommand(TFT.SWRESET)              #Software reset.
-    time.sleep_us(50)
-    self._writecommand(TFT.SLPOUT)               #out of sleep mode.
-    time.sleep_us(500)
-
-    data3 = bytearray([0x01, 0x2C, 0x2D])        #
-    self._writecommand(TFT.FRMCTR1)              #Frame rate control.
-    self._writedata(data3)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.FRMCTR2)              #Frame rate control.
-    self._writedata(data3)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.FRMCTR3)              #Frame rate control.
-    self._writedata(data3)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.INVCTR)               #Display inversion control
-    data1 = bytearray(1)                         #
-    data1[0] = 0x07
-    self._writedata(data1)
-
-    self._writecommand(TFT.PWCTR1)               #Power control
-    data3[0] = 0xA2   #
-    data3[1] = 0x02   #
-    data3[2] = 0x84   #
-    self._writedata(data3)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.PWCTR2)               #Power control
-    data1[0] = 0xC5                              #
-    self._writedata(data1)
-
-    self._writecommand(TFT.PWCTR3)           #Power control
-    data2 = bytearray(2)
-    data2[0] = 0x0A   #
-    data2[1] = 0x00   #
-    self._writedata(data2)
-
-    self._writecommand(TFT.PWCTR4)           #Power control
-    data2[0] = 0x8A   #
-    data2[1] = 0x2A   #
-    self._writedata(data2)
-
-    self._writecommand(TFT.PWCTR5)           #Power control
-    data2[0] = 0x8A   #
-    data2[1] = 0xEE   #
-    self._writedata(data2)
-
-    self._writecommand(TFT.VMCTR1)               #Power control
-    data1[0] = 0x0E   #
-    self._writedata(data1)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.MADCTL)
-    data1[0] = 0xC8                             #row address/col address, bottom to top refresh
-    self._writedata(data1)
-
-#These different values don't seem to make a difference.
-#     dataGMCTRP = bytearray([0x0f, 0x1a, 0x0f, 0x18, 0x2f, 0x28, 0x20, 0x22, 0x1f,
-#                             0x1b, 0x23, 0x37, 0x00, 0x07, 0x02, 0x10])
-    dataGMCTRP = bytearray([0x02, 0x1c, 0x07, 0x12, 0x37, 0x32, 0x29, 0x2d, 0x29,
-                            0x25, 0x2b, 0x39, 0x00, 0x01, 0x03, 0x10])
-    self._writecommand(TFT.GMCTRP1)
-    self._writedata(dataGMCTRP)
-
-#     dataGMCTRN = bytearray([0x0f, 0x1b, 0x0f, 0x17, 0x33, 0x2c, 0x29, 0x2e, 0x30,
-#                             0x30, 0x39, 0x3f, 0x00, 0x07, 0x03, 0x10])
-    dataGMCTRN = bytearray([0x03, 0x1d, 0x07, 0x06, 0x2e, 0x2c, 0x29, 0x2d, 0x2e,
-                            0x2e, 0x37, 0x3f, 0x00, 0x00, 0x02, 0x10])
-    self._writecommand(TFT.GMCTRN1)
-    self._writedata(dataGMCTRN)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.CASET)                #Column address set.
-    self.windowLocData[0] = 0x00
-    self.windowLocData[1] = 0x02                   #Start at column 2
-    self.windowLocData[2] = 0x00
-    self.windowLocData[3] = self._size[0] - 1
-    self._writedata(self.windowLocData)
-
-    self._writecommand(TFT.RASET)                #Row address set.
-    self.windowLocData[1] = 0x01                   #Start at row 2.
-    self.windowLocData[3] = self._size[1] - 1
-    self._writedata(self.windowLocData)
-
-    data1 = bytearray(1)
-    self._writecommand(TFT.COLMOD)               #Set color mode.
-    data1[0] = 0x05                             #16 bit color.
-    self._writedata(data1)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.NORON)                #Normal display on.
-    time.sleep_us(10)
-
-    self._writecommand(TFT.RAMWR)
-    time.sleep_us(500)
-
-    self._writecommand(TFT.DISPON)
-    self.cs(1)
-    time.sleep_us(500)
-
-  #@micropython.native
-  def initg( self ) :
-    '''Initialize a green tab version.'''
-    self._reset()
-
-    self._writecommand(TFT.SWRESET)              #Software reset.
-    time.sleep_us(150)
-    self._writecommand(TFT.SLPOUT)               #out of sleep mode.
-    time.sleep_us(255)
-
-    data3 = bytearray([0x01, 0x2C, 0x2D])       #fastest refresh, 6 lines front, 3 lines back.
-    self._writecommand(TFT.FRMCTR1)              #Frame rate control.
-    self._writedata(data3)
-
-    self._writecommand(TFT.FRMCTR2)              #Frame rate control.
-    self._writedata(data3)
-
-    data6 = bytearray([0x01, 0x2c, 0x2d, 0x01, 0x2c, 0x2d])
-    self._writecommand(TFT.FRMCTR3)              #Frame rate control.
-    self._writedata(data6)
-    time.sleep_us(10)
-
-    self._writecommand(TFT.INVCTR)               #Display inversion control
-    self._writedata(bytearray([0x07]))
-    self._writecommand(TFT.PWCTR1)               #Power control
-    data3[0] = 0xA2
-    data3[1] = 0x02
-    data3[2] = 0x84
-    self._writedata(data3)
-
-    self._writecommand(TFT.PWCTR2)               #Power control
-    self._writedata(bytearray([0xC5]))
-
-    data2 = bytearray(2)
-    self._writecommand(TFT.PWCTR3)               #Power control
-    data2[0] = 0x0A   #Opamp current small
-    data2[1] = 0x00   #Boost frequency
-    self._writedata(data2)
-
-    self._writecommand(TFT.PWCTR4)               #Power control
-    data2[0] = 0x8A   #Opamp current small
-    data2[1] = 0x2A   #Boost frequency
-    self._writedata(data2)
-
-    self._writecommand(TFT.PWCTR5)               #Power control
-    data2[0] = 0x8A   #Opamp current small
-    data2[1] = 0xEE   #Boost frequency
-    self._writedata(data2)
-
-    self._writecommand(TFT.VMCTR1)               #Power control
-    self._writedata(bytearray([0x0E]))
-
-    self._writecommand(TFT.INVOFF)
-
-    self._setMADCTL()
-
-    self._writecommand(TFT.COLMOD)
-    self._writedata(bytearray([0x05]))
-
-    self._writecommand(TFT.CASET)                #Column address set.
-    self.windowLocData[0] = 0x00
-    self.windowLocData[1] = 0x01                #Start at row/column 1.
-    self.windowLocData[2] = 0x00
-    self.windowLocData[3] = self._size[0] - 1
-    self._writedata(self.windowLocData)
-
-    self._writecommand(TFT.RASET)                #Row address set.
-    self.windowLocData[3] = self._size[1] - 1
-    self._writedata(self.windowLocData)
-
-    dataGMCTRP = bytearray([0x02, 0x1c, 0x07, 0x12, 0x37, 0x32, 0x29, 0x2d, 0x29,
-                            0x25, 0x2b, 0x39, 0x00, 0x01, 0x03, 0x10])
-    self._writecommand(TFT.GMCTRP1)
-    self._writedata(dataGMCTRP)
-
-    dataGMCTRN = bytearray([0x03, 0x1d, 0x07, 0x06, 0x2e, 0x2c, 0x29, 0x2d, 0x2e,
-                            0x2e, 0x37, 0x3f, 0x00, 0x00, 0x02, 0x10])
-    self._writecommand(TFT.GMCTRN1)
-    self._writedata(dataGMCTRN)
-
-    self._writecommand(TFT.NORON)                #Normal display on.
-    time.sleep_us(10)
-
-    self._writecommand(TFT.DISPON)
-    time.sleep_us(100)
-
-    self.cs(1)
-
-def maker(  ) :
-  t = TFT(1, "X1", "X2")
-  print("Initializing")
-  t.initr()
-  t.fill(0)
-  return t
-
-def makeb(  ) :
-  t = TFT(1, "X1", "X2")
-  print("Initializing")
-  t.initb()
-  t.fill(0)
-  return t
-
-def makeg(  ) :
-  t = TFT(1, "X1", "X2")
-  print("Initializing")
-  t.initg()
-  t.fill(0)
-  return t
+  def init_7735 ( self, Tabcolor) :
+    self.tabcolor = Tabcolor
+    if self.tabcolor == self.BLUETAB :
+        # Initialize blue tab version.
+        self._size = (128, 160)
+        self._offset = (2,1)
+        self._rgb = True
+
+        self._reset()
+        self._writecommand(TFT.SWRESET)              #Software reset.
+        time.sleep_us(50)
+        self._writecommand(TFT.SLPOUT)               #out of sleep mode.
+        time.sleep_us(500)
+
+        data1 = bytearray(1)
+        self._writecommand(TFT.COLMOD)               #Set color mode.
+        data1[0] = 0x05                             #16 bit color.
+        self._writedata(data1)
+        time.sleep_us(10)
+
+        data3 = bytearray([0x00, 0x06, 0x03])       #fastest refresh, 6 lines front, 3 lines back.
+        self._writecommand(TFT.FRMCTR1)              #Frame rate control.
+        self._writedata(data3)
+        time.sleep_us(10)
+
+        self._writecommand(TFT.MADCTL)
+        data1[0] = 0x08                             #row address/col address, bottom to top refresh
+        self._writedata(data1)
+
+        data2 = bytearray(2)
+        self._writecommand(TFT.DISSET5)              #Display settings
+        data2[0] = 0x15                             #1 clock cycle nonoverlap, 2 cycle gate rise, 3 cycle oscil, equalize
+        data2[1] = 0x02                             #fix on VTL
+        self._writedata(data2)
+
+        self._writecommand(TFT.INVCTR)               #Display inversion control
+        data1[0] = 0x00                             #Line inversion.
+        self._writedata(data1)
+
+        self._writecommand(TFT.PWCTR1)               #Power control
+        data2[0] = 0x02   #GVDD = 4.7V
+        data2[1] = 0x70   #1.0uA
+        self._writedata(data2)
+        time.sleep_us(10)
+
+        self._writecommand(TFT.PWCTR2)               #Power control
+        data1[0] = 0x05                             #VGH = 14.7V, VGL = -7.35V
+        self._writedata(data1)
+
+        self._writecommand(TFT.PWCTR3)           #Power control
+        data2[0] = 0x01   #Opamp current small
+        data2[1] = 0x02   #Boost frequency
+        self._writedata(data2)
+
+        self._writecommand(TFT.VMCTR1)               #Power control
+        data2[0] = 0x3C   #VCOMH = 4V
+        data2[1] = 0x38   #VCOML = -1.1V
+        self._writedata(data2)
+        time.sleep_us(10)
+
+        self._writecommand(TFT.PWCTR6)               #Power control
+        data2[0] = 0x11
+        data2[1] = 0x15
+        self._writedata(data2)
+
+        #These different values don't seem to make a difference.
+    #     dataGMCTRP = bytearray([0x0f, 0x1a, 0x0f, 0x18, 0x2f, 0x28, 0x20, 0x22, 0x1f,
+    #                             0x1b, 0x23, 0x37, 0x00, 0x07, 0x02, 0x10])
+        dataGMCTRP = bytearray([0x02, 0x1c, 0x07, 0x12, 0x37, 0x32, 0x29, 0x2d, 0x29,
+                                0x25, 0x2b, 0x39, 0x00, 0x01, 0x03, 0x10])
+        self._writecommand(TFT.GMCTRP1)
+        self._writedata(dataGMCTRP)
+
+    #     dataGMCTRN = bytearray([0x0f, 0x1b, 0x0f, 0x17, 0x33, 0x2c, 0x29, 0x2e, 0x30,
+    #                             0x30, 0x39, 0x3f, 0x00, 0x07, 0x03, 0x10])
+        dataGMCTRN = bytearray([0x03, 0x1d, 0x07, 0x06, 0x2e, 0x2c, 0x29, 0x2d, 0x2e,
+                                0x2e, 0x37, 0x3f, 0x00, 0x00, 0x02, 0x10])
+        self._writecommand(TFT.GMCTRN1)
+        self._writedata(dataGMCTRN)
+        time.sleep_us(10)
+
+        self._writecommand(TFT.CASET)                #Column address set.
+        self.windowLocData[0] = 0x00
+        self.windowLocData[1] = self._offset[0]                   #Start at column 2
+        self.windowLocData[2] = 0x00
+        self.windowLocData[3] = self._size[0] + self._offset[0]
+        self._writedata(self.windowLocData)
+
+        self._writecommand(TFT.RASET)                #Row address set.
+        self.windowLocData[1] = self._offset[1]                   #Start at row 1.
+        self.windowLocData[3] = self._size[1] + self._offset[1]
+        self._writedata(self.windowLocData)
+
+        self._writecommand(TFT.NORON)                #Normal display on.
+        time.sleep_us(10)
+
+        self._writecommand(TFT.RAMWR)
+        time.sleep_us(500)
+
+        self._writecommand(TFT.DISPON)
+        self.cs(1)
+        time.sleep_us(500)
+    else :
+        # Initialize a green tab version.
+        self._reset()
+        self._writecommand(TFT.SWRESET)              #Software reset.
+        time.sleep_us(150)
+        self._writecommand(TFT.SLPOUT)               #out of sleep mode.
+        time.sleep_us(255)
+
+        data3 = bytearray([0x01, 0x2C, 0x2D])       #fastest refresh, 6 lines front, 3 lines back.
+        self._writecommand(TFT.FRMCTR1)              #Frame rate control.
+        self._writedata(data3)
+
+        self._writecommand(TFT.FRMCTR2)              #Frame rate control.
+        self._writedata(data3)
+
+        data6 = bytearray([0x01, 0x2c, 0x2d, 0x01, 0x2c, 0x2d])
+        self._writecommand(TFT.FRMCTR3)              #Frame rate control.
+        self._writedata(data6)
+        time.sleep_us(10)
+
+        self._writecommand(TFT.INVCTR)               #Display inversion control
+        self._writedata(bytearray([0x07]))
+        self._writecommand(TFT.PWCTR1)               #Power control
+        data3[0] = 0xA2
+        data3[1] = 0x02
+        data3[2] = 0x84
+        self._writedata(data3)
+
+        self._writecommand(TFT.PWCTR2)               #Power control
+        self._writedata(bytearray([0xC5]))
+
+        data2 = bytearray(2)
+        self._writecommand(TFT.PWCTR3)               #Power control
+        data2[0] = 0x0A   #Opamp current small
+        data2[1] = 0x00   #Boost frequency
+        self._writedata(data2)
+
+        self._writecommand(TFT.PWCTR4)               #Power control
+        data2[0] = 0x8A   #Opamp current small
+        data2[1] = 0x2A   #Boost frequency
+        self._writedata(data2)
+
+        self._writecommand(TFT.PWCTR5)               #Power control
+        data2[0] = 0x8A   #Opamp current small
+        data2[1] = 0xEE   #Boost frequency
+        self._writedata(data2)
+
+        self._writecommand(TFT.VMCTR1)               #Power control
+        self._writedata(bytearray([0x0E]))
+
+        self._writecommand(TFT.INVOFF)
+
+        if self.tabcolor == self.GREENTAB :
+            self._offset = (2,1)
+        if self.tabcolor == self.REDTAB :
+            self._offset = (0,0)
+        if self.tabcolor == self.BLACKTAB :
+            self._offset = (0,0)
+            self._rgb = False
+        elif self.tabcolor == self.GREENTAB2 :
+            self._offset = (2,1)
+            self._rgb = False
+        elif self.tabcolor == self.GREENTAB3 :
+            self._offset = (2,3)
+        elif self.tabcolor == self.GREENTAB128x128 :
+            self._size = (128,128)
+            self._offset = (2,1)
+            self._rgb = False
+        elif self.tabcolor == self.GREENTAB80x160 :
+            self._size = (80,160)
+            self._offset = (26,1)
+            self._rgb = False
+            self._writecommand(TFT.INVON)
+        elif self.tabcolor == self.REDTAB80x160 :
+            self._size = (80,160)
+            self._offset = (24,0)
+
+        # rotate to the same orientation with the Pins on the boards at the top
+        if self.tabcolor == self.GREENTAB80x160 or self.tabcolor == self.REDTAB80x160 :
+            self.rotation(1)
+        else :
+            self.rotation(2)
+
+        # set the color mapping of  RGB or GBR
+        self._setMADCTL()
+
+        self._writecommand(TFT.COLMOD)
+        self._writedata(bytearray([0x05]))
+
+        self._writecommand(TFT.CASET)                #Column address set.
+
+        self.windowLocData[0] = 0x00
+        self.windowLocData[1] = self._offset[0]
+        self.windowLocData[2] = 0x00
+        self.windowLocData[3] = self._size[0]+self._offset[0]
+        self._writedata(self.windowLocData)
+
+        self._writecommand(TFT.RASET)                #Row address set.
+        self.windowLocData[1] = self._offset[1]
+        self.windowLocData[3] = self._size[1]+self._offset[1]
+        self._writedata(self.windowLocData)
+
+        dataGMCTRP = bytearray([0x02, 0x1c, 0x07, 0x12, 0x37, 0x32, 0x29, 0x2d, 0x29,
+                                0x25, 0x2b, 0x39, 0x00, 0x01, 0x03, 0x10])
+        self._writecommand(TFT.GMCTRP1)
+        self._writedata(dataGMCTRP)
+
+        dataGMCTRN = bytearray([0x03, 0x1d, 0x07, 0x06, 0x2e, 0x2c, 0x29, 0x2d, 0x2e,
+                                0x2e, 0x37, 0x3f, 0x00, 0x00, 0x02, 0x10])
+        self._writecommand(TFT.GMCTRN1)
+        self._writedata(dataGMCTRN)
+
+        self._writecommand(TFT.NORON)                #Normal display on.
+        time.sleep_us(10)
+
+        self._writecommand(TFT.DISPON)
+        time.sleep_us(100)
+
+        self.cs(1)
