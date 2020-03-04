@@ -1,4 +1,4 @@
-#Added 1.44 inch 128x128 and 0.96 inch 80x160 SST7735 to the
+# Added 1.44 inch 128x128 and 0.96 inch 80x160 SST7735 to the
 # original 1.8 inch drivers developed by Guy Carver
 # fixed the issue of different start Row and start col addresses of different OLED types
 # fixed the RGB special equence in 80x160 ST7735B
@@ -8,7 +8,7 @@ import time
 from math import sqrt
 
 #TFTRotations and TFTRGB are bits to set
-# on MADCTL to control display rotation/color layout
+#on MADCTL to control display rotation/color layout
 #Looking at display with pins on top.
 #00 = upper left printing right
 #10 = does nothing (MADCTL_ML)
@@ -24,17 +24,13 @@ TFTRotations = [0x00, 0x60, 0xC0, 0xA0]
 TFTBGR = 0x08 # for 1.8 and 1.44 inch display
 TFTRGB = 0x00
 
-#@micropython.native
 def clamp( aValue, aMin, aMax ) :
   return max(aMin, min(aMax, aValue))
 
-#@micropython.native
 def TFTColor( aR, aG, aB ) :
   '''Create a 16 bit rgb value from the given R,G,B from 0-255.
      This assumes rgb 565 layout and will be incorrect for bgr.'''
   return ((aR & 0xF8) << 8) | ((aG & 0xFC) << 3) | (aB >> 3)
-
-#ScreenSize = (128, 160)
 
 class TFT(object) :
   """ define different model of ST7735, circuit board color or types (tabcolor)."""
