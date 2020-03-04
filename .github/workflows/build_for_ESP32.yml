@@ -407,4 +407,5 @@ jobs:
         aws configure list
         aws s3 cp ./ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip s3://${AWS_S3_BUCKET}/ESP32/${{ steps.unix_port.outputs.board }}/        
 
-        
+     
+     
