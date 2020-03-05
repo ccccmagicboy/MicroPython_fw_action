@@ -34,9 +34,11 @@ on:
 # * * * * *  
 
 env:
-  REPO_URL: https://github.com/micropython/micropython.git
-  REPO_BRANCH: master
-  TZ: Asia/Shanghai    
+  # REPO_URL: https://github.com/micropython/micropython.git
+  REPO_URL: https://github.com/ccccmagicboy/micropython.git
+  # REPO_BRANCH: master
+  REPO_BRANCH: mpy-cross_build_under_windows_makefile_fix
+  TZ: Asia/Shanghai
 
 jobs:
   build:
@@ -76,6 +78,8 @@ jobs:
       working-directory: .\my_micropython
       run: |
         echo %PATH%
+        echo $(expr substr $(uname -s) 1 10)
+        echo $(uname -s)
         make -C mpy-cross
       shell: cmd
       
