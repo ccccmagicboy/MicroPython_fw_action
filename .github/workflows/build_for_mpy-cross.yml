@@ -67,10 +67,10 @@ jobs:
         python3 -c "import sys; print(sys.version)"
       shell: cmd
       
-    - name: Run the DIY customs
-      run: |
-        python %DIY_SCRIPT%
-      shell: cmd
+    # - name: Run the DIY customs
+      # run: |
+        # python %DIY_SCRIPT%
+      # shell: cmd
       
     - name: Make the mpy-cross
       working-directory: .\my_micropython

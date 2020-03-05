@@ -8,13 +8,13 @@ def replaceAll(file,searchExp,replaceExp):
             line = line.replace(searchExp,replaceExp)
         sys.stdout.write(line)
         
-def main():
-    print(os.environ['PATH'])
-    print(os.getcwd())
-    mk_path = os.path.join(os.getcwd(), 'my_micropython', 'mpy-cross', 'Makefile')
-    print(mk_path)
-    replaceAll(mk_path, "PROG = mpy-cross","PROG = mpy-cross.exe")
-    print("ok finished!")
+# def main():
+    # print(os.environ['PATH'])
+    # print(os.getcwd())
+    # mk_path = os.path.join(os.getcwd(), 'my_micropython', 'mpy-cross', 'Makefile')
+    # print(mk_path)
+    # replaceAll(mk_path, "PROG = mpy-cross","PROG = mpy-cross.exe")
+    # print("ok finished!")
     
 def get_ver():
     command = 'cd my_micropython\mpy-cross && mpy-cross --version'
@@ -36,5 +36,5 @@ def get_ver_unix():
 
 if __name__ == "__main__":
     # execute only if run as a script
-    main()
+    # main()
 
