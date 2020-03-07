@@ -47,7 +47,7 @@ env:
   ADD_MPY_FROZEN_MODULES: true
   ADD_NATIVE_C_MPY_MODULES: true
   ADD_EXTERNAL_C_MODULES: true
-  ADD_PR: true
+  ADD_PR: false
   USE_S3: false
   USB_DETACHED_HEAD: false
   USB_BIGGER_FLASH: true
