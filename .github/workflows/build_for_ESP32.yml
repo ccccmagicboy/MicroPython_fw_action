@@ -366,11 +366,11 @@ jobs:
         name: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}
         path: ESP32_${{ steps.unix_port.outputs.board }}_fw_${{ steps.unix_port.outputs.version }}_${{ matrix.idf-select }}_${{ steps.unix_port.outputs.gitid }}_${{ steps.get_datetime.outputs.datetime_str }}.zip        
         
-    # - name: Upload the zip file
-      # uses: actions/upload-artifact@master
-      # with:
-        # name: machine_sdcard
-        # path: my_micropython/ports/esp32/machine_sdcard.c   
+    - name: Upload the zip file
+      uses: actions/upload-artifact@master
+      with:
+        name: machine_sdcard
+        path: my_micropython/ports/esp32/machine_sdcard.c   
         
     - name: Upload the zip file
       uses: actions/upload-artifact@master
