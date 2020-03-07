@@ -35,8 +35,10 @@ on:
 # * * * * *  
 
 env:
-  REPO_URL: https://github.com/micropython/micropython.git
-  REPO_BRANCH: master
+  REPO_URL: https://github.com/ccccmagicboy/micropython.git
+  REPO_BRANCH: use_40MHz_for_esp32_sdmmc
+  # REPO_URL: https://github.com/micropython/micropython.git
+  # REPO_BRANCH: master
   TOOLCHAIN_FROM_SCRATCH: false
   TZ: Asia/Shanghai
   ADD_CUSTOM_BOARD: true  
