@@ -83,6 +83,12 @@ jobs:
         make -C mpy-cross
       shell: cmd
       
+    - name: Print the toolchain environment
+      run: |
+        echo $(expr substr $(uname -s) 1 10)
+        echo $(uname -s)
+      shell: bash
+      
     - name: Print the version of mpy-cross.exe
       working-directory: .\
       id: print_ver
