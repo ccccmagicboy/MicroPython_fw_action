@@ -329,7 +329,8 @@ jobs:
         
     - name: Download the ${{ matrix.idf-select }} from espressif and make the esp32 port - ${{ matrix.test-board }}
       run: |
-        git clone https://github.com/espressif/esp-idf.git esp-idf
+        # git clone https://github.com/espressif/esp-idf.git esp-idf
+        git clone https://github.com/ccccmagicboy/esp-idf.git esp-idf
         cd esp-idf
         git checkout ${{ steps.get_hash.outputs.hash_selected }}
         git submodule update --init --recursive
