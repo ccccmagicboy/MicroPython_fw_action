@@ -134,7 +134,8 @@ jobs:
     - name: Clone the ST7789 external c modules - https://github.com/devbis/st7789_mpy
       working-directory: ./c_modules
       run: |
-        git clone https://github.com/devbis/st7789_mpy.git
+        # git clone https://github.com/devbis/st7789_mpy.git
+        git clone https://github.com/russhughes/st7789_mpy.git
         mkdir -p ./ESP32/st7789
         cp -R ./st7789_mpy/st7789/. ./ESP32/st7789
         ls -al ./ESP32/st7789   
