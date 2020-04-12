@@ -131,7 +131,7 @@ jobs:
         cp -R ./ulab/code/. ./ESP32/ulab
         ls -al ./ESP32/ulab        
         
-    - name: Clone the ST7789 external c modules - https://github.com/devbis/st7789_mpy
+    - name: Clone the ST7789 external c modules
       working-directory: ./c_modules
       run: |
         # git clone https://github.com/devbis/st7789_mpy.git
@@ -139,7 +139,15 @@ jobs:
         git clone https://github.com/ccccmagicboy/st7789_mpy.git
         mkdir -p ./ESP32/st7789
         cp -R ./st7789_mpy/st7789/. ./ESP32/st7789
-        ls -al ./ESP32/st7789   
+        ls -al ./ESP32/st7789
+
+    - name: Clone the ST7735 external c modules
+      working-directory: ./c_modules
+      run: |
+        git clone https://github.com/ccccmagicboy/st7735_mpy.git
+        mkdir -p ./ESP32/st7735
+        cp -R ./st7735_mpy/st7735/. ./ESP32/st7735
+        ls -al ./ESP32/st7735        
 
     - name: Clone the modbus py modules - https://github.com/pycom/pycom-modbus.git
       working-directory: ./modules
