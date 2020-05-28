@@ -126,7 +126,8 @@ jobs:
     - name: Clone the ulab external c modules - https://github.com/v923z/micropython-ulab
       working-directory: ./c_modules
       run: |
-        git clone https://github.com/v923z/micropython-ulab.git ulab
+        # git clone https://github.com/v923z/micropython-ulab.git ulab
+        git clone https://github.com/ccccmagicboy/micropython-ulab.git ulab -b fix_float_double_flags
         mkdir -p ./ESP32/ulab
         cp -R ./ulab/code/. ./ESP32/ulab
         ls -al ./ESP32/ulab        
